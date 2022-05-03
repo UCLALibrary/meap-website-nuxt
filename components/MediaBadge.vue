@@ -1,10 +1,10 @@
 <template lang="html">
-    <div class="media-badge">
+    <button class="media-badge">
         <div class="floating-highlight" />
         <div class="badge-content">
             <slot class="badge-content-item" />
         </div>
-    </div>
+    </button>
 </template>
 
 <script>
@@ -23,6 +23,7 @@
     height: var(--badge-height);
     right: 0px;
     bottom: 0px;
+    padding: 0px;
     cursor: pointer;
 
 

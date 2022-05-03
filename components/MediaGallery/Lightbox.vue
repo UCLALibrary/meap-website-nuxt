@@ -6,23 +6,32 @@
             :image="image"
         />
         <button
+            v-shortkey="['esc']"
+            aria-label="close"
             class="button-close"
+            @shortkey="$emit('closeModal')"
             @click="$emit('closeModal')"
         >
             <svg-icon-close />
         </button>
         <button
             v-if="nItems > 1"
+            v-shortkey="['arrowleft']"
+            aria-label="previous"
             class="button-prev"
             :disabled="selectionIndex <= 0"
+            @shortkey="$emit('clickPrev')"
             @click="$emit('clickPrev')"
         >
             <svg-icon-caret-left />
         </button>
         <button
             v-if="nItems > 1"
+            v-shortkey="['arrowright']"
+            aria-label="next"
             class="button-next"
             :disabled="selectionIndex >= nItems - 1"
+            @shortkey="$emit('clickNext')"
             @click="$emit('clickNext')"
         >
             <svg-icon-caret-right />

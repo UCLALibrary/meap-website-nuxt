@@ -1,5 +1,5 @@
 <template>
-    <div class="thumbnail-card">
+    <button class="thumbnail-card">
         <responsive-image
             :image="image"
             aspect-ratio="60"
@@ -13,7 +13,7 @@
             class="caption-text"
             v-text="captionText"
         />
-    </div>
+    </button>
 </template>
 
 <script>
@@ -42,7 +42,13 @@ export default
     width: 100%;
     max-width: 100%;
     margin: 0;
+    margin-bottom: auto;        
     padding: 0;
+
+    // display: flex;
+    // flex-direction: column;
+    // align-items: flex-start;
+    // justify-content: flex-start;
 
     .caption-title {
         @include step-1;

@@ -56,6 +56,7 @@ export default {
         "~/plugins/web-font-loader.client.js",
         "~/plugins/browser-events.client.js",
         "~/plugins/craft.js",
+        "~/plugins/vue-shortkey.js",
     ],
 
     /*

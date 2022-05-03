@@ -1,6 +1,7 @@
 <template>
     <div
         class="banner-image"
+        aria-label="expand items"
         @click="$emit('toggleThumbnails')"
     >
         <responsive-image

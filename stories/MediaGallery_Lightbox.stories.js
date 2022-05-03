@@ -1,27 +1,20 @@
+import * as API from "~/stories/mock-api.json"
+
 // Storybook default settings
 export default {
     title: "Media Gallery / Lightbox",
 }
 
 const mock = {
-    "src": "https://via.placeholder.com/1920x1080",
-    "height": 1080,
-    "width": 1920,
-    "sizes": "100vw",
-    "alt": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    "title": "Lorem ipsum"
+    "images": API.images,
 }
 
 // Variations of stories below
 export const Default = () => ({
     data() {
-        return {
-            image: mock,
-            captionTitle: mock.title,
-            captionText: mock.alt,
-        }
+        return mock
     },
-    template: `<media-gallery-lightbox :image="image" :caption-title="captionTitle" :caption-text="captionText" :selection-index="3" :n-items="5" />`,
+    template: `<media-gallery-lightbox :images="images" />`,
 })
 
 export const FirstItem = () => ({

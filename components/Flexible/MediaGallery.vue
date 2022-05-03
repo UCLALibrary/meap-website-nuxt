@@ -23,8 +23,8 @@
             @click.native="toggleThumbnails"
         />
         <div
-            v-if="expandThumbnails"
-            class="thumbnails"
+            :aria-expanded="expandThumbnails"
+            :class="expandThumbnails ? 'thumbnails' : 'thumbnails hidden'"
         >
             <media-gallery-thumbnail-card
                 v-for="(item, index) in block.mediaGallery"
@@ -124,6 +124,10 @@ export default
         grid-template-columns: repeat(3, calc((100% - 2*$column-gap) / 3));
         column-gap: $column-gap;
         row-gap: var(--space-xl);
+    }
+
+    .hidden {
+        visibility: hidden;
     }
 }
 </style>
