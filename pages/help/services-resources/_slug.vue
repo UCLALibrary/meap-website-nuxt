@@ -24,8 +24,9 @@
             class="divider-way-finder"
         />
         <h2 class="more-info">
-            More Information
+            More Information 
         </h2>
+        </nuxt-link>
 
         <flexible-blocks
             class="content"

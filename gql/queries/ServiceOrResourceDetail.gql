@@ -50,6 +50,7 @@ fragment FlexibleBlocksServiceOrResource on ElementInterface {
         ...BlockSimpleCards
         ...BlockRichText
         ...BlockMediaWithText
+        ...BlockMediaGallery
     }
 }
 
@@ -129,4 +130,29 @@ fragment BlockMediaWithText on defaultFpbWithNoCta_mediaWithText_BlockType {
             typeMedia
         }
     }
+}
+
+fragment BlockMediaGallery on defaultFpbWithNoCta_mediaGallery_BlockType {
+  id
+  mediaGallery {
+    id
+    ... on mediaGallery_image_BlockType {
+      id
+      image {
+        id
+        url
+      }
+      captionTitle
+      captionText
+      altText
+      caption
+      captionHeading
+      sortOrder
+      imageFile(altText: "") {
+        id
+        img
+        title
+      }
+    }
+  }
 }
