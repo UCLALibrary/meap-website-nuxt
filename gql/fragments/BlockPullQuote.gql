@@ -1,0 +1,9 @@
+fragment BlockPullQuote on allFlexiblePageBlocks_pullQuote_BlockType {
+    id
+    pullQuote {
+        ... on pullQuote_pullQuote_BlockType {
+            text
+            attribution
+        }
+    }
+}

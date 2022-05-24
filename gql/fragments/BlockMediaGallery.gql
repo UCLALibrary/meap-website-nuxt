@@ -1,0 +1,15 @@
+fragment BlockMediaGallery 
+    mediaGallery {
+    id
+    ... on mediaGallery_image_BlockType {
+        id
+        image {
+            id
+            url
+        }
+        captionTitle
+        captionText
+        altText
+    }
+}
+

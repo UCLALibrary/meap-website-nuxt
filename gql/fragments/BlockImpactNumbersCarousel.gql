@@ -1,0 +1,15 @@
+fragment BlockImpactNumbersCarousel {
+    impactNumbersCarousel {
+        id
+        ... on impactNumbersCarousel_impactNumbersCarousel_BlockType {
+            id
+            largeText
+            mediumText
+            smallDescriptor
+            image {
+                url
+            }
+            imageAltText
+        }
+    }
+}

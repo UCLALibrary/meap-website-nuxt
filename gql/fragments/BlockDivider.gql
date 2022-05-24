@@ -1,0 +1,4 @@
+fragment BlockDivider {
+    id
+    divider
+}
