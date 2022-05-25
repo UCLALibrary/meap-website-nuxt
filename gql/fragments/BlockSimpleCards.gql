@@ -1,0 +1,17 @@
+fragment BlockSimpleCards on ElementInterface {
+    id
+    simpleCards {
+        ... on simpleCards_simpleCard_BlockType {
+            id
+            title: titleSimpleCard
+            contentLink {
+                id
+                url
+                title
+                text: summary
+            }
+            summary
+            externalLink
+        }
+    }
+}

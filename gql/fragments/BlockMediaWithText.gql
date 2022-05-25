@@ -1,0 +1,20 @@
+fragment BlockMediaWithText on ElementInterface {
+    id
+    mediaWithText {
+        ... on mediaWithText_mediaWithText_BlockType {
+            id
+            sectionHeader
+            shortDescription
+            buttonText
+            mediaType
+            mediaWithTextLink
+            downloadAssetLink {
+                id
+                url
+            }
+            image {
+                ...Image
+            }
+        }
+    }
+}

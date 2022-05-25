@@ -1,15 +1,10 @@
-fragment BlockCtaBlockTwoUp {
-    ctaBlock2Up {
-        id
-        ... on ctaBlock2Up_ctaBlock2Up_BlockType {
-            id
-            text: shortDescription
-            name: urlButtonText
-            to: urlButtonUrl
-            title: titleCTA2Up
-            svgName: icon
-            backgroundColor
-            isSizeSmall
-        }
-    }
+fragment BlockCtaBlockTwoUp on ElementInterface {
+    id
+    text: shortDescription
+    name: urlButtonText
+    to: urlButtonUrl
+    title: titleCTA2Up
+    svgName: icon
+    backgroundColor
+    isSizeSmall
 }

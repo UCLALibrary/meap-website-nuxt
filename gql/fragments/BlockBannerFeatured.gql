@@ -1,31 +1,33 @@
-fragment BlockBannerFeatured on 
+fragment BlockBannerFeatured on ElementInterface {
+    id
     bannerFeatured {
-    ... on bannerFeatured_bannerFeatured_BlockType {
-        id
-        contentLink {
-            url
-            to: uri
-            title
-            prompt: buttonText
-            date {
-                startDate
-                endDate
-            }
-            associatedLocations {
-                id
-                title
+        ... on bannerFeatured_bannerFeatured_BlockType {
+            id
+            contentLink {
+                url
                 to: uri
-            }
-            heroImage {
-                ... on heroImage_heroImage_BlockType {
+                title
+                prompt: buttonText
+                date {
+                    startDate
+                    endDate
+                }
+                associatedLocations {
                     id
-                    image {
-                        ...Image
+                    title
+                    to: uri
+                }
+                heroImage {
+                    ... on heroImage_heroImage_BlockType {
+                        id
+                        image {
+                            ...Image
+                        }
+                        altText
                     }
-                    altText
                 }
             }
+            alignment
         }
-        alignment
     }
 }

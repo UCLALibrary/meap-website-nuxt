@@ -1,0 +1,25 @@
+#import "~/gql/fragments/Image"
+#import "~/gql/fragments/BlockDivider"
+#import "~/gql/fragments/BlockMediaGallery"
+#import "~/gql/fragments/BlockMediaWithText"
+#import "~/gql/fragments/BlockPullQuote"
+#import "~/gql/fragments/BlockRichText"
+#import "~/gql/fragments/BlockSimpleCards"
+#import "~/gql/fragments/BlockCta"
+#import "~/gql/fragments/BlockCtaBlockTwoUp"
+
+fragment DefaultFpb on ElementInterface {
+    blocks: defaultFpb {
+        id
+        typeHandle
+
+        ...BlockDivider
+        ...BlockMediaGallery
+        ...BlockMediaWithText
+        ...BlockPullQuote
+        ...BlockRichText
+        ...BlockSimpleCards
+        ...BlockCta
+        ...BlockCtaBlockTwoUp
+    }
+}

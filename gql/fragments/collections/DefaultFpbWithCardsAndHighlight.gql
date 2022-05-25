@@ -1,0 +1,25 @@
+#import "~/gql/fragments/Image"
+#import "~/gql/fragments/BlockCardWithImage"
+#import "~/gql/fragments/BlockDivider"
+#import "~/gql/fragments/BlockHighlight"
+#import "~/gql/fragments/BlockMediaGallery"
+#import "~/gql/fragments/BlockMediaWithText"
+#import "~/gql/fragments/BlockPullQuote"
+#import "~/gql/fragments/BlockRichText"
+#import "~/gql/fragments/BlockSimpleCards"
+
+fragment DefaultFpbWithCardsAndHighlight on ElementInterface {
+    blocks: defaultFpbWithCardsAndHighlight {
+        id
+        typeHandle
+
+        ...BlockCardWithImage
+        ...BlockDivider
+        ...BlockHighlight
+        ...BlockMediaGallery
+        ...BlockMediaWithText
+        ...BlockPullQuote
+        ...BlockRichText
+        ...BlockSimpleCards
+    }
+}

@@ -1,4 +1,4 @@
-fragment BlockCardWithImage {
+fragment BlockCardWithImage on ElementInterface {
     id
     cardWithImage {
         id

@@ -1,32 +1,28 @@
-fragment BlockHighlight {
-    highlight {
-        ... on highlight_highlight_BlockType {
+fragment BlockHighlight on ElementInterface {
+    id
+    contentLink {
+        id
+        url
+        to: uri
+        title
+        prompt: buttonText
+        text: shortDescription
+        date {
+            startDate
+            endDate
+        }
+        associatedLocations {
             id
-            contentLink {
+            title
+            to: uri
+        }
+        heroImage {
+            ... on heroImage_heroImage_BlockType {
                 id
-                url
-                to: uri
-                title
-                prompt: buttonText
-                text: shortDescription
-                date {
-                    startDate
-                    endDate
+                image {
+                    ...Image
                 }
-                associatedLocations {
-                    id
-                    title
-                    to: uri
-                }
-                heroImage {
-                    ... on heroImage_heroImage_BlockType {
-                        id
-                        image {
-                            ...Image
-                        }
-                        altText
-                    }
-                }
+                altText
             }
         }
     }

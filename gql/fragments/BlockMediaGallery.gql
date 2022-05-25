@@ -1,15 +1,10 @@
-fragment BlockMediaGallery 
-    mediaGallery {
+fragment BlockMediaGallery on ElementInterface {
     id
-    ... on mediaGallery_image_BlockType {
+    image {
         id
-        image {
-            id
-            url
-        }
-        captionTitle
-        captionText
-        altText
+        url
     }
+    captionTitle
+    captionText
+    altText
 }
-

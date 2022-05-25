@@ -1,0 +1,31 @@
+#import "~/gql/fragments/Image"
+#import "~/gql/fragments/BlockCardWithImage"
+#import "~/gql/fragments/BlockDivider"
+#import "~/gql/fragments/BlockHighlight"
+#import "~/gql/fragments/BlockImpactNumbersCarousel"
+#import "~/gql/fragments/BlockMediaGallery"
+#import "~/gql/fragments/BlockMediaWithText"
+#import "~/gql/fragments/BlockPullQuote"
+#import "~/gql/fragments/BlockRichText"
+#import "~/gql/fragments/BlockSimpleCards"
+#import "~/gql/fragments/BlockCta"
+#import "~/gql/fragments/BlockCtaBlockTwoUp"
+
+fragment AllFpbWithNoBanner on ElementInterface {
+    blocks: AllFpbWithNoBanner {
+        id
+        typeHandle
+
+        ...BlockCardWithImage
+        ...BlockDivider
+        ...BlockHighlight
+        ...BlockImpactNumbersCarousel
+        ...BlockMediaGallery
+        ...BlockMediaWithText
+        ...BlockPullQuote
+        ...BlockRichText
+        ...BlockSimpleCards
+        ...BlockCta
+        ...BlockCtaBlockTwoUp
+    }
+}
