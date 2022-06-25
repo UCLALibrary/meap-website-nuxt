@@ -2,15 +2,23 @@ fragment BlockImpactNumbersCarouselFragment on ElementInterface {
     id
     impactNumbersCarousel {
         id
+        uri
+        title
         ... on impactNumbersCarousel_impactNumbersCarousel_BlockType {
             id
+            uri
+            title
             largeText
             mediumText
             smallDescriptor
+            impactNumber
+            impactText
+            typeHandle
+            summary
+            dateCreated
             image {
-                url
+                ...Image
             }
-            imageAltText
         }
     }
 }
