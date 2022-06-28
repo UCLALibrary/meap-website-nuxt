@@ -7,6 +7,8 @@ author
 <template lang="html">
     <section class="page-news-detail">
         <nav-breadcrumb :title="page.title" />
+        <h2>{{ page.blocks }}</h2>
+        <h1>TOPICS: {{ parsedAssociatedTopics }}</h1>
 
         <banner-header
             v-if="page.heroImage && page.heroImage.length == 1"
@@ -100,10 +102,14 @@ export default {
                 }
             })
         },
+        parsedAssociatedTopics() {
+            return this.page.blocks.map((obj) => {
+                return {
+                    ...obj,
 
-        parsedForm() {
-
-        }
+                }
+            })
+        },
 
         // parsedLocations() {
         //     let places= this.page.locations.map((place) => {

@@ -1,8 +1,65 @@
 fragment BlockAssociatedTopicCardsFragment on ElementInterface {
     id
-    text: summary
-    title
-    slug
-    uri
-    to: externalResourceUrl
+    title: titleGeneral
+    summary: plainText
+    associatedTopicsFlexiblePageBlock {
+        ... on associatedTopicsFlexiblePageBlock_associatedTopics_BlockType {
+            topics {
+                title
+                ... on externalResource_externalResource_Entry {
+                    title
+                    summary
+                    to: uri
+                }
+                ... on generalContentPage_generalContentPage_Entry {
+                    title
+                    summary
+                    to: uri
+                }
+                ... on helpTopic_helpTopic_Entry {
+                    title
+                    summary
+                    to: uri
+                }
+                ... on serviceOrResource_serviceOrResource_Entry {
+                    title
+                    summary
+                    to: uri
+                }
+                ... on workshopOrEventSeries_workshopOrEventSeries_Entry {
+                    title
+                    summary
+                    to: uri
+                }
+            }
+        }
+    }
 }
+
+# {
+#     "id": "19778",
+#     "title": "ASSOCIATED TOPICS: Turtle Soup",
+#     "summary": "Differing versions of the soup exist in some cultures and are viewed as a delicacy.",
+#     "associatedTopicsFlexiblePageBlock": [
+#     {
+#         "typeHandle": "associatedTopics",
+#         "topics": [
+#         {
+#             "title": "Animals & Food  Simple Cards",
+#             "summary": "Some animals eat plants and plant products like grass, leaves and fodder. Goat, cow, horse and sheep eat only plants.",
+#             "uri": "help/help-topic-1"
+#         },
+#         {
+#             "title": "Scissors",
+#             "summary": "<p>hand-operated shearing tools</p>",
+#             "uri": "help/services-resources/scissors"
+#         },
+#         {
+#             "title": "Privacy & Terms of Use",
+#             "summary": "<p>A summary of privacy policy.</p>",
+#             "uri": "privacy-terms-of-use"
+#         }
+#         ]
+#     }
+#     ]
+# },
