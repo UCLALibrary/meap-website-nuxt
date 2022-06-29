@@ -70,12 +70,6 @@
         </banner-featured>
 
         <divider-general class="divider" />
-
-        <section-post-small
-            class="section"
-            :items="page.posts"
-            to="/news/"
-        />
     </div>
 </template>
 
