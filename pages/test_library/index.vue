@@ -53,6 +53,24 @@
         />
         <hr>
 
+        <h2>BlockEvent Component</h2>
+        <block-event
+            :category="mockBlockEvent.bricks[0].category"
+            :title="mockBlockEvent.bricks[0].title"
+            :prompt="mockBlockEvent.bricks[0].prompt"
+            :dates="mockBlockEvent.bricks[0].dates"
+            :to="mockBlockEvent.bricks[0].to"
+        />
+        <br><br>
+        <block-event
+            :category="mockBlockEvent.bricks[1].category"
+            :title="mockBlockEvent.bricks[1].title"
+            :prompt="mockBlockEvent.bricks[1].prompt"
+            :dates="mockBlockEvent.bricks[1].dates"
+            :to="mockBlockEvent.bricks[1].to"
+        />
+        <hr>
+
         <h2>BlockHighlight Component</h2>
         <block-highlight
             :image="mockBlockHighlight.image"
@@ -221,6 +239,13 @@
         />
         <hr>
 
+        <h2>SectionDualMasonry Component</h2>
+        <section-dual-masonry
+            :items="mockSectionDualMasonry.bricks"
+            to="/visit/foo"
+        />
+        <hr>
+
         <h2>SmartLink Component</h2>
         <smart-link to="/">
             This will render as a vue-router link
@@ -235,6 +260,38 @@ export default {
     name: "Home",
     data() {
         return {
+            mockBlockEvent: {
+                bricks: [
+                    {
+                        image: {
+                            src: "https://via.placeholder.com/1920x1920",
+                            srcset: "https://via.placeholder.com/960x960 960w, https://via.placeholder.com/1280x1280 1280w, https://via.placeholder.com/1920x1920 1920w",
+                            sizes: "100vw",
+                            alt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                            title: "Lorem ipsum",
+                        },
+                        category: "Fermentu",
+                        title: "Maecenas Leo Mauris",
+                        prompt: "Velit Exceptur",
+                        dates: "Datum 12 - Datum 23, 2021",
+                        to: "/llamacorn/uri/1",
+                    },
+                    {
+                        image: {
+                            src: "https://via.placeholder.com/1920x1920",
+                            srcset: "https://via.placeholder.com/960x960 960w, https://via.placeholder.com/1280x1280 1280w, https://via.placeholder.com/1920x1920 1920w",
+                            sizes: "100vw",
+                            alt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                            title: "Lorem ipsum",
+                        },
+                        category: "Fermentu",
+                        title: "Maecenas Leo Mauris Praesent finibus fermentum ligula, nec tristique",
+                        prompt: "Velit Exceptur",
+                        dates: "Datum 1 - Datum 18, 2021",
+                        to: "/visit/uri/2",
+                    },
+                ],
+            },
             mockBlockHighlight: {
                 image: API.image,
                 to: "/visit/foo/bar/",
@@ -421,6 +478,38 @@ export default {
                         title: "Taciti sociosqu",
                         text: "Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa.",
                         isHorizontal: false,
+                    },
+                ],
+            },
+            mockSectionDualMasonry: {
+                bricks: [
+                    {
+                        image: {
+                            src: "https://via.placeholder.com/1920x1920",
+                            srcset: "https://via.placeholder.com/960x960 960w, https://via.placeholder.com/1280x1280 1280w, https://via.placeholder.com/1920x1920 1920w",
+                            sizes: "100vw",
+                            alt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                            title: "Lorem ipsum",
+                        },
+                        category: "Fermentu",
+                        title: "Maecenas Leo Mauris",
+                        prompt: "Velit Exceptur",
+                        dates: "Datum 12 - Datum 23, 2021",
+                        to: "/llamacorn/uri/1",
+                    },
+                    {
+                        image: {
+                            src: "https://via.placeholder.com/1920x1920",
+                            srcset: "https://via.placeholder.com/960x960 960w, https://via.placeholder.com/1280x1280 1280w, https://via.placeholder.com/1920x1920 1920w",
+                            sizes: "100vw",
+                            alt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                            title: "Lorem ipsum",
+                        },
+                        category: "Fermentu",
+                        title: "Maecenas Leo Mauris Praesent finibus fermentum ligula, nec tristique",
+                        prompt: "Velit Exceptur",
+                        dates: "Datum 1 - Datum 18, 2021",
+                        to: "/visit/uri/2",
                     },
                 ],
             },
