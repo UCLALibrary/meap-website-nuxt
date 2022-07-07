@@ -4,7 +4,7 @@
         class="app"
     >
         <h1>
-            This page displays the components in the
+            This page SERVES the components from the
             <a
                 href="https://github.com/UCLALibrary/ucla-library-website-components"
             >
@@ -911,6 +911,7 @@ export default {
     h1 {
         margin: 10px 0;
         font-weight: bold;
+        color: gold;
     }
 
     h2 {
