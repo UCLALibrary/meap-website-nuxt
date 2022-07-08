@@ -272,6 +272,10 @@
         <section-spaces-list :items="items" />
         <hr>
 
+        <h2>SectionStaffList</h2>
+        <section-staff-list :items="mockSectionStaffList.items" />
+        <hr>
+
         <h2>SmartLink Component</h2>
         <smart-link to="/">
             This will render as a vue-router link
@@ -566,6 +570,65 @@ export default {
                         location: "Pennyboy Cottage",
                         text: "Gosh beefeater numpty scouser rambunctious a bottle of plonk know your onions, cornish pasty spend a penny cheerio down the local mush. What a mug one off blimey a comely wench nose rag ponce gobsmacked pennyboy cottage pie, ey up fake tan spam fritters marvelous chippy hedgehog chav.",
                         buttonUrl: "http://google.com",
+                    },
+                ],
+            },
+            mockSectionStaffList: {
+                items: [
+                    {
+                        to: "/staff/foo",
+                        jobTitle: "Ullamco",
+                        staffName: "Fames ac turpis",
+                        department: "Inceptos Himenaeos",
+                        email: "loreum@ipsum.foo",
+                        locations: [
+                            {
+                                title: "cupidatat non proident",
+                                to: "/location/bar",
+                            },
+                            {
+                                title: "tristique",
+                                to: "/location/baz",
+                            },
+                        ],
+                        phone: "(222) 444-5555",
+                    },
+                    {
+                        to: "/staff/foo",
+                        jobTitle: "Ullamco",
+                        staffName: "Fames ac turpis",
+                        department: "Inceptos Himenaeos",
+                        email: "loreum@ipsum.foo",
+                        locations: [
+                            {
+                                title: "cupidatat non proident",
+                                to: "/location/bar",
+                            },
+                            {
+                                title: "tristique",
+                                to: "/location/baz",
+                            },
+                        ],
+                        phone: "(222) 444-5555",
+                    },
+                    {
+                        to: "/staff/foo",
+                        image: API.image,
+                        jobTitle: "Ullamco",
+                        staffName: "Fames ac turpis",
+                        department: "Inceptos Himenaeos",
+                        email: "loreum@ipsum.foo",
+                        locations: [
+                            {
+                                title: "cupidatat non proident",
+                                to: "/location/bar",
+                            },
+                            {
+                                title: "tristique",
+                                to: "/location/baz",
+                            },
+                        ],
+                        phone: "(222) 444-5555",
                     },
                 ],
             },
