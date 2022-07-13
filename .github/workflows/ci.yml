@@ -1,4 +1,3 @@
-
 name: Run CI Suite
 
 on:
@@ -47,10 +46,7 @@ jobs:
         key: nuxt-site-${{ github.sha }}
     - run: npm run generate
       env:
-        CRAFT_ENDPOINT: ${{ secrets.CRAFT_ENDPOINT_TEST }}
-        LIBCAL_ENDPOINT: ${{ secrets.LIBCAL_ENDPOINT }}
-        LIBCAL_CLIENT_SECRET: ${{ secrets.LIBCAL_CLIENT_SECRET }}
-        LIBCAL_CLIENT_ID: ${{ secrets.LIBCAL_CLIENT_ID }}
+        CRAFT_TEST_ENDPOINT: ${{ secrets.CRAFT_TEST_ENDPOINT }}
         S3_BUCKET: "https://static.library.ucla.edu/"
         LIVE_PREVIEW: "dev"
     - uses: cypress-io/github-action@2113e5bc19c45979ba123df6e07256d2aaba9a33
@@ -59,10 +55,7 @@ jobs:
         command-prefix: 'npx'
         wait-on: http://localhost:3000
       env:
-        CRAFT_ENDPOINT: ${{ secrets.CRAFT_ENDPOINT_TEST }}
-        LIBCAL_ENDPOINT: ${{ secrets.LIBCAL_ENDPOINT }}
-        LIBCAL_CLIENT_SECRET: ${{ secrets.LIBCAL_CLIENT_SECRET }}
-        LIBCAL_CLIENT_ID: ${{ secrets.LIBCAL_CLIENT_ID }}
+        CRAFT_TEST_ENDPOINT: ${{ secrets.CRAFT_TEST_ENDPOINT }}
         S3_BUCKET: "https://static.library.ucla.edu/"
         LIVE_PREVIEW: "dev"
     - name: Deploy to Netlify (test)
