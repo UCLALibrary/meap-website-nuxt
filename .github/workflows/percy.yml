@@ -23,7 +23,7 @@ jobs:
     - run: npm run generate
       if: steps.cache-nuxt.outputs.cache-hit != 'true'
       env:
-        CRAFT_TEST_ENDPOINT: ${{ secrets.CRAFT_TEST_ENDPOINT }}
+        CRAFT_ENDPOINT: ${{ secrets.CRAFT_ENDPOINT_TEST }}
         LIBCAL_ENDPOINT: ${{ secrets.LIBCAL_ENDPOINT }}
         LIBCAL_CLIENT_SECRET: ${{ secrets.LIBCAL_CLIENT_SECRET }}
         LIBCAL_CLIENT_ID: ${{ secrets.LIBCAL_CLIENT_ID }}
