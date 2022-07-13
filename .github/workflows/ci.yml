@@ -32,9 +32,10 @@ jobs:
             2. Click the 'Run workflow' button in the blue bar. 
             3. Select the correct branch for this PR and click 'Run workflow' again to confirm.
 
-  nuxt:
-    name: Nuxt build / Cypress tests / Netlify deploy
+  deploy:
     runs-on: ubuntu-latest
+    outputs:
+      deploy-url: ${{ steps.deploy.outputs.deploy-url || steps.deploy-prod.outputs.deploy-url }}
     timeout-minutes: 20
     steps:
     - uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f
