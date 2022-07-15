@@ -59,7 +59,7 @@
 
 <script>
 // GQL
-import SERVICE_OR_RESOURCE_DETAIL from "~/gql/queries/ServiceOrResourceDetail"
+import RESOURCE_DETAIL from "~/gql/queries/ResourceDetail"
 
 // Helpers
 import _get from "lodash/get"
@@ -70,12 +70,9 @@ export default {
         console.log(
             "fetching graphql data for Service or Resource detail from Craft for live preview"
         )
-        const data = await $graphql.default.request(
-            SERVICE_OR_RESOURCE_DETAIL,
-            {
-                slug: params.slug,
-            }
-        )
+        const data = await $graphql.default.request(RESOURCE_DETAIL, {
+            slug: params.slug,
+        })
         console.log("Data fetched: " + JSON.stringify(data))
         return {
             page: _get(data, "entry", {}),
@@ -92,7 +89,9 @@ export default {
             return this.page.associatedTopics.map((obj) => {
                 return {
                     ...obj,
-                    to: obj.externalResourceUrl ? obj.externalResourceUrl : obj.uri,
+                    to: obj.externalResourceUrl
+                        ? obj.externalResourceUrl
+                        : obj.uri,
                 }
             })
         },

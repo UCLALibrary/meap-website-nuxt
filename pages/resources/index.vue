@@ -28,12 +28,12 @@
 
 <script>
 // gql
-import SERVICE_AND_RESOURCE_LIST from "~/gql/queries/ServiceAndResourceList"
+import RESOURCE_LIST from "~/gql/queries/ResourceList"
 import HELP_TOPIC_LIST from "~/gql/queries/HelpTopicList"
 
 export default {
     async asyncData({ $graphql, params }) {
-        const data = await $graphql.default.request(SERVICE_AND_RESOURCE_LIST, {
+        const data = await $graphql.default.request(RESOURCE_LIST, {
             uri: params.path,
         })
         const helpTopicData = await $graphql.default.request(HELP_TOPIC_LIST, {

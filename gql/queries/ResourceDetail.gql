@@ -1,4 +1,4 @@
-#import "~/gql/fragments/collections/DefaultFpbWithNoCta"
+#import "~/gql/fragments/collections/MEAPDefaultFpbWithNoCta"
 
 query ResourceDetail($slug: [String!]) {
     entry(section: "meapResource", slug: $slug) {
@@ -21,15 +21,9 @@ query ResourceDetail($slug: [String!]) {
                     altText
                 }
             }
-            type: serviceOrResourceType
             title
             text: summary
-            locations: associatedLocations {
-                id
-                to: slug
-                title
-            }
-            associatedTopics {
+            associatedTopics: meapAssociatedContent {
                 id
                 text: summary
                 title
@@ -38,6 +32,6 @@ query ResourceDetail($slug: [String!]) {
                 externalResourceUrl
             }
         }
-        ...DefaultFpbWithNoCta
+        ...MEAPDefaultFpbWithNoCta
     }
 }
