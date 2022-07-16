@@ -41,7 +41,7 @@ export const mutations = {
 
 // Define actions
 export const actions = {
-    async nuxtServerInit({ commit }, { $config }) {
+    async nuxtServerInit({ commit }) {
             
         try {
             // console.log("Get Global data from Craft")
