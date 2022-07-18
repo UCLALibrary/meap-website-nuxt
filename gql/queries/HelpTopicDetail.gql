@@ -1,4 +1,4 @@
-#import "~/gql/fragments/collections/DefaultFpb"
+#import "~/gql/fragments/collections/MEAPDefaultFpb"
 
 query HelpTopicDetail($slug: [String!]) {
     entry(section: "helpTopic", slug: $slug) {
@@ -16,6 +16,6 @@ query HelpTopicDetail($slug: [String!]) {
                 text: summary
             }
         }
-        ...DefaultFpb
+        ...MEAPDefaultFpb
     }
 }
