@@ -109,11 +109,13 @@ export default {
 .page-service-detail {
     .banner-text {
         --color-theme: var(--color-help-green-03);
+        margin-top: 0; // TODO do this change in component later
     }
     .banner-header {
         margin-bottom: var(--space-xl);
         padding: 0;
         max-width: $container-xl-full-width + px;
+        margin-top: 0; // TODO do this change in component later
         margin: var(--unit-gutter) auto;
     }
     .banner-text + .divider-way-finder {
