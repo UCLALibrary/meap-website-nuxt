@@ -49,7 +49,7 @@ export default {
             return this.page.entries.map((obj) => {
                 return {
                     ...obj,
-                    to: `/help/services-resources/${obj.to}`,
+                    to: `/resources/${obj.to}`,
                 }
             })
         },
@@ -57,7 +57,7 @@ export default {
             return this.helpTopic.entries.map((obj) => {
                 return {
                     ...obj,
-                    to: `/help/${obj.to}`,
+                    to: `/applicants/${obj.to}`,
                 }
             })
         },
