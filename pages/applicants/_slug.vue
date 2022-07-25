@@ -79,7 +79,6 @@ export default {
     .content {
         margin: 0 auto;
         max-width: $container-l-main + px;
-        padding: 0 var(--unit-gutter);
     }
 
     .help-topic-section {
@@ -91,6 +90,9 @@ export default {
     }
 
     @media #{$medium} {
+        .content {
+            padding: 0 var(--unit-gutter);
+        }
         .help-topic-block {
             padding: 0 var(--unit-gutter);
         }
