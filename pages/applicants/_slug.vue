@@ -4,43 +4,42 @@
             :title="page.title"
             class="breadcrumb"
         />
-        <MastheadSecondary
+        <masthead-secondary
             :title="page.title"
             :text="page.summary"
         />
-        <DividerWayFinder
+        <divider-way-finder
             v-if="page.richText"
             color="help"
         />
-        <RichText
+        <rich-text
             v-if="page.richText"
             class="content"
             :rich-text-content="page.richText"
         />
 
-        <DividerWayFinder color="help" />
+        <divider-way-finder color="help" />
         <div
             v-for="(block, index) in page.helpTopicBlocks"
             :key="`HelpTopicBlocksKey${index}`"
             class="help-topic-section"
         >
-            <SimpleCards
+            <simple-cards
                 class="help-topic-block"
                 :section-title="block.sectionTitle"
                 :section-summary="block.sectionSummary"
                 :items="block.associatedEntries"
             />
-            <DividerWayFinder
+            <divider-way-finder
                 color="help"
                 class="help-topic-divider"
             />
         </div>
-
         <flexible-blocks
             class="content"
             :blocks="page.blocks"
         />
-        <DividerWayFinder
+        <divider-way-finder
             v-if="page.blocks.length"
             class="help-topic-divider"
             color="help"
