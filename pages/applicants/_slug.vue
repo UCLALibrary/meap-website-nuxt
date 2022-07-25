@@ -8,6 +8,10 @@
             :title="page.title"
             :text="page.summary"
         />
+        <DividerWayFinder
+            v-if="page.richText"
+            color="help"
+        />
         <RichText
             v-if="page.richText"
             class="content"
@@ -75,6 +79,7 @@ export default {
     .content {
         margin: 0 auto;
         max-width: $container-l-main + px;
+        padding: 0 var(--unit-gutter);
     }
 
     .help-topic-section {
