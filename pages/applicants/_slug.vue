@@ -14,7 +14,7 @@
             :rich-text-content="page.richText"
         />
 
-        <DividerWayFinder />
+        <DividerWayFinder color="help" />
         <div
             v-for="(block, index) in page.helpTopicBlocks"
             :key="`HelpTopicBlocksKey${index}`"
@@ -26,7 +26,10 @@
                 :section-summary="block.sectionSummary"
                 :items="block.associatedEntries"
             />
-            <DividerWayFinder class="help-topic-divider" />
+            <DividerWayFinder
+                color="help"
+                class="help-topic-divider"
+            />
         </div>
 
         <flexible-blocks
@@ -36,6 +39,7 @@
         <DividerWayFinder
             v-if="page.blocks.length"
             class="help-topic-divider"
+            color="help"
         />
     </main>
 </template>
