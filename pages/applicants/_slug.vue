@@ -26,7 +26,6 @@
                 :section-summary="block.sectionSummary"
                 :items="block.associatedEntries"
             />
-            <!-- TO Do match width to general divider -->
             <DividerWayFinder class="help-topic-divider" />
         </div>
 
@@ -35,7 +34,7 @@
             :blocks="page.blocks"
         />
         <DividerWayFinder
-            v-if="page.blocks"
+            v-if="page.blocks.length"
             class="help-topic-divider"
         />
     </main>
