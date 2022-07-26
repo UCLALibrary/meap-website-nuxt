@@ -36,7 +36,7 @@
             />
         </div>
         <flexible-blocks
-            class="content"
+            class="flexible-content"
             :blocks="page.blocks"
         />
         <divider-way-finder
@@ -75,7 +75,8 @@ export default {
 
 <style lang="scss" scoped>
 .page-help-topic {
-    .content {
+    .content,
+    .flexible-content {
         margin: 0 auto;
         max-width: $container-l-main + px;
     }
