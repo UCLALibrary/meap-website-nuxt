@@ -1,5 +1,5 @@
 <template lang="html">
-    <section class="page-service-detail">
+    <section class="page-project-detail">
         <nav-breadcrumb :title="page.title" />
 
         <banner-text
@@ -99,7 +99,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.page-service-detail {
+.page-project-detail {
     .banner-text {
         --color-theme: var(--color-help-green-03);
     }

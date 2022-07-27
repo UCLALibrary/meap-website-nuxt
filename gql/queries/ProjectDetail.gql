@@ -14,15 +14,36 @@ query HelpTopicDetail($slug: [String!]) {
                 altText
             }
         }
-        meapProjectCallToAction
+        meapProjectCallToAction {
+            ... on meapProjectCallToAction_externalUrl_BlockType {
+                id
+                externalUrl
+            }
+            ... on meapProjectCallToAction_uploadAsset_BlockType {
+                id
+                uploadAsset {
+                    id
+                }
+            }
+        }
         titleGeneral
         projectDescription
         citation
         projectContributorsSubheading
         projectContributors
         projectType
-        region
-        meapProjectTopic
+        region {
+            ... on meapProjectRegion_Category {
+                id
+                title
+            }
+        }
+        meapProjectTopic {
+            ... on meapProjectTopics_Category {
+                id
+                title
+            }
+        }
         institution
         languageOfOrigin
         format
