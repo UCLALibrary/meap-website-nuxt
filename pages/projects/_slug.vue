@@ -7,7 +7,8 @@
             class="banner-text"
             :category="page.type"
             :title="page.title"
-            :text="page.text"
+            :text="page.summary"
+            :byline="page.institution"
             :button-text="parsedButtonText"
             :to="parsedButtonTo"
         />
@@ -17,18 +18,32 @@
             :image="page.heroImage[0].image[0]"
             :to="parsedButtonTo"
             :prompt="parsedButtonText"
+            :byline="page.institution"
             :title="page.title"
             :category="page.type"
-            :text="page.text"
+            :text="page.summary"
         />
 
         <divider-way-finder
             color="help"
             class="divider-way-finder"
         />
+        <!-- TO DO not actually rich text -->
         <rich-text :rich-text-content="page.titleGeneral" />
         <rich-text :rich-text-content="page.projectDescription" />
+        <rich-text :rich-text-content="page.citation" />
+
+        <divider-general class="divider-way-finder" />
+
+        <rich-text :rich-text-content="page.projectContributorsSubheading" />
+        <rich-text :rich-text-content="page.projectContributors" />
+        <divider-way-finder
+            v-if="page.blocks"
+            color="help"
+            class="divider-way-finder"
+        />
         <flexible-blocks
+            v-if="page.blocks"
             class="content"
             :blocks="page.blocks"
         />
