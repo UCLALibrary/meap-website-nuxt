@@ -28,22 +28,35 @@
             color="help"
             class="divider-way-finder"
         />
-        <!-- TO DO not actually rich text -->
-        <rich-text :rich-text-content="page.titleGeneral" />
+        <div
+            class="about-the-project"
+            v-html="`About the Project`"
+        />
+        <div
+            class="title-general"
+            v-html="page.titleGeneral"
+        />
+        <div
+            class="project-type"
+            v-html="page.projectType"
+        />
         <rich-text :rich-text-content="page.projectDescription" />
-        <rich-text :rich-text-content="page.citation" />
+        <rich-text
+            :rich-text-content="page.citation"
+            class="citation"
+        />
 
         <divider-general class="divider-way-finder" />
 
         <rich-text :rich-text-content="page.projectContributorsSubheading" />
         <rich-text :rich-text-content="page.projectContributors" />
         <divider-way-finder
-            v-if="page.blocks"
+            v-if="page.blocks.length > 0"
             color="help"
             class="divider-way-finder"
         />
         <flexible-blocks
-            v-if="page.blocks"
+            v-if="page.blocks.length"
             class="content"
             :blocks="page.blocks"
         />
@@ -89,10 +102,10 @@ export default {
     },
     computed: {
         parsedButtonText() {
-            return _get(this.page, "button[0].buttonText", "")
+            return _get(this.page, "meapProjectCallToAction[0].buttonText", "")
         },
         parsedButtonTo() {
-            return _get(this.page, "button[0].buttonUrl", "")
+            return _get(this.page, "meapProjectCallToAction[0].externalUrl", "")
         },
     },
 }
@@ -118,6 +131,25 @@ export default {
     }
     .content {
         margin: 0 auto;
+    }
+    .about-the-project {
+        @include step-3;
+        color: var(--color-primary-blue-03);
+    }
+    .title-general {
+        @include step-1;
+        color: var(--color-secondary-grey-05);
+    }
+    .project-type {
+        @include step-0;
+        font-weight: $font-weight-medium;
+        color: var(--color-secpndary-grey-05);
+    }
+    .citation {
+        ::v-deep p {
+            @include step-1;
+            color: var(--color-secondary-grey-04);
+        }
     }
     .block-call-to-action {
         margin: var(--space-3xl) auto;
