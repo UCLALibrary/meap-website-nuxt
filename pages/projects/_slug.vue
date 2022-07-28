@@ -16,12 +16,12 @@
         <banner-header
             v-if="page.heroImage && page.heroImage.length == 1"
             :image="page.heroImage[0].image[0]"
+            :category="page.format"
+            :title="page.title"
+            :text="page.summary"
+            :byline="parsedByline"
             :to="parsedButtonTo"
             :prompt="parsedButtonText"
-            :byline="page.institution"
-            :title="page.title"
-            :category="page.format"
-            :text="page.summary"
         />
 
         <divider-way-finder class="divider-way-finder" />
@@ -110,6 +110,9 @@ export default {
         parsedButtonTo() {
             return _get(this.page, "meapProjectCallToAction[0].externalUrl", "")
         },
+        parsedByline() {
+            return [this.page.institution]
+        },
     },
 }
 </script>
@@ -155,7 +158,8 @@ export default {
     .project-type {
         @include step-0;
         font-weight: $font-weight-medium;
-        color: var(--color-secondary-grey-05);
+        // color: var(--color-secondary-grey-05);
+        color: var(--color-primary-blue-03);
         text-transform: capitalize;
         max-width: $container-l-main + px;
         margin: 0 auto var(--space-m);
