@@ -34,18 +34,25 @@
             v-html="page.titleGeneral"
         />
         <div
+            v-if="page.projectType"
             class="project-type"
             v-html="page.projectType"
         />
-        <rich-text :rich-text-content="page.projectDescription" />
         <rich-text
+            v-if="page.projectDescription"
+            :rich-text-content="page.projectDescription"
+            class="project-description"
+        />
+        <rich-text
+            v-if="page.citation"
             :rich-text-content="page.citation"
             class="citation"
         />
 
-        <divider-general class="divider-way-finder" />
+        <divider-general class="divider-general" />
 
         <div
+            v-if="page.projectContributorsSubheading"
             class="contributors-subheading"
             v-html="page.projectContributorsSubheading"
         />
@@ -125,27 +132,38 @@ export default {
         max-width: $container-l-main + px;
         margin: var(--space-3xl) auto;
     }
+    .divider-general {
+        max-width: $container-l-main + px;
+        margin: var(--space-l) auto;
+    }
     .content {
         margin: 0 auto;
     }
     .about-the-project {
         @include step-3;
         color: var(--color-primary-blue-03);
-        max-width: $container-xl-full-width + px;
+        max-width: $container-l-main + px;
+
+        margin: 0 auto var(--space-xl);
     }
     .title-general {
         @include step-1;
         color: var(--color-secondary-grey-05);
-        max-width: $container-xl-full-width + px;
+        max-width: $container-l-main + px;
+        margin: 0 auto 12px;
     }
     .project-type {
         @include step-0;
         font-weight: $font-weight-medium;
-        color: var(--color-secpndary-grey-05);
+        color: var(--color-secondary-grey-05);
         text-transform: capitalize;
-        max-width: $container-xl-full-width + px;
+        max-width: $container-l-main + px;
+        margin: 0 auto var(--space-m);
+    }
+    .project-description {
     }
     .citation {
+        margin-top: var(--space-m);
         ::v-deep p {
             @include step-1;
             color: var(--color-secondary-grey-04);
@@ -153,6 +171,8 @@ export default {
     }
     .contributors-subheading {
         @include step-1;
+        max-width: $container-l-main + px;
+        margin: 0 auto var(--space-m);
     }
     .block-call-to-action {
         margin: var(--space-3xl) auto;
