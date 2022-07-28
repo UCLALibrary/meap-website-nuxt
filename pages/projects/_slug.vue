@@ -48,7 +48,10 @@
 
         <divider-general class="divider-way-finder" />
 
-        <rich-text :rich-text-content="page.projectContributorsSubheading" />
+        <div
+            class="contributors-subheading"
+            v-html="page.projectContributorsSubheading"
+        />
         <rich-text :rich-text-content="page.projectContributors" />
         <divider-way-finder
             v-if="page.blocks.length > 0"
@@ -144,12 +147,16 @@ export default {
         @include step-0;
         font-weight: $font-weight-medium;
         color: var(--color-secpndary-grey-05);
+        text-transform: capitalize;
     }
     .citation {
         ::v-deep p {
             @include step-1;
             color: var(--color-secondary-grey-04);
         }
+    }
+    .contributors-subheading {
+        @include step-1;
     }
     .block-call-to-action {
         margin: var(--space-3xl) auto;
