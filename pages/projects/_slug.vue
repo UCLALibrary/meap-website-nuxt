@@ -5,7 +5,7 @@
         <banner-text
             v-if="!page.heroImage || page.heroImage.length == 0"
             class="banner-text"
-            :category="page.type"
+            :category="page.format"
             :title="page.title"
             :text="page.summary"
             :byline="page.institution"
@@ -20,14 +20,11 @@
             :prompt="parsedButtonText"
             :byline="page.institution"
             :title="page.title"
-            :category="page.type"
+            :category="page.format"
             :text="page.summary"
         />
 
-        <divider-way-finder
-            color="help"
-            class="divider-way-finder"
-        />
+        <divider-way-finder class="divider-way-finder" />
         <div
             class="about-the-project"
             v-html="`About the Project`"
@@ -53,11 +50,7 @@
             v-html="page.projectContributorsSubheading"
         />
         <rich-text :rich-text-content="page.projectContributors" />
-        <divider-way-finder
-            v-if="page.blocks.length > 0"
-            color="help"
-            class="divider-way-finder"
-        />
+        <divider-way-finder class="divider-way-finder" />
         <flexible-blocks
             v-if="page.blocks.length"
             class="content"
@@ -65,7 +58,7 @@
         />
 
         <divider-way-finder
-            color="help"
+            v-if="page.blocks.length"
             class="divider-way-finder"
         />
 
@@ -138,16 +131,19 @@ export default {
     .about-the-project {
         @include step-3;
         color: var(--color-primary-blue-03);
+        max-width: $container-xl-full-width + px;
     }
     .title-general {
         @include step-1;
         color: var(--color-secondary-grey-05);
+        max-width: $container-xl-full-width + px;
     }
     .project-type {
         @include step-0;
         font-weight: $font-weight-medium;
         color: var(--color-secpndary-grey-05);
         text-transform: capitalize;
+        max-width: $container-xl-full-width + px;
     }
     .citation {
         ::v-deep p {
