@@ -25,24 +25,29 @@
         />
 
         <divider-way-finder class="divider-way-finder" />
+
         <div
             class="about-the-project"
             v-html="`About the Project`"
         />
+
         <div
             class="title-general"
             v-html="page.titleGeneral"
         />
+
         <div
             v-if="page.projectType"
             class="project-type"
             v-html="page.projectType"
         />
+
         <rich-text
             v-if="page.projectDescription"
             :rich-text-content="page.projectDescription"
             class="project-description"
         />
+
         <rich-text
             v-if="page.citation"
             :rich-text-content="page.citation"
@@ -57,7 +62,9 @@
             v-html="page.projectContributorsSubheading"
         />
         <rich-text :rich-text-content="page.projectContributors" />
+
         <divider-way-finder class="divider-way-finder" />
+
         <flexible-blocks
             v-if="page.blocks.length"
             class="content"
