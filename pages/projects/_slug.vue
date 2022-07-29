@@ -8,7 +8,7 @@
             :category="page.format"
             :title="page.title"
             :text="page.summary"
-            :byline="page.institution"
+            :byline="parsedByline"
             :button-text="parsedButtonText"
             :to="parsedButtonTo"
         />
