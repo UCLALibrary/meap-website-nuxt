@@ -1,8 +1,12 @@
 <template lang="html">
     <div :class="classes">
-        <a href="#main" ref="skipLink" class="skip-link">Skip to main content</a>
+        <a
+            ref="skipLink"
+            href="#main"
+            class="skip-link"
+        >Skip to main content</a>
         
-        <header-smart />
+        <header-smart title="Modern Endangered Archives Program" />
         <main id="main">
             <nuxt class="page" />
         </main>
