@@ -27,7 +27,10 @@
             :prompt="parsedButtonText"
         />
 
-        <divider-way-finder class="divider-way-finder" />
+        <divider-way-finder
+            class="divider-way-finder"
+            color="help"
+        />
         <div class="content">
             <div
                 class="about-the-project"
@@ -57,17 +60,26 @@
                 class="citation"
             />
 
-            <divider-general class="divider-general" />
+            <divider-general
+                v-if="page.projectContributors && page.projectDescription"
+                class="divider-general"
+            />
 
             <div
                 v-if="page.projectContributorsSubheading"
                 class="contributors-subheading"
                 v-html="page.projectContributorsSubheading"
             />
-            <rich-text :rich-text-content="page.projectContributors" />
+            <rich-text
+                v-if="page.projectContributors"
+                :rich-text-content="page.projectContributors"
+            />
         </div>
 
-        <divider-way-finder class="divider-way-finder" />
+        <divider-way-finder
+            class="divider-way-finder"
+            color="help"
+        />
 
         <flexible-blocks
             v-if="page.blocks.length"
@@ -131,9 +143,6 @@ export default {
 
 <style lang="scss" scoped>
 .page-project-detail {
-    .nav-breadcrumb {
-        max-width: $container-xl-full-width + px;
-    }
     .banner-text {
         --color-theme: var(--color-help-green-03);
     }
@@ -183,7 +192,7 @@ export default {
     }
     .citation {
         margin-top: var(--space-m);
-        ::v-deep p {
+        :deep p {
             // @include step-1;
             color: var(--color-secondary-grey-04);
         }
@@ -192,6 +201,7 @@ export default {
         @include step-1;
         max-width: $container-l-main + px;
         margin: 0 auto var(--space-m);
+        color: var(--color-secondary-grey-05);
     }
     .block-call-to-action {
         margin: var(--space-3xl) auto;
