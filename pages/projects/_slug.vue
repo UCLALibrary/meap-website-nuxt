@@ -1,6 +1,9 @@
 <template lang="html">
     <section class="page-project-detail">
-        <nav-breadcrumb :title="page.title" />
+        <nav-breadcrumb
+            :title="page.title"
+            class="nav-breadcrumb"
+        />
 
         <banner-text
             v-if="!page.heroImage || page.heroImage.length == 0"
@@ -128,6 +131,9 @@ export default {
 
 <style lang="scss" scoped>
 .page-project-detail {
+    .nav-breadcrumb {
+        max-width: $container-xl-full-width + px;
+    }
     .banner-text {
         --color-theme: var(--color-help-green-03);
     }
@@ -178,7 +184,7 @@ export default {
     .citation {
         margin-top: var(--space-m);
         ::v-deep p {
-            @include step-1;
+            // @include step-1;
             color: var(--color-secondary-grey-04);
         }
     }
