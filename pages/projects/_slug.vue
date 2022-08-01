@@ -25,43 +25,44 @@
         />
 
         <divider-way-finder class="divider-way-finder" />
+        <div class="content">
+            <div
+                class="about-the-project"
+                v-html="`About the Project`"
+            />
 
-        <div
-            class="about-the-project"
-            v-html="`About the Project`"
-        />
+            <div
+                class="title-general"
+                v-html="page.titleGeneral"
+            />
 
-        <div
-            class="title-general"
-            v-html="page.titleGeneral"
-        />
+            <div
+                v-if="page.projectType"
+                class="project-type"
+                v-html="page.projectType"
+            />
 
-        <div
-            v-if="page.projectType"
-            class="project-type"
-            v-html="page.projectType"
-        />
+            <rich-text
+                v-if="page.projectDescription"
+                :rich-text-content="page.projectDescription"
+                class="project-description"
+            />
 
-        <rich-text
-            v-if="page.projectDescription"
-            :rich-text-content="page.projectDescription"
-            class="project-description"
-        />
+            <rich-text
+                v-if="page.citation"
+                :rich-text-content="page.citation"
+                class="citation"
+            />
 
-        <rich-text
-            v-if="page.citation"
-            :rich-text-content="page.citation"
-            class="citation"
-        />
+            <divider-general class="divider-general" />
 
-        <divider-general class="divider-general" />
-
-        <div
-            v-if="page.projectContributorsSubheading"
-            class="contributors-subheading"
-            v-html="page.projectContributorsSubheading"
-        />
-        <rich-text :rich-text-content="page.projectContributors" />
+            <div
+                v-if="page.projectContributorsSubheading"
+                class="contributors-subheading"
+                v-html="page.projectContributorsSubheading"
+            />
+            <rich-text :rich-text-content="page.projectContributors" />
+        </div>
 
         <divider-way-finder class="divider-way-finder" />
 
@@ -188,6 +189,12 @@ export default {
     }
     .block-call-to-action {
         margin: var(--space-3xl) auto;
+    }
+
+    @media #{$medium} {
+        .content {
+            padding: 0 var(--unit-gutter);
+        }
     }
 }
 </style>
