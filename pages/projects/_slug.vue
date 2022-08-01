@@ -143,6 +143,9 @@ export default {
 
 <style lang="scss" scoped>
 .page-project-detail {
+    .nav-breadcrumb {
+        max-width: $container-xl-full-width + px;
+    }
     .banner-text {
         --color-theme: var(--color-help-green-03);
     }
@@ -170,7 +173,6 @@ export default {
         @include step-3;
         color: var(--color-primary-blue-03);
         max-width: $container-l-main + px;
-
         margin: 0 auto var(--space-xl);
     }
     .title-general {
