@@ -1,8 +1,6 @@
 <template lang="html">
     <section class="page-news-detail">
-        <h2>{{ page }}</h2>
-        <h2>{{ page.title }}</h2>
-        <!-- <nav-breadcrumb :title="page.title" /> 
+        <nav-breadcrumb :title="page.title" /> 
 
         <banner-header
             v-if="page.heroImage && page.heroImage.length == 1"
@@ -25,7 +23,7 @@
                 class="content"
                 :blocks="page.blocks"
             />
-        </div>-->
+        </div>
     </section>
 </template>
 
@@ -61,7 +59,7 @@ export default {
         parsedBylines() {
             if (this.page.byline)
                 return [
-                    `${this.page.byline.firstName} ${this.page.byline.lastName}`,
+                    `${this.page.byline.title}`,
                 ]
             return []
         },

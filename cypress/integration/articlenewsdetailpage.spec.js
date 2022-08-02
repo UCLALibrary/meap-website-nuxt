@@ -7,7 +7,7 @@ describe("Article Detail page", () => {
         cy.get(".logo-ucla").should("be.visible")
         cy.get("h1.title").should(
             "contain",
-            "Help topic about kids play"
+            "Kids Play"
         )
         cy.percySnapshot({ widths: [768, 992, 1200] })*/
     })
