@@ -1,5 +1,6 @@
 <template lang="html">
     <section class="page-news-detail">
+        <h2>{{ page }}</h2>
         <nav-breadcrumb :title="page.title" /> 
 
         <banner-header
@@ -7,7 +8,7 @@
             :image="page.heroImage[0].image[0]"
             :title="page.title"
             category="Library News"
-            :byline="parsedBylines"
+            :byline="page.staffMember.title"
             :locations="page.locations"
             :date-created="page.dateCreated"
             :align-right="true"

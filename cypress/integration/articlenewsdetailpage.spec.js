@@ -9,6 +9,6 @@ describe("Article Detail page", () => {
             "contain",
             "Kids Play"
         )
-        cy.percySnapshot({ widths: [768, 992, 1200] })*/
+        cy.percySnapshot({ widths: [768, 992, 1200] })
     })
 })
