@@ -90,6 +90,7 @@
         <divider-way-finder
             v-if="page.blocks.length"
             class="divider-way-finder"
+            color="help"
         />
 
         <!-- TO DO replace with content from meap -->
