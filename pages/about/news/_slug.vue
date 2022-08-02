@@ -1,6 +1,5 @@
 <template lang="html">
     <section class="page-news-detail">
-        <h2>{{ page }}</h2>
         <nav-breadcrumb :title="page.title" /> 
 
         <banner-header
