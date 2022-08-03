@@ -41,10 +41,6 @@
         "ucla-library-design-tokens": "^3.9.1",
         "vue-svg-loader": "^0.16.0",
         "vue-template-compiler": "^2.6.12",
-<<<<<<< HEAD
-        "ucla-library-website-components": "^v1.38.1"
-=======
-        "ucla-library-website-components":"^v1.34.2"
->>>>>>> 4939d0d (Apps 1718 update gql (#9))
+        "ucla-library-website-components": "^v1.39.1"
     }
 }
