@@ -26,7 +26,6 @@ fragment BlockCardWithImageFragment on ElementInterface {
                     to: uri
                 }
             }
-            summary: shortDescription
         }
         ... on meapflexiblePageBlocks_cardWithImage_externalContent_BlockType {
             id

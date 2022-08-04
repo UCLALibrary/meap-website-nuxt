@@ -3,7 +3,7 @@ fragment BlockHighlightFragment on ElementInterface {
     typeHandle
     titleGeneral
     summary
-    meapflexiblePageBlocks_highlight {
+    highlight: meapflexiblePageBlocks_highlight {
         ... on meapflexiblePageBlocks_highlight_internalContent_BlockType {
             id
 

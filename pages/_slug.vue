@@ -1,7 +1,7 @@
 <template lang="html">
     <section class="page-news-detail">
         <nav-breadcrumb :title="page.title" />
-
+        {{ page.blocks }}
         <banner-text
             v-if="!page.heroImage || page.heroImage.length == 0"
             class="banner-text"
