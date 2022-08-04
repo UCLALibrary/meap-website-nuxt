@@ -1,8 +1,8 @@
 fragment BlockBannerFeaturedFragment on ElementInterface {
     typeHandle
     id
-    titleGeneral
-    meapflexiblePageBlocks_bannerFeatured {
+    sectionTitle: titleGeneral
+    content: meapflexiblePageBlocks_bannerFeatured {
         ... on meapflexiblePageBlocks_bannerFeatured_internalContent_BlockType {
             id
             contentLink {
@@ -11,29 +11,37 @@ fragment BlockBannerFeaturedFragment on ElementInterface {
                 to: uri
                 summary
                 projectCategory: format
-                eventCategory: eventType
-                articleCategory: articleCategories
+                # eventCategory: eventType
+                articleCategory: articleCategories {
+                    title
+                }
                 projectByline1: meapProjectTopic {
                     ... on meapProjectTopics_Category {
+                        id
                         title
                     }
                 }
                 articleByline1: staffMember {
                   id
-                  slug
+                  to: uri
                   title
                 }
-                articleByline2: date
-                eventByline1: dateStartTime
-                eventByline2: dateEndTime
+                articleByline2: postDate
+                # eventByline1: dateStartTime
+                # eventByline2: dateEndTime
 
                 articleLocations: associatedLocations {
                     id
                     title
                     to: uri
                 }
-                eventLocations: eventLocation
-                projectLocations: region
+                # eventLocations: eventLocation
+                projectLocations: region {
+                    ... on meapProjectRegion_Category {
+                        id
+                        title
+                    }
+                }
                 # aligment will be defualts to left
                 heroImage {
                     ... on heroImage_heroImage_BlockType {
@@ -49,8 +57,7 @@ fragment BlockBannerFeaturedFragment on ElementInterface {
             image {
                 ...Image
             }
-            titleGeneral
-            title
+            title: titleGeneral
             summary
             alignment
             location
