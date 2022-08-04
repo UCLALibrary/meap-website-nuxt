@@ -6,6 +6,8 @@ query GeneralContentDetail($slug: [String!]) {
         ... on meapGeneralContentPage_meapGeneralContentPage_Entry {
             id
             title
+            slug
+            uri
             text: summary
             heroImage {
                 ... on heroImage_heroImage_BlockType {

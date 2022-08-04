@@ -1,4 +1,4 @@
-fragment BlockMediaWithTextFragment on ElementInterface  {
+fragment BlockMediaWithTextFragment on ElementInterface {
     id
     typeHandle
     sectionTitle: titleGeneral
