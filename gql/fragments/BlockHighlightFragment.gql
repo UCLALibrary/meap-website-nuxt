@@ -1,35 +1,50 @@
 fragment BlockHighlightFragment on ElementInterface {
     id
     typeHandle
-    # meapflexiblePageBlocks_highlight {
-    #     ... on meapflexiblePageBlocks_highlight_highlight_BlockType {
-    #         id
-    #         contentLink {
-    #             id
-    #             url
-    #             to: uri
-    #             title
-    #             prompt: buttonText
-    #             text: shortDescription
-    #             date {
-    #                 startDate
-    #                 endDate
-    #             }
-    #             associatedLocations {
-    #                 id
-    #                 title
-    #                 to: uri
-    #             }
-    #             heroImage {
-    #                 ... on heroImage_heroImage_BlockType {
-    #                     id
-    #                     image {
-    #                         ...Image
-    #                     }
-    #                     altText
-    #                 }
-    #             }
-    #         }
-    #     }
-    # }
+    titleGeneral
+    summary
+    meapflexiblePageBlocks_highlight {
+        ... on meapflexiblePageBlocks_highlight_internalContent_BlockType {
+            id
+
+            contentLink {
+                id
+                url
+                to: uri
+                title
+                prompt: buttonText
+                text: shortDescription
+                date {
+                    startDate
+                    endDate
+                }
+                associatedLocations {
+                    id
+                    title
+                    to: uri
+                }
+                heroImage {
+                    ... on heroImage_heroImage_BlockType {
+                        id
+                        image {
+                            ...Image
+                        }
+                        altText
+                    }
+                }
+            }
+        }
+    }
+    ... on meapflexiblePageBlocks_highlight_externalContent_BlockType {
+        id
+        title
+        image {
+            ...Image
+        }
+        byline1
+        byline2
+        category
+        location
+        summary
+    }
 }
