@@ -6,14 +6,14 @@ fragment BlockHighlightFragment on ElementInterface {
     highlight: meapflexiblePageBlocks_highlight {
         ... on meapflexiblePageBlocks_highlight_internalContent_BlockType {
             id
-
+            typeHandle
             contentLink {
                 id
-                url
+                category: typeHandle
                 to: uri
                 title
-                prompt: buttonText
-                text: shortDescription
+                # prompt: buttonText
+                text: summary
                 date {
                     startDate
                     endDate
@@ -34,17 +34,18 @@ fragment BlockHighlightFragment on ElementInterface {
                 }
             }
         }
-    }
-    ... on meapflexiblePageBlocks_highlight_externalContent_BlockType {
-        id
-        title
-        image {
-            ...Image
+        ... on meapflexiblePageBlocks_highlight_externalContent_BlockType {
+            id
+            typeHandle
+            title
+            image {
+                ...Image
+            }
+            byline1
+            byline2
+            category
+            location
+            text: summary
         }
-        byline1
-        byline2
-        category
-        location
-        summary
     }
 }
