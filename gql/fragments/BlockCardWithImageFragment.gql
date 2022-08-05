@@ -2,7 +2,7 @@ fragment BlockCardWithImageFragment on ElementInterface {
     id
     typeHandle
     #cardWithImage: meapflexiblePageBlocks_cardWithImage {
-        id
+     # id
        # ... on meapflexiblePageBlocks_cardWithImage_cardWithImage_BlockType {
         #    id
          #   image {
