@@ -1,10 +1,10 @@
 fragment BlockAssociatedTopicCardsFragment on ElementInterface {
     id
     typeHandle
-    sectionText: plainText
+    sectionText: summary
     sectionTitle: titleGeneral
-    meapflexiblePageBlocks_associatedTopicsFlexiblePageBlock {
-        ... on meapflexiblePageBlocks_associatedTopicsFlexiblePageBlock_associatedTopics_BlockType {
+    associatedTopicsFlexiblePageBlock: meapflexiblePageBlocks_associatedTopics {
+        ... on meapflexiblePageBlocks_associatedTopics_associatedTopics_BlockType {
             id
             topics {
                 title
