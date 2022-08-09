@@ -1,0 +1,7 @@
+#import "~/gql/fragments/Image"
+query HomePage {
+    title
+    featuredProjects
+    featuredMeapResources
+    meapAnnouncements
+}
