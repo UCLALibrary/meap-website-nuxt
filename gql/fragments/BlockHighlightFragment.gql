@@ -12,8 +12,8 @@ fragment BlockHighlightFragment on ElementInterface {
                 category: typeHandle
                 to: uri
                 title
-                # prompt: buttonText
                 text: summary
+                # prompt: buttonText
                 date {
                     startDate
                     endDate
