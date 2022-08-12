@@ -9,30 +9,30 @@
             class="divider-way-finder"
         />
 
-        <banner-featured
+        <!-- <banner-featured
             class="section banner banner-visit"
-            :image="bannerVisit.image"
-            :to="bannerVisit.to"
-            :title="bannerVisit.title"
-            :category="bannerVisit.category"
-            :breadcrumb="bannerVisit.breadcrumb"
-            :start-date="bannerVisit.startDate"
-            :end-date="bannerVisit.endDate"
-            :prompt="bannerVisit.prompt"
-            :ratio="bannerVisit.ratio"
+            :image="homePage.image"
+            :to="homePage.to"
+            :title="homePage.title"
+            :category="homePage.category"
+            :breadcrumb="homePage.breadcrumb"
+            :start-date="homePage.startDate"
+            :end-date="homePage.endDate"
+            :prompt="homePage.prompt"
+            :ratio="homePage.ratio"
             :align-right="false"
         >
             <heading-arrow
-                :text="bannerVisit.breadcrumb"
-                :to="bannerVisit.to"
+                :text="homePage.breadcrumb"
+                :to="homePage.to"
             />
-        </banner-featured>
+        </banner-featured> -->
     </main>
 </template>
 
 <script>
 // GQL
-import HELP_TOPIC_LIST from "~/gql/queries/HelpTopicList"
+import MEAP_HOMEPAGE from "~/gql/queries/HomePage"
 
 // Helpers
 import _get from "lodash/get"
@@ -61,7 +61,7 @@ export default {
             prompt: "Read More",
             alignRight: true,
         }
-        const data = await $graphql.default.request(HELP_TOPIC_LIST, {
+        const data = await $graphql.default.request(MEAP_HOMEPAGE, {
             slug: params.slug,
             banner
         })
@@ -76,19 +76,13 @@ export default {
         }
     },
     computed: {
-        helpTopicList() {
+        homePage() {
             return this.page.map((obj) => {
                 return {
                     ...obj,
                     to: `/applicants/${obj.to}`,
                 }
             })
-        },
-        bannerVisit() {
-            return {
-                ...this.page.banner,
-                ratio: 56.25,
-            }
         },
     },
 }

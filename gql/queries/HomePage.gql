@@ -1,7 +1,58 @@
 #import "~/gql/fragments/Image"
-query HomePage {
-    title
-    featuredProjects
-    featuredMeapResources
-    meapAnnouncements
+
+query MeapHomePage {
+  entry(section: "meapHomepage", slug: "homepage-meap") {
+    ... on meapHomepage_meapHomepage_Entry {
+      id
+      title
+      featuredMeapResources {
+        to: uri
+        title
+        text: summary
+      }
+      featuredProjects {
+        title
+        text: summary
+        category: format
+        to: uri
+        byline: meapProjectTopic {
+          ... on meapProjectTopics_Category {
+            id
+            title
+          }
+        }
+        projectLocations: region {
+          ... on meapProjectRegion_Category {
+            id
+            title
+          }
+        }
+        heroImage {
+          ... on heroImage_heroImage_BlockType {
+            image {
+              ...Image
+            }
+          }
+        }
+      }
+      # To display this data use SectionTeaserCard component
+      # https://ucla-library-storybook.netlify.app/?path=/story/section-teaser-card--default
+      meapAnnouncements {
+        id
+        title
+        text: summary
+        to: uri
+        articleCategories {
+          id
+          title
+        }
+        byline1: staffMember {
+          id
+          to: uri
+          title
+        }
+        byline2: postDate
+      }
+    }
+  }
 }
