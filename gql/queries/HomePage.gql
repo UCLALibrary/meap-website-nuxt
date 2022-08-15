@@ -1,7 +1,7 @@
 #import "~/gql/fragments/Image"
 
 query MeapHomePage {
-  entry(section: "meapHomepage", slug: "homepage-meap") {
+  entries(section: "meapHomepage", slug: "homepage-meap") {
     ... on meapHomepage_meapHomepage_Entry {
       id
       title

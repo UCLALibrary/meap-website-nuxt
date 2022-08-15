@@ -1,5 +1,6 @@
 <template lang="html">
     <main class="page page-help-topic">
+        <h1>PAGE: {{ page }}</h1>
         <nuxt-link
             v-for="item in helpTopicList"
             :key="item.to"
