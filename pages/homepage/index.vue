@@ -4,56 +4,110 @@
             title="Modern Endangered Archives Program"
             text="Our grants enable digitization and access to at-risk cultural heritage collections from around the world. Explore our projects and learn more about available grant opportunities. "
         />
-        <divider-way-finder
-            color="about"
-            class="divider-way-finder"
-        />
+        <!-- Featured Projects -->
 
-        <h2 class="gallery-section-heading">
-            {{ homePage.title }}
-        </h2>
-        <banner-featured
-            class="section banner banner-visit"
-            :image="featuredProjects[0].heroImage[0].image[0]"
-            :to="featuredProjects[0].to"
-            :title="featuredProjects[0].title"
-            :category="featuredProjects[0].category"
-            breadcrumb="Featured"
-            :start-date="featuredProjects[0].startDate"
-            :end-date="featuredProjects[0].endDate"
-            :prompt="featuredProjects[0].prompt"
-            :ratio="featuredProjects[0].ratio"
-            :align-right="true"
-        />
-
-        <div class="block-highlight-list">
-            <block-highlight
-                v-for="(card, index) in featuredProjects"
-                :key="`Card${index}`"
-                class="card"
-                :image="card.heroImage[0].image[0]"
-                :to="card.to"
-                :category="card.category"
-                :title="card.title"
-                :start-date="card.startDate"
-                :end-date="card.endDate"
-                :text="card.text"
-                :image-aspect-ratio="60"
-                :is-vertical="true"
-                :is-online="card.isOnline"
-            />
-        </div>
-        <nuxt-link
-            v-if="featuredProjects.length"
-            class="button-more"
-            to="#"
+        <div
+            v-if="featuredProjects"
         >
-            <button-more text="See More" />
-        </nuxt-link>
-        <divider-way-finder
-            color="about"
-            class="divider-way-finder"
-        />
+            <divider-way-finder
+                color="about"
+                class="divider"
+            />
+            <h2
+                v-if="featuredProjects"
+                class="gallery-section-heading"
+            >
+                Featured Projects
+            </h2>
+            <banner-featured
+                class="section banner banner-visit"
+                :image="featuredProjects[0].heroImage[0].image[0]"
+                :to="featuredProjects[0].to"
+                :title="featuredProjects[0].title"
+                :category="featuredProjects[0].category"
+                breadcrumb="Featured"
+                :start-date="featuredProjects[0].startDate"
+                :end-date="featuredProjects[0].endDate"
+                :prompt="featuredProjects[0].prompt"
+                :ratio="featuredProjects[0].ratio"
+                :align-right="true"
+            />
+
+            <div class="block-highlight-list">
+                <block-highlight
+                    v-for="(card, index) in featuredProjects"
+                    :key="`Card${index}`"
+                    class="card"
+                    :image="card.heroImage[0].image[0]"
+                    :to="card.to"
+                    :category="card.category"
+                    :title="card.title"
+                    :start-date="card.startDate"
+                    :end-date="card.endDate"
+                    :text="card.text"
+                    :image-aspect-ratio="60"
+                    :is-vertical="true"
+                    :is-online="card.isOnline"
+                />
+            </div>
+            <nuxt-link
+                v-if="featuredProjects.length"
+                class="button-more"
+                to="#"
+            >
+                <button-more text="Explore Projects" />
+            </nuxt-link>
+        </div>
+        
+        <!-- Program Resources -->
+        <div
+            v-if="featuredMeapResources"
+        >
+            <divider-way-finder
+                color="about"
+                class="divider-way-finder"
+            />
+            <h2
+                v-if="featuredMeapResources"
+                class="gallery-section-heading"
+            >
+                Program Resources
+            </h2>
+            <ul class="simple-cards-list">
+                <block-simple-card
+                    v-for="(item, index) in featuredMeapResources"
+                    :key="`SimpleCardsKey${index}`"
+                    :class="item.classes"
+                    :to="item.to"
+                    :title="item.title"
+                    :text="item.text"
+                />
+            </ul>
+            <nuxt-link
+                v-if="featuredMeapResources.length"
+                class="button-more"
+                to="#"
+            >
+                <button-more text="See More" />
+            </nuxt-link>
+        </div>
+
+        <!-- Announcements -->
+        <div
+            v-if="meapAnnouncements"
+        >
+            <divider-way-finder
+                color="about"
+                class="divider-way-finder"
+            />
+
+            <h2
+                class="gallery-section-heading"
+            >
+                Announcements
+            </h2>
+        <!-- <section-teaser-card :items="meapAnnouncements" /> -->
+        </div>
     </main>
 </template>
 
@@ -106,8 +160,10 @@ export default {
 <style lang="scss" scoped>
 
     .divider-way-finder {
-        max-width: $container-l-main + px;
+        padding-left: 64px;
+        padding-right: 64px;
         margin: var(--space-3xl) auto;
+        max-width: 1440px !important;
     }
 
     .gallery-section-heading {
@@ -130,5 +186,18 @@ export default {
     
     .button-more,{
         margin: var(--space-2xl) auto;
+    }
+
+    .simple-cards-list {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-content: flex-start;
+        align-items: flex-start;
+        gap: var(--space-s);
+        max-width: 1440px;
+        margin: var(--space-3xl) auto;
+        padding: 0 64px;
     }
 </style>
