@@ -94,7 +94,7 @@
 
         <!-- Announcements -->
         <div
-            v-if="meapAnnouncements"
+            v-if="meapNews"
         >
             <divider-way-finder
                 color="about"
@@ -106,7 +106,10 @@
             >
                 Announcements
             </h2>
-        <!-- <section-teaser-card :items="meapAnnouncements" /> -->
+            <section-teaser-card
+                :items="meapNews"
+                class="meap-news"
+            />
         </div>
     </main>
 </template>
@@ -150,8 +153,14 @@ export default {
         featuredProjects() {
             return this.homePage.featuredProjects
         },
-        meapAnnouncements() {
-            return this.homePage.meapAnnouncements
+        meapNews() {
+            // return  this.homePage.meapNews.map((obj) => {
+            //     return {
+            //         ...obj,
+            //         image: obj.heroImage[0].image[0]
+            //     }
+            // })
+            return this.homePage.meapNews
         },
     },
 }
@@ -188,7 +197,7 @@ export default {
         margin: var(--space-2xl) auto;
     }
 
-    .simple-cards-list {
+    .simple-cards-list, .meap-news {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -196,8 +205,12 @@ export default {
         align-content: flex-start;
         align-items: flex-start;
         gap: var(--space-s);
-        max-width: 1440px;
+        max-width: 1440px !important;
         margin: var(--space-3xl) auto;
         padding: 0 64px;
+    }
+
+    .meap-news {
+
     }
 </style>

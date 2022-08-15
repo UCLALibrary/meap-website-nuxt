@@ -37,7 +37,7 @@ query MeapHomePage {
       }
       # To display this data use SectionTeaserCard component
       # https://ucla-library-storybook.netlify.app/?path=/story/section-teaser-card--default
-      meapAnnouncements {
+      meapNews {
         id
         title
         text: summary
