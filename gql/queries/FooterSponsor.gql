@@ -1,29 +1,18 @@
-query Globals {
+query FooterSponsor {
   globalSets {
-    ... on askALibrarian_GlobalSet {
-      id
-      askALibrarianTitle: titleGeneral
-      askALibrarianText: summary
-      buttonUrl {
-        buttonText
-        buttonUrl
-      }
-    }
     ... on meapFunders_GlobalSet {
-      id
-      name
-      funders {
-        ... on funders_funder_BlockType {
-          id
-          funderLogo {
-            ... on mediaAndDocuments_Asset {
-              img
+        funders {
+            ... on funders_funder_BlockType {
+            id
+            funderLogo {
+                ... on mediaAndDocuments_Asset {
+                img
+                }
             }
-          }
-          funderName
-          funderUrl
+            alt: funderName
+            to: funderUrl
+            }
         }
-      }
+        }
     }
-  }
 }
