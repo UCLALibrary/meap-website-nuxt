@@ -15,7 +15,7 @@
             />
             <h2
                 v-if="featuredProjects"
-                class="gallery-section-heading"
+                class="section-heading"
             >
                 Featured Projects
             </h2>
@@ -34,12 +34,14 @@
             />
 
             <div class="block-highlight-list">
-                <section-teaser-card :items="featuredProjects" />
+                <section-teaser-highlight
+                    :items="featuredProjects"
+                />
             </div>
             <nuxt-link
                 v-if="featuredProjects.length"
                 class="button-more"
-                to="#"
+                to="/funded-projects"
             >
                 <button-more text="Explore Projects" />
             </nuxt-link>
@@ -55,20 +57,11 @@
             />
             <h2
                 v-if="featuredMeapResources"
-                class="gallery-section-heading"
+                class="section-heading"
             >
                 Program Resources
             </h2>
             <ul class="simple-cards-list">
-                <!-- <block-simple-card
-                    v-for="(item, index) in featuredMeapResources"
-                    :key="`SimpleCardsKey${index}`"
-                    :class="item.classes"
-                    :to="item.to"
-                    :title="item.title"
-                    :text="item.text"
-                /> -->
-
                 <simple-cards
                     :items="featuredMeapResources"
                 />
@@ -76,7 +69,7 @@
             <nuxt-link
                 v-if="featuredMeapResources.length"
                 class="button-more"
-                to="#"
+                to="/applicants"
             >
                 <button-more text="See More" />
             </nuxt-link>
@@ -85,6 +78,7 @@
         <!-- Announcements -->
         <div
             v-if="meapNews"
+            class="announcements"
         >
             <divider-way-finder
                 color="about"
@@ -92,7 +86,7 @@
             />
 
             <h2
-                class="gallery-section-heading"
+                class="section-heading"
             >
                 Announcements
             </h2>
@@ -100,6 +94,13 @@
                 :items="meapNews"
                 class="meap-news"
             />
+            <nuxt-link
+                v-if="featuredMeapResources.length"
+                class="button-more"
+                to="/about/news"
+            >
+                <button-more text="See More" />
+            </nuxt-link>
         </div>
     </main>
 </template>
@@ -112,7 +113,7 @@ import MEAP_HOMEPAGE from "~/gql/queries/HomePage"
 import _get from "lodash/get"
 
 export default {
-    async asyncData({ $graphql, params, store }) {
+    async asyncData({ $graphql, params}) {
         // Do not remove testing live preview
         
         const data = await $graphql.default.request(MEAP_HOMEPAGE, {
@@ -141,15 +142,14 @@ export default {
             return this.homePage.featuredMeapResources
         },
         featuredProjects() {
-            return this.homePage.featuredProjects
+            return  this.homePage.featuredProjects.map((obj) => {
+                return {
+                    ...obj,
+                    image: obj.heroImage[0].image[0]
+                }
+            })
         },
         meapNews() {
-            // return  this.homePage.meapNews.map((obj) => {
-            //     return {
-            //         ...obj,
-            //         image: obj.heroImage[0].image[0]
-            //     }
-            // })
             return this.homePage.meapNews
         },
     },
@@ -158,59 +158,20 @@ export default {
 
 <style lang="scss" scoped>
 
-    // .divider-way-finder {
-    //     padding-left: 64px;
-    //     padding-right: 64px;
-    //     margin: 0 auto var(--space-l);
-    //     max-width: $container-l-main + px;
-    //     margin: var(--space-3xl) auto;
-    // }
-
-
-    // .gallery-section-heading {
-    //     @include step-3;
-    //     margin-bottom: var(--space-xl);
-    //     color: var(--color-primary-blue-03);
-    //     max-width: 1440px;
-    //     margin: var(--space-3xl) auto;
-    //     padding-left: 64px;
-    //     padding-right: 64px;
-    // }
-
-    // .block-highlight-list {
-    //     display: flex;
-    //     flex-direction: row;
-    //     flex-wrap: wrap;
-    //     gap: 32px 16px;
-    //     max-width: 1440px;
-    //     padding-left: 64px;
-    //     padding-right: 64px;
-
-    //     .card {
-    //         min-width: 49%;
-    //     }
-    // }
+    .section-heading {
+        @include step-3;
+        color: var(--color-primary-blue-03);
+        margin: var(--space-l) auto;
+        margin-bottom: var(--space-m);
+        max-width: 928px;
+    }
     
-    // .button-more,{
-    //     margin: var(--space-2xl) auto;
-    // }
+    .button-more {
+        margin: var(--space-2xl) auto;
+        white-space: nowrap;
+    }
     
-    // .simple-cards-list {
-    //     .simple-cards {
-    //         max-width: 1440px;
-    //     }
-    // }
-
-    // .meap-news {
-    //     display: flex;
-    //     flex-direction: row;
-    //     flex-wrap: wrap;
-    //     justify-content: flex-start;
-    //     align-content: flex-start;
-    //     align-items: flex-start;
-    //     gap: var(--space-s);
-    //     max-width: 1440px;
-    //     margin: var(--space-3xl) auto;
-    //     padding: 0 64px;
-    // }
+    .meap-news, .block-highlight-list {
+        margin: var(--space-2xl) auto;
+    }
 </style>
