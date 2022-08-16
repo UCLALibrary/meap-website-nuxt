@@ -1,5 +1,5 @@
 <template lang="html">
-    <main class="page page-help-topic">
+    <main class="page">
         <masthead-secondary
             title="Modern Endangered Archives Program"
             text="Our grants enable digitization and access to at-risk cultural heritage collections from around the world. Explore our projects and learn more about available grant opportunities. "
@@ -11,7 +11,7 @@
         >
             <divider-way-finder
                 color="about"
-                class="divider"
+                class="divider-way-finder"
             />
             <h2
                 v-if="featuredProjects"
@@ -34,21 +34,7 @@
             />
 
             <div class="block-highlight-list">
-                <block-highlight
-                    v-for="(card, index) in featuredProjects"
-                    :key="`Card${index}`"
-                    class="card"
-                    :image="card.heroImage[0].image[0]"
-                    :to="card.to"
-                    :category="card.category"
-                    :title="card.title"
-                    :start-date="card.startDate"
-                    :end-date="card.endDate"
-                    :text="card.text"
-                    :image-aspect-ratio="60"
-                    :is-vertical="true"
-                    :is-online="card.isOnline"
-                />
+                <section-teaser-card :items="featuredProjects" />
             </div>
             <nuxt-link
                 v-if="featuredProjects.length"
@@ -74,13 +60,17 @@
                 Program Resources
             </h2>
             <ul class="simple-cards-list">
-                <block-simple-card
+                <!-- <block-simple-card
                     v-for="(item, index) in featuredMeapResources"
                     :key="`SimpleCardsKey${index}`"
                     :class="item.classes"
                     :to="item.to"
                     :title="item.title"
                     :text="item.text"
+                /> -->
+
+                <simple-cards
+                    :items="featuredMeapResources"
                 />
             </ul>
             <nuxt-link
@@ -168,49 +158,59 @@ export default {
 
 <style lang="scss" scoped>
 
-    .divider-way-finder {
-        padding-left: 64px;
-        padding-right: 64px;
-        margin: var(--space-3xl) auto;
-        max-width: 1440px !important;
-    }
+    // .divider-way-finder {
+    //     padding-left: 64px;
+    //     padding-right: 64px;
+    //     margin: 0 auto var(--space-l);
+    //     max-width: $container-l-main + px;
+    //     margin: var(--space-3xl) auto;
+    // }
 
-    .gallery-section-heading {
-        @include step-3;
-        margin-bottom: var(--space-xl);
-        color: var(--color-primary-blue-03);
-        max-width: 1440px;
-        margin: var(--space-3xl) auto;
-        padding-left: 64px;
-        padding-right: 64px;
-    }
 
-    .block-highlight-list {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 32px 16px;
-    }
+    // .gallery-section-heading {
+    //     @include step-3;
+    //     margin-bottom: var(--space-xl);
+    //     color: var(--color-primary-blue-03);
+    //     max-width: 1440px;
+    //     margin: var(--space-3xl) auto;
+    //     padding-left: 64px;
+    //     padding-right: 64px;
+    // }
+
+    // .block-highlight-list {
+    //     display: flex;
+    //     flex-direction: row;
+    //     flex-wrap: wrap;
+    //     gap: 32px 16px;
+    //     max-width: 1440px;
+    //     padding-left: 64px;
+    //     padding-right: 64px;
+
+    //     .card {
+    //         min-width: 49%;
+    //     }
+    // }
     
-    .button-more,{
-        margin: var(--space-2xl) auto;
-    }
+    // .button-more,{
+    //     margin: var(--space-2xl) auto;
+    // }
+    
+    // .simple-cards-list {
+    //     .simple-cards {
+    //         max-width: 1440px;
+    //     }
+    // }
 
-    .simple-cards-list, .meap-news {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        align-content: flex-start;
-        align-items: flex-start;
-        gap: var(--space-s);
-        max-width: 1440px !important;
-        margin: var(--space-3xl) auto;
-        padding: 0 64px;
-    }
-
-    .meap-news {
-
-    }
+    // .meap-news {
+    //     display: flex;
+    //     flex-direction: row;
+    //     flex-wrap: wrap;
+    //     justify-content: flex-start;
+    //     align-content: flex-start;
+    //     align-items: flex-start;
+    //     gap: var(--space-s);
+    //     max-width: 1440px;
+    //     margin: var(--space-3xl) auto;
+    //     padding: 0 64px;
+    // }
 </style>
