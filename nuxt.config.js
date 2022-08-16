@@ -112,7 +112,7 @@ export default {
     },
 
     sitemap: {
-        hostname:"https://meap.library.ucla.edu",
+        hostname: process.env.SITEMAP_HOST || "https://meap.library.ucla.edu",
         routes:[],
     },
 
