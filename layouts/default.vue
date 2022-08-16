@@ -7,9 +7,11 @@
         >Skip to main content</a>
         
         <header-smart title="Modern Endangered Archives Program" />
+
         <main id="main">
             <nuxt class="page" />
         </main>
+
         <footer-sponsor />
         <footer-primary
             :form="true"
@@ -23,7 +25,15 @@
 import kebabCase from "~/utils/kebabCase"
 
 export default {
-    components: {},
+    async asyncData({ $graphql, params, store }) {
+        // Do not remove testing live preview
+        const data = await $graphql.default.request(FOOTER_SPONSOR, {
+            slug: params.slug,
+        })
+        return {
+            page: _get(data, "entries", {}),
+        }
+    },
     data() {
         return {
             pageMeta: {

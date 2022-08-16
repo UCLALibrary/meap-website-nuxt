@@ -1,8 +1,8 @@
 #import "~/gql/fragments/MenuItem"
 #import "~/gql/fragments/Image"
 
-query FooterMenuItems {
-  sponsors: globalSets {
+query FooterSponsorItems {
+  globalSets {
     ... on meapFunders_GlobalSet {
       id
       name
@@ -19,15 +19,6 @@ query FooterMenuItems {
           funderUrl
         }
       }
-    }
-  }
-  primary: nodes(navHandle: "footerSockLinks", level: 1) {
-    ...MenuItem
-  }
-  sock: nodes(navHandle: "footerPrimary", level: 1) {
-    ...MenuItem
-    children {
-      ...MenuItem
     }
   }
 }
