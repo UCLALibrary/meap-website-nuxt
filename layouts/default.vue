@@ -12,14 +12,13 @@
             <nuxt class="page" />
         </main>
 
-        <footer />
-        <h3>JEN</h3>
+        <footer-main />
 
-        <footer-sponsor />
+        <!-- <footer-sponsor />
         <footer-primary
             :form="true"
         />
-        <footer-sock />
+        <footer-sock /> -->
     </div>
 </template>
 

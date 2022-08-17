@@ -50,6 +50,9 @@ export const actions = {
             
         try {
             // console.log("Get Global data from Craft")
+            console.log("HELLO")
+
+            // ASK A LIBRARIAN Data -------------- --------------
             let globalData = await this.$graphql.default.request(GLOBALS)
             globalData = removeEmpties(globalData.globalSets || [])
 
@@ -59,15 +62,30 @@ export const actions = {
             }
             commit("SET_GLOBALS", globalData)
 
+            // MAIN MENU Data -------------- --------------
             let headerData = await this.$graphql.default.request(HEADER_MAIN_MENU_ITEMS)
             commit("SET_HEADER", headerData)
 
-            let footerSponsorData = await this.$graphql.default.request(FOOTER_SPONSOR_ITEMS)
-            commit("SET_FOOTER_SPONSOR", footerSponsorData)
 
+            // FOOTER SPONSOR Data -------------- --------------
+            let footerSponsorData = await this.$graphql.default.request(FOOTER_SPONSOR_ITEMS)
+
+            // Shape data from Craft
+            footerSponsorData = removeEmpties(footerSponsorData.globalSets || [])
+
+            footerSponsorData = { sponsors: footerSponsorData[0] }
+            commit("SET_FOOTER_SPONSOR", footerSponsorData)
+            console.log(footerSponsorData)
+            console.log("GOODBYE")
+
+
+
+
+            // FOOTER PRIMARY Data -------------- --------------
             let footerPrimaryData = await this.$graphql.default.request(FOOTER_PRIMARY_ITEMS)
             commit("SET_FOOTER_PRIMARY", footerPrimaryData)
 
+            // FOOTER SOCK Data -------------- --------------
             let footerSockData = await this.$graphql.default.request(FOOTER_SOCK_ITEMS)
             commit("SET_FOOTER_SOCK", footerSockData)
         } catch (e) {

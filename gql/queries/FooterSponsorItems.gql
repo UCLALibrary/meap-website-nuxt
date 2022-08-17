@@ -1,11 +1,9 @@
-#import "~/gql/fragments/MenuItem"
 #import "~/gql/fragments/Image"
 
 query FooterSponsorItems {
   globalSets {
     ... on meapFunders_GlobalSet {
       id
-      name
       funders {
         ... on funders_funder_BlockType {
           id
