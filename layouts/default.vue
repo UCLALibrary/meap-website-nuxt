@@ -13,12 +13,6 @@
         </main>
 
         <footer-main />
-
-        <!-- <footer-sponsor />
-        <footer-primary
-            :form="true"
-        />
-        <footer-sock /> -->
     </div>
 </template>
 
@@ -27,15 +21,6 @@
 import kebabCase from "~/utils/kebabCase"
 
 export default {
-    async asyncData({ $graphql, params, store }) {
-        // Do not remove testing live preview
-        const data = await $graphql.default.request(FOOTER_SPONSOR, {
-            slug: params.slug,
-        })
-        return {
-            page: _get(data, "entries", {}),
-        }
-    },
     data() {
         return {
             pageMeta: {

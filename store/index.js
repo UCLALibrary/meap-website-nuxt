@@ -71,14 +71,11 @@ export const actions = {
             let footerSponsorData = await this.$graphql.default.request(FOOTER_SPONSOR_ITEMS)
 
             // Shape data from Craft
-            footerSponsorData = removeEmpties(footerSponsorData.globalSets || [])
+            footerSponsorData = removeEmpties(footerSponsorData.footerSponsor || [])
 
-            footerSponsorData = { sponsors: footerSponsorData[0] }
-            commit("SET_FOOTER_SPONSOR", footerSponsorData)
-            console.log(footerSponsorData)
+            commit("SET_FOOTER_SPONSOR", footerSponsorData[0])
+            console.log(JSON.stringify(footerSponsorData))
             console.log("GOODBYE")
-
-
 
 
             // FOOTER PRIMARY Data -------------- --------------
