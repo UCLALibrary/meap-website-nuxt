@@ -35,13 +35,18 @@ query MeapHomePage {
           }
         }
       }
-      # To display this data use SectionTeaserCard component
-      # https://ucla-library-storybook.netlify.app/?path=/story/section-teaser-card--default
       meapNews {
         id
         title
         text: summary
         to: uri
+        heroImage {
+          ... on heroImage_heroImage_BlockType {
+            image {
+              ...Image
+            }
+          }
+        }
         articleCategories {
           id
           title

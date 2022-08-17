@@ -2,54 +2,64 @@
     <main class="page">
         <masthead-secondary
             title="Modern Endangered Archives Program"
-            text="Our grants enable digitization and access to at-risk cultural heritage collections from around the world. Explore our projects and learn more about available grant opportunities. "
+            text="Our grants enable digitization and access to at-risk cultural heritage collections from around the world. Explore our projects and learn more about available grant opportunities."
         />
         <!-- Featured Projects -->
 
         <div
             v-if="featuredProjects"
         >
-            <divider-way-finder
+            <!-- TODO Add back in when we add hte searchbar -->
+            <!-- <divider-way-finder
                 color="about"
                 class="divider-way-finder"
-            />
-            <h2
-                v-if="featuredProjects"
-                class="section-heading"
-            >
-                Featured Projects
-            </h2>
-            <banner-featured
-                class="section banner banner-visit"
-                :image="featuredProjects[0].heroImage[0].image[0]"
-                :to="featuredProjects[0].to"
-                :title="featuredProjects[0].title"
-                :category="featuredProjects[0].category"
-                breadcrumb="Featured"
-                :start-date="featuredProjects[0].startDate"
-                :end-date="featuredProjects[0].endDate"
-                :prompt="featuredProjects[0].prompt"
-                :ratio="featuredProjects[0].ratio"
-                :align-right="true"
-            />
-
-            <div class="block-highlight-list">
-                <section-teaser-highlight
-                    :items="featuredProjects"
+            /> -->
+            <div class="section">
+                <h2
+                    v-if="featuredProjects"
+                    class="section-heading"
+                >
+                    Featured Projects
+                </h2>
+                <banner-featured
+                    class="banner banner-visit"
+                    :image="featuredProjects[0].heroImage[0].image[0]"
+                    :to="featuredProjects[0].to"
+                    :title="featuredProjects[0].title"
+                    :category="featuredProjects[0].category"
+                    breadcrumb="Featured"
+                    :start-date="featuredProjects[0].startDate"
+                    :end-date="featuredProjects[0].endDate"
+                    :prompt="featuredProjects[0].prompt"
+                    :ratio="featuredProjects[0].ratio"
+                    :align-right="true"
+                    prompt="View project"
                 />
             </div>
-            <nuxt-link
-                v-if="featuredProjects.length"
-                class="button-more"
-                to="/funded-projects"
-            >
-                <button-more text="Explore Projects" />
-            </nuxt-link>
+
+            <div class="section">
+                <div
+                    class="
+                block-highlight-list"
+                >
+                    <section-teaser-highlight
+                        :items="featuredProjects"
+                    />
+                </div>
+                <nuxt-link
+                    v-if="featuredProjects.length"
+                    class="button-more"
+                    to="/funded-projects"
+                >
+                    <button-more text="Explore Projects" />
+                </nuxt-link>
+            </div>
         </div>
-        
+
         <!-- Program Resources -->
         <div
             v-if="featuredMeapResources"
+            class="section"
         >
             <divider-way-finder
                 color="about"
@@ -71,14 +81,14 @@
                 class="button-more"
                 to="/applicants"
             >
-                <button-more text="See More" />
+                <button-more text="See all resources" />
             </nuxt-link>
         </div>
 
         <!-- Announcements -->
         <div
             v-if="meapNews"
-            class="announcements"
+            class="section"
         >
             <divider-way-finder
                 color="about"
@@ -88,18 +98,20 @@
             <h2
                 class="section-heading"
             >
-                Announcements
+                News
             </h2>
             <section-teaser-card
                 :items="meapNews"
+                :image="meapNews[0].heroImage[0].image[0]"
                 class="meap-news"
             />
+
             <nuxt-link
                 v-if="featuredMeapResources.length"
                 class="button-more"
                 to="/about/news"
             >
-                <button-more text="See More" />
+                <button-more text="See all news" />
             </nuxt-link>
         </div>
     </main>
@@ -162,7 +174,7 @@ export default {
         @include step-3;
         color: var(--color-primary-blue-03);
         margin: var(--space-l) auto;
-        margin-bottom: var(--space-m);
+        margin-bottom: var(--space-xl);
         max-width: 928px;
     }
     
@@ -174,4 +186,17 @@ export default {
     .meap-news, .block-highlight-list {
         margin: var(--space-2xl) auto;
     }
+
+    @media #{$medium} {
+    .content {
+        padding: 0 var(--unit-gutter);
+    }
+    .meap-news {
+        padding: 0 var(--unit-gutter);
+    }
+
+    .featured {
+        padding: 0 var(--unit-gutter);
+    }
+}
 </style>
