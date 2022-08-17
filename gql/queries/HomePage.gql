@@ -5,6 +5,14 @@ query MeapHomePage {
     ... on meapHomepage_meapHomepage_Entry {
       id
       title
+      summary
+        heroImage {
+          ... on heroImage_heroImage_BlockType {
+            image {
+              ...Image
+            }
+          }
+        }
       featuredMeapResources {
         to: uri
         title

@@ -3,6 +3,7 @@
         <masthead-secondary
             title="Modern Endangered Archives Program"
             text="Our grants enable digitization and access to at-risk cultural heritage collections from around the world. Explore our projects and learn more about available grant opportunities."
+            :hero-image="heroImage"
         />
         <!-- Featured Projects -->
 
