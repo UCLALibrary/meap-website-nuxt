@@ -12,6 +12,9 @@
             <nuxt class="page" />
         </main>
 
+        <footer />
+        <h3>JEN</h3>
+
         <footer-sponsor />
         <footer-primary
             :form="true"
