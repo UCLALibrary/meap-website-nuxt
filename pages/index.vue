@@ -3,32 +3,31 @@
         <masthead-secondary
             title="Modern Endangered Archives Program"
             text="Our grants enable digitization and access to at-risk cultural heritage collections from around the world. Explore our projects and learn more about available grant opportunities."
-            :hero-image="heroImage"
+            :hero-image="parsedMastheadHeroImage"
         />
-        <!-- Featured Projects -->
 
         <div
             v-if="featuredProjects"
         >
-            <!-- TODO Add back in when we add hte searchbar -->
+            <!-- TODO Add the divider back in when we add the searchbar -->
             <!-- <divider-way-finder
                 color="about"
                 class="divider-way-finder"
             /> -->
             <div class="section">
-                <h2
+                <!-- <h2
                     v-if="featuredProjects"
                     class="section-heading"
                 >
                     Featured Projects
-                </h2>
+                </h2> -->
                 <banner-featured
                     class="banner banner-visit"
                     :image="featuredProjects[0].heroImage[0].image[0]"
                     :to="featuredProjects[0].to"
                     :title="featuredProjects[0].title"
                     :category="featuredProjects[0].category"
-                    breadcrumb="Featured"
+                    breadcrumb="Featured Projects"
                     :start-date="featuredProjects[0].startDate"
                     :end-date="featuredProjects[0].endDate"
                     :prompt="featuredProjects[0].prompt"
@@ -96,9 +95,7 @@
                 class="divider-way-finder"
             />
 
-            <h2
-                class="section-heading"
-            >
+            <h2 class="section-heading">
                 News
             </h2>
             <section-teaser-card
@@ -151,6 +148,9 @@ export default {
                 }
             })[0]
         },
+        parsedMastheadHeroImage() {
+            return this.homePage.heroImage[0].image[0]
+        },
         featuredMeapResources() {
             return this.homePage.featuredMeapResources
         },
@@ -163,13 +163,22 @@ export default {
             })
         },
         meapNews() {
-            return this.homePage.meapNews
+            return this.homePage.meapNews.map((obj) => {
+                return {
+                    ...obj,
+                    image: obj.heroImage[0].image[0]
+                }
+            })
         },
     },
 }
 </script>
 
 <style lang="scss" scoped>
+    ::v-deep .masthead-secondary .meta {
+        background-color: var(--color-primary-blue-03);
+        padding: 0 18px 20px 24px;
+    }
 
     .section-heading {
         @include step-3;
