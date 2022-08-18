@@ -83,5 +83,11 @@ export default {
     .section-cards {
         margin: var(--space-3xl) auto;
     }
+
+    @media #{$medium} {
+        .content {
+            padding: 0 var(--unit-gutter);
+        }
+    }
 }
 </style>
