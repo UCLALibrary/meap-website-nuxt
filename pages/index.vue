@@ -15,12 +15,13 @@
                 class="divider-way-finder"
             /> -->
             <div class="section">
-                <!-- <h2
+                <h2
                     v-if="featuredProjects"
-                    class="section-heading"
+                    class="visually-hidden"
                 >
                     Featured Projects
-                </h2> -->
+                </h2>
+
                 <banner-featured
                     class="banner banner-visit"
                     :image="featuredProjects[0].heroImage[0].image[0]"
@@ -79,7 +80,7 @@
             <nuxt-link
                 v-if="featuredMeapResources.length"
                 class="button-more"
-                to="/applicants"
+                to="/applicants/resources"
             >
                 <button-more text="See all resources" />
             </nuxt-link>
@@ -180,6 +181,9 @@ export default {
         padding: 0 18px 20px 24px;
     }
 
+    .visually-hidden {
+        @include visually-hidden;
+    }
     .section-heading {
         @include step-3;
         color: var(--color-primary-blue-03);

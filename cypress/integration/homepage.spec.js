@@ -33,17 +33,17 @@ describe("Website Homepage", () => {
             }
         })
 
-        // cy.get("h2.title").should(
-        //     "contain",
-        //     "Featured Projects"
-        // )
+        cy.get("h2.section-heading").should(
+            "contain",
+            "Featured Projects"
+        )
 
-        cy.get("h2.title").should(
+        cy.get("h2.section-heading").should(
             "contain",
             "Program Resources"
         )
 
-        cy.get("h2.title").should(
+        cy.get("h2.section-heading").should(
             "contain",
             "News"
         )
