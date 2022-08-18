@@ -4,7 +4,12 @@
             :title="summaryData.projectListTitle"
             :text="summaryData.projectListSummary"
         />
-        <divider-way-finder color="help" />
+        <div class="section-header">
+            <h2 class="section-title">
+                All Projects
+            </h2>
+        </div>
+
         <section-teaser-card
             class="content"
             :items="projectList"
@@ -76,6 +81,16 @@ export default {
 
 <style lang="scss" scoped>
 .page-project-list {
+    .section-header {
+        margin-top: var(--space-3xl);
+        margin-bottom: var(--space-xl);
+    }
+    .section-title {
+        @include step-4;
+        color: var(--color-primary-blue-03);
+        margin: 0 auto;
+        max-width: $container-l-main + px;
+    }
     .content {
         margin: 0 auto;
     }
