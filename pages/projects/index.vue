@@ -1,15 +1,12 @@
 <template lang="html">
-    <main class="page page-project-topic">
-        <nuxt-link
-            v-for="item in projectList"
-            :key="item.to"
-            :to="item.to"
-        >
-            <div
-                class="text"
-                v-html="item.title"
-            />
-        </nuxt-link>
+    <main class="page page-project-list">
+        <masthead-secondary />
+        <divider-way-finder />
+        <section-teaser-card
+            class="content"
+            :items="projectList"
+        />
+        <divider-general />
     </main>
 </template>
 
@@ -42,6 +39,7 @@ export default {
                 return {
                     ...obj,
                     to: `/projects/${obj.to}`,
+                    image: _get(obj, "image[0].image[0]", {}),
                 }
             })
         },
@@ -49,4 +47,10 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.page-project-list {
+    .content {
+        margin: 0 auto;
+    }
+}
+</style>

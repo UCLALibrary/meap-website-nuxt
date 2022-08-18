@@ -1,10 +1,21 @@
+#import "~/gql/fragments/Image"
+
 query ProjectList {
     entries(section: "meapProject") {
         ... on meapProject_meapProject_Entry {
             id
             to: slug
             title
-            summary
+            text: summary
+            category: format
+            image: heroImage {
+                ... on heroImage_heroImage_BlockType {
+                    id
+                    image {
+                        ...Image
+                    }
+                }
+            }
         }
     }
 }
