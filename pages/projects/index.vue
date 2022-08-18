@@ -43,7 +43,9 @@ export default {
         }
     },
     head() {
-        let title = this.page ? this.page.title : "... loading"
+        let title = this.summaryData
+            ? this.summaryData.projectListTitle
+            : "... loading"
         return {
             title: title,
         }
