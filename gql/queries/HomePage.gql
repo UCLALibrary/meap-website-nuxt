@@ -6,13 +6,13 @@ query MeapHomePage {
       id
       title
       summary
-        heroImage {
-          ... on heroImage_heroImage_BlockType {
-            image {
-              ...Image
-            }
+      heroImage {
+        ... on heroImage_heroImage_BlockType {
+          image {
+            ...Image
           }
         }
+      }
       featuredMeapResources {
         to: uri
         title
