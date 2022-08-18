@@ -36,7 +36,6 @@ import _get from "lodash/get"
 
 export default {
     async asyncData({ $graphql, params, store }) {
-        // Do not remove testing live preview
         const summaryData = await $graphql.default.request(
             PROJECT_LISTING_PAGE,
             {}
@@ -100,7 +99,8 @@ export default {
     }
 
     @media #{$medium} {
-        .content {
+        .content,
+        .section-title {
             padding: 0 var(--unit-gutter);
         }
     }
