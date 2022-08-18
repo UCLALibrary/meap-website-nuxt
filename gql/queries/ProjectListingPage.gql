@@ -1,0 +1,16 @@
+query ProjectListingPage {
+    entries(section: "meapListingProjects") {
+        ... on meapListingProjects_meapListingProjects_Entry {
+            id
+            projectListTitle: titleGeneral
+            projectListSummary: summary
+            featuredMeapResources {
+                id
+                title
+                text: summary
+                uri
+                externalResourceUrl
+            }
+        }
+    }
+}
