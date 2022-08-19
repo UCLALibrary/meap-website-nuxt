@@ -20,6 +20,7 @@ query ArticleNewsList {
             }
             description: summary
             authors: staffMember {
+                id
                 title
             }
             date: dateCreated

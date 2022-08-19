@@ -9,17 +9,22 @@
         <banner-header
             :image="parsedBannerHeader.image"
             :title="parsedBannerHeader.title"
-            category="Library News"
-            :byline="parsedBannerHeader.authors"
+            :category="parsedBannerHeader.category"
+            :byline="parsedBannerHeader.articleStaff"
             :locations="parsedBannerHeader.locations"
+            :description="parsedBannerHeader.text"
+            :start-date="parsedBannerHeader.dateCreated"
+            :end-date="parsedBannerHeader.dateCreated"
             :to="parsedBannerHeader.to"
+            prompt="Read More"
             :align-right="true"
+            class="banner"
         />
 
-        <!-- <section-teaser-highlight
+        <section-teaser-highlight
             class="section"
-            :items="highlightEvents"
-        /> -->
+            :items="parsedSectionHighlight"
+        />
 
         <divider-way-finder
             class="divider"
@@ -50,10 +55,15 @@ export default {
             {}
         )
         const data = await $graphql.default.request(ARTICLE_NEWS_LIST, {})
-        console.log(summaryData)
         return {
             summaryData: _get(summaryData, "entries[0]", {}),
             page: _get(data, "entries", {}),
+        }
+    },
+    head() {
+        let title = this.summaryData ? this.summaryData.title : "... loading"
+        return {
+            title: title,
         }
     },
     computed: {
@@ -62,21 +72,23 @@ export default {
                 return {
                     ...obj,
                     to: `/about/news/${obj.to}`,
-                    image: _get(obj, "heroImage[0].image[0]", null),
+                    image: _get(obj, "heroImage[0].image[0]", {}),
+                    category: _get(obj, "category[0].title", ""),
                 }
             })
         },
         parsedBannerHeader() {
             return this.parsedFeaturedNews[0]
         },
-        parsedSectionHighlight() {},
+        parsedSectionHighlight() {
+            return this.parsedFeaturedNews.slice(1)
+        },
         parsedNewsList() {
             return this.page.map((obj) => {
                 return {
                     ...obj,
                     to: `/about/news/${obj.to}`,
                     image: _get(obj, "heroImage[0].image[0]", null),
-                    authors: "Ashton Prigge",
                 }
             })
         },
@@ -90,12 +102,9 @@ export default {
 
 <style lang="scss" scoped>
 .page-news {
-    padding-left: 50px;
-
-    .entry-count {
-        @include step-2;
-        color: var(--color-primary-blue-03);
-        margin: var(--space-m);
+    .banner {
+        max-width: $container-l-main + px;
+        margin: 0 auto;
     }
 
     .section-heading {
@@ -103,7 +112,8 @@ export default {
         color: var(--color-primary-blue-03);
         margin-bottom: var(--space-m);
     }
-
+    .section {
+    }
     .all-news-heading {
         @include step-1;
         color: var(--color-primary-blue-03);

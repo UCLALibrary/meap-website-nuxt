@@ -10,13 +10,18 @@ query NewsListingPage {
                 id
                 title
                 text: summary
-                authors: staffMember {
+                articleStaff: staffMember {
                     id
                     slug
                     title
                 }
                 category: articleCategories {
                     title
+                }
+                locations: associatedLocations {
+                    id
+                    title
+                    uri
                 }
                 dateCreated
                 heroImage {
