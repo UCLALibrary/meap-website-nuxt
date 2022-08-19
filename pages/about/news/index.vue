@@ -20,7 +20,7 @@
             :align-right="true"
             class="banner"
         />
-
+        {{ parsedSectionHighlight }}
         <section-teaser-highlight
             class="section"
             :items="parsedSectionHighlight"
@@ -45,18 +45,13 @@ import _get from "lodash/get"
 import format from "date-fns/format"
 
 // GQL
-import NEWS_LISTING_PAGE from "~/gql/queries/NewsListingPage"
 import ARTICLE_NEWS_LIST from "~/gql/queries/ArticleNewsList"
 
 export default {
     async asyncData({ $graphql, params }) {
-        const summaryData = await $graphql.default.request(
-            NEWS_LISTING_PAGE,
-            {}
-        )
         const data = await $graphql.default.request(ARTICLE_NEWS_LIST, {})
         return {
-            summaryData: _get(summaryData, "entries[0]", {}),
+            summaryData: _get(data, "entry", {}),
             page: _get(data, "entries", {}),
         }
     },
@@ -74,7 +69,9 @@ export default {
                     to: `/about/news/${obj.to}`,
                     image: _get(obj, "heroImage[0].image[0]", {}),
                     category: _get(obj, "category[0].title", ""),
-                    byline: _get(obj, "articleStaff[0].title", ""),
+                    byline: _get(obj, "articleStaff", ""),
+                    bylineOne: _get(obj, "articleStaff[0].title", ""),
+                    bylineTwo: _get(obj, "dateCreated", ""),
                 }
             })
         },

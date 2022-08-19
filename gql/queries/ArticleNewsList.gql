@@ -26,4 +26,38 @@ query ArticleNewsList {
             date: dateCreated
         }
     }
+    entry(section: "meapListingNews") {
+        ... on meapListingNews_meapListingNews_Entry {
+            id
+            title: titleGeneral
+            summary
+            meapNewsListing {
+                id
+                title
+                text: summary
+                articleStaff: staffMember {
+                    id
+                    slug
+                    title
+                }
+                category: articleCategories {
+                    title
+                }
+                locations: associatedLocations {
+                    id
+                    title
+                    uri
+                }
+                dateCreated
+                heroImage {
+                    ... on heroImage_heroImage_BlockType {
+                        id
+                        image {
+                            ...Image
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
