@@ -4,7 +4,6 @@
             :title="summaryData.projectListTitle"
             :text="summaryData.projectListSummary"
         />
-        {{ data }}
         <div class="section-header">
             <h2 class="section-title">
                 All Projects
@@ -37,7 +36,6 @@ import _get from "lodash/get"
 export default {
     async asyncData({ $graphql, params, store }) {
         const data = await $graphql.default.request(PROJECT_LIST, {})
-        console.log(data)
         return {
             summaryData: _get(data, "entry", {}),
             page: _get(data, "entries", {}),
