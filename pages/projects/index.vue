@@ -4,6 +4,7 @@
             :title="summaryData.projectListTitle"
             :text="summaryData.projectListSummary"
         />
+        {{ data }}
         <div class="section-header">
             <h2 class="section-title">
                 All Projects
@@ -28,7 +29,6 @@
 
 <script>
 // GQL
-import PROJECT_LISTING_PAGE from "~/gql/queries/ProjectListingPage"
 import PROJECT_LIST from "~/gql/queries/ProjectList"
 
 // Helpers
@@ -36,13 +36,10 @@ import _get from "lodash/get"
 
 export default {
     async asyncData({ $graphql, params, store }) {
-        const summaryData = await $graphql.default.request(
-            PROJECT_LISTING_PAGE,
-            {}
-        )
         const data = await $graphql.default.request(PROJECT_LIST, {})
+        console.log(data)
         return {
-            summaryData: _get(summaryData, "entries[0]", {}),
+            summaryData: _get(data, "entry", {}),
             page: _get(data, "entries", {}),
         }
     },
