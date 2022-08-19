@@ -1,5 +1,5 @@
 describe("Project Detail page", () => {
-    it("Visit a Project Detail Page", () => {
+    it("Visit Project Listing Page", () => {
         cy.visit("/projects")
 
         // UCLA Library brand
