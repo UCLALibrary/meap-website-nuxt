@@ -20,8 +20,8 @@
             class="section-cards"
             :items="parsedAssociatedTopics"
             title="Associated Topics"
-            button-text="All Services and Resources"
-            to="/resources"
+            button-text="All Resources"
+            to="/applicants/resources"
         />
     </main>
 </template>
