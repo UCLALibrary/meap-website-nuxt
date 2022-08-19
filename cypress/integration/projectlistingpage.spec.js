@@ -1,4 +1,4 @@
-describe("Project Detail page", () => {
+describe("Project Listing page", () => {
     it("Visit Project Listing Page", () => {
         cy.visit("/projects")
 
