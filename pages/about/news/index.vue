@@ -10,7 +10,7 @@
             :image="parsedBannerHeader.image"
             :title="parsedBannerHeader.title"
             :category="parsedBannerHeader.category"
-            :byline="parsedBannerHeader.articleStaff"
+            :byline="parsedBannerHeader.byline"
             :locations="parsedBannerHeader.locations"
             :description="parsedBannerHeader.text"
             :start-date="parsedBannerHeader.dateCreated"
@@ -74,6 +74,7 @@ export default {
                     to: `/about/news/${obj.to}`,
                     image: _get(obj, "heroImage[0].image[0]", {}),
                     category: _get(obj, "category[0].title", ""),
+                    byline: _get(obj, "articleStaff[0].title", ""),
                 }
             })
         },
@@ -103,7 +104,7 @@ export default {
 <style lang="scss" scoped>
 .page-news {
     .banner {
-        max-width: $container-l-main + px;
+        // max-width: $container-l-main + px;
         margin: 0 auto;
     }
 
