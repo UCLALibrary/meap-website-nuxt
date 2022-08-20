@@ -47,7 +47,7 @@ export default {
     async asyncData({ $graphql, params, store }) {
         // Do not remove testing live preview
         const data = await $graphql.default.request(GENERAL_CONTENT_DETAIL, {
-            slug: params.slug,
+            slug: params.parent,
         })
         return {
             page: _get(data, "entry", {}),
