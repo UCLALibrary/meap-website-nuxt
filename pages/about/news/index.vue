@@ -5,7 +5,6 @@
             :text="summaryData.summary"
         />
 
-        {{ parsedBannerHeader }}
         <banner-header
             :image="parsedBannerHeader.image"
             :title="parsedBannerHeader.title"
@@ -20,7 +19,6 @@
             :align-right="true"
             class="banner"
         />
-        {{ parsedSectionHighlight }}
         <section-teaser-highlight
             class="section"
             :items="parsedSectionHighlight"
