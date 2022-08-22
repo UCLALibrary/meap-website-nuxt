@@ -100,7 +100,8 @@ export default {
 .page-news {
     .banner {
         // max-width: $container-l-main + px;
-        margin: 0 auto;
+        margin: var(--space-2xl) auto;
+        // margin-bottom: var(--space-l);
     }
 
     .section-heading {
@@ -109,6 +110,9 @@ export default {
         margin-bottom: var(--space-m);
     }
     .section {
+    }
+    .divider {
+        margin-bottom: var(--space-xl);
     }
     .all-news-heading {
         @include step-1;
