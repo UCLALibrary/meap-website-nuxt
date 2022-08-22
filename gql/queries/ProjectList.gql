@@ -16,6 +16,7 @@ query ProjectList {
                     }
                 }
             }
+<<<<<<< HEAD
         }
     }
 
@@ -31,6 +32,8 @@ query ProjectList {
                 uri
                 externalResourceUrl
             }
+=======
+>>>>>>> df6588b (project page wip)
         }
     }
 }
