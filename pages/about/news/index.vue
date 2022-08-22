@@ -1,27 +1,25 @@
 <template>
     <main class="page page-news">
-        <h2>ENTRIES-- {{ entryCount }}</h2>
-        <!-- <banner-header
-            v-if="page.heroImage && page.heroImage.length == 1"
-            :image="page.heroImage[0].image[0]"
-            :title="page.title"
+        <masthead-secondary
+            :title="summaryData.title"
+            :text="summaryData.summary"
+        />
+
+        {{ parsedBannerHeader }}
+        <banner-header
+            :image="parsedBannerHeader.image"
+            :title="parsedBannerHeader.title"
             category="Library News"
-            :byline="parsedBylines"
-            :locations="locations"
-            :date-created="parsedDate"
-            :to="to"
-            :authors="authors"
+            :byline="parsedBannerHeader.authors"
+            :locations="parsedBannerHeader.locations"
+            :to="parsedBannerHeader.to"
             :align-right="true"
-        /> -->
+        />
 
         <!-- <section-teaser-highlight
             class="section"
             :items="highlightEvents"
         /> -->
-
-        <h2 class="entry-count">
-            Entry Count: {{ entryCount }}
-        </h2>
 
         <divider-way-finder
             class="divider"
@@ -42,30 +40,43 @@ import _get from "lodash/get"
 import format from "date-fns/format"
 
 // GQL
+import NEWS_LISTING_PAGE from "~/gql/queries/NewsListingPage"
 import ARTICLE_NEWS_LIST from "~/gql/queries/ArticleNewsList"
 
 export default {
     async asyncData({ $graphql, params }) {
-        const data = await $graphql.default.request(ARTICLE_NEWS_LIST, {
-            uri: params.path,
-        })
-
+        const summaryData = await $graphql.default.request(
+            NEWS_LISTING_PAGE,
+            {}
+        )
+        const data = await $graphql.default.request(ARTICLE_NEWS_LIST, {})
+        console.log(summaryData)
         return {
-            page: data,
+            summaryData: _get(summaryData, "entries[0]", {}),
+            page: _get(data, "entries", {}),
         }
     },
     computed: {
-        entryCount() {
-            return `${this.page.entryCount}`
-        },
-
-        parsedNewsList() {
-            return this.page.entries.map((obj) => {
+        parsedFeaturedNews() {
+            return this.summaryData.meapNewsListing.map((obj) => {
                 return {
                     ...obj,
                     to: `/about/news/${obj.to}`,
                     image: _get(obj, "heroImage[0].image[0]", null),
-                    authors: `${obj.fullName}`,
+                }
+            })
+        },
+        parsedBannerHeader() {
+            return this.parsedFeaturedNews[0]
+        },
+        parsedSectionHighlight() {},
+        parsedNewsList() {
+            return this.page.map((obj) => {
+                return {
+                    ...obj,
+                    to: `/about/news/${obj.to}`,
+                    image: _get(obj, "heroImage[0].image[0]", null),
+                    authors: "Ashton Prigge",
                 }
             })
         },
