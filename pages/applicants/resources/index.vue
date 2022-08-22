@@ -12,7 +12,6 @@
 
         <section-cards-with-illustrations
             :items="resourceList"
-            is-horizontal="true"
         />
 
         <divider-way-finder
