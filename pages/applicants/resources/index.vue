@@ -5,23 +5,30 @@
             :text="summaryData.text"
         />
 
-        <divider-way-finder
-            class="divider divider-first"
-            color="about"
-        />
+        <div
+            v-if="resourceList"
+            class="section"
+        >
+            <divider-way-finder
+                class="divider-way-finder"
+                color="about"
+            />
 
-        <section-cards-with-illustrations
-            :items="resourceList"
-        />
+            <section-cards-with-illustrations
+                class="section"
+                :items="resourceList"
+                :is-horizontal="true"
+            />
 
-        <divider-way-finder
-            class="divider divider-first"
-            color="about"
-        />
+            <divider-way-finder
+                class="divider-way-finder"
+                color="about"
+            />
+        </div>
 
         <block-call-to-action
             class="block-call-to-action"
-            :is-global="true"
+            :is-meap-global="true"
         />
     </div>
 </template>
