@@ -12,7 +12,7 @@
 
         <section-cards-with-illustrations
             :items="resourceList"
-            :isHorizontal= "true"
+            is-horizontal="true"
         />
 
         <divider-way-finder
@@ -21,14 +21,8 @@
         />
 
         <block-call-to-action
-            class="section"
-            svgName="search"
-            title="Have further questions?"
-            text="Get in touch"
-            name="Contact us"
-            to="https://google.com/map"
-            :isDark=false
-            :isSmallSize="isSmallSize"
+            class="block-call-to-action"
+            :is-global="true"
         />
     </div>
 </template>
