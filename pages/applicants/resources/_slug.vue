@@ -22,28 +22,18 @@
             :text="page.text"
         />
 
-        <divider-way-finder
-            color="help"
-            class="divider-way-finder"
-        />
+        <section-wrapper v-if="page.blocks.length">
+            <flexible-blocks
+                :blocks="page.blocks"
+            />
+        </section-wrapper>
 
-        <h2 class="more-info">
-            More Information
-        </h2>
-
-        <flexible-blocks
-            class="content"
-            :blocks="page.blocks"
-        />
-
-        <divider-way-finder
-            color="help"
-            class="divider-way-finder"
-        />
+        <section-wrapper v-if="page.blocks.length && page.parsedAssociatedTopics.length">
+            <divider-way-finder color="help" />
+        </section-wrapper>
 
         <section-cards-with-illustrations
             v-if="parsedAssociatedTopics.length"
-            class="section-cards"
             :items="parsedAssociatedTopics"
             title="Associated Topics"
             button-text="All Services and Resources"
@@ -51,7 +41,6 @@
         />
 
         <block-call-to-action
-            class="block-call-to-action"
             :is-global="true"
         />
     </section>
@@ -117,25 +106,6 @@ export default {
         max-width: $container-xl-full-width + px;
         margin-top: 0; // TODO do this change in component later
         margin: var(--unit-gutter) auto;
-    }
-    .banner-text + .divider-way-finder {
-        margin: 0 auto var(--space-2xl);
-    }
-    .divider-way-finder {
-        max-width: $container-l-main + px;
-        margin: var(--space-3xl) auto;
-    }
-    .content {
-        margin: 0 auto;
-    }
-    .section-cards {
-        margin: var(--space-3xl) auto;
-    }
-    .more-info {
-        @include visually-hidden;
-    }
-    .block-call-to-action {
-        margin: var(--space-3xl) auto;
     }
 }
 </style>

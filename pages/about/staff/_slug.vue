@@ -4,31 +4,34 @@
         <!-- no search on this page -->
         <nav-breadcrumb :title="page.entry.title" />
 
-        <block-staff-detail
-            class="staff-detail-block"
-            :image="parsedImage"
-            :staff-name="parsedStaffName"
-            :alternative-full-name="parsedAlternativeFullName"
-            :language="parsedLanguage"
-            :job-title="page.entry.jobTitle"
-            :departments="page.entry.departments"
-            :locations="page.entry.locations"
-            :pronouns="page.entry.pronouns"
-            :email="page.entry.email"
-            :phone="page.entry.phone"
-            :consultation="page.entry.consultation"
-            :topics="page.entry.topics"
-            :academic-departments="page.entry.academicDepartments"
-            :biography="page.entry.biography"
-        />
+        <section-wrapper>
+            <block-staff-detail
+                class="staff-detail-block"
+                :image="parsedImage"
+                :staff-name="parsedStaffName"
+                :alternative-full-name="parsedAlternativeFullName"
+                :language="parsedLanguage"
+                :job-title="page.entry.jobTitle"
+                :departments="page.entry.departments"
+                :locations="page.entry.locations"
+                :pronouns="page.entry.pronouns"
+                :email="page.entry.email"
+                :phone="page.entry.phone"
+                :consultation="page.entry.consultation"
+                :topics="page.entry.topics"
+                :academic-departments="page.entry.academicDepartments"
+                :biography="page.entry.biography"
+            />
+        </section-wrapper>
 
-
-        <section
-            v-if="
-                parsedItems.length ||
-                    page.entry.publications ||
-                    page.entry.orcid
-            "
+        <section-wrapper v-if="(page.entry.publications || page.entry.orcid)" theme="divider">
+            <divider-way-finder
+                class="divider divider-first"
+                color="about"
+            />
+        </section-wrapper>
+        <section-wrapper
+            v-if="(page.entry.publications || page.entry.orcid)"
             class="selected-articles"
         >
             <section-staff-orcid-publications
@@ -36,28 +39,26 @@
                 :orcid="page.entry.orcid"
                 :publications="page.entry.publications"
             />
+        </section-wrapper>
 
+        <section-wrapper v-if="parsedItems.length" theme="divider">
             <divider-way-finder
-                v-if="
-                    parsedItems.length &&
-                        (page.entry.publications || page.entry.orcid)
-                "
                 class="divider divider-first"
                 color="about"
             />
-
+        </section-wrapper>
+        <section-wrapper
+            v-if="parsedItems.length"
+            class="selected-articles"
+        >
             <section-staff-article-list
                 v-if="parsedItems.length"
                 class="staff-article-list-section"
                 section-title="Articles"
                 :items="parsedItems"
             />
-        </section>
+        </section-wrapper>
 
-        <divider-way-finder
-                class="divider divider-first"
-                color="about"
-            />
         <!-- this is different from flexible page blocks ctacontentwidth and will be hardcoded where required -->
         <block-call-to-action
             class="section block-call-to-action"
@@ -131,14 +132,7 @@ export default {
 
 <style lang="scss" scoped>
 .page-staff-detail {
-    .staff-detail-block {
-        margin-left: auto;
-        margin-right: auto;
-    }
-
     .selected-articles {
-        margin: var(--space-3xl) auto;
-
         ::v-deep .divider .dotted {
             border-color: var(--color-secondary-grey-03);
         }

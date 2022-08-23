@@ -3,27 +3,7 @@
         <masthead-secondary title="Staff Directory">
         </masthead-secondary>
 
-        <div class="search-container">
-            <div class="empty-search-box"></div>
-            <div class="input-indicator"></div>
-            <div class="filters">
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
-            <!-- TODO Add SearchGenric here when complete
-                 Filter by location, department, subject libarian -->
-            <!-- <search-generic search-type="about"
-                    :filters="searchFilters.filters"
-                    :view-modes="searchFilters.views"
-                    class="generic-search"
-                    @view-mode-change="viewModeChanger"
-            /> -->
-        </div>
-
-        <divider-way-finder class="divider divider-way-finder" />
-
-        <section class="browse-by">
+        <section-wrapper class="browse-by">
             <h2 class="section-heading">Browse by Last Name</h2>
             <!-- TODO Add Browse by A-Z links -->
             <ul class="browse-by-options">
@@ -55,9 +35,12 @@
                 <li>Z</li>
                 <!-- <li>View All</li> -->
             </ul>
-        </section>
+        </section-wrapper>
 
-        <section-staff-list :items="parsedStaffList" />
+        <section-wrapper theme="divider"><divider-way-finder class="divider divider-way-finder" /></section-wrapper>
+        <section-wrapper>
+            <section-staff-list :items="parsedStaffList" />
+        </section-wrapper>
     </main>
 </template>
 
@@ -96,71 +79,6 @@ export default {
 
 <style lang="scss" scoped>
 .page-staff {
-    .search-container {
-        position: relative;
-        width: $container-l-cta + px;
-        // height: 240px;
-        background-color: var(--color-white);
-        margin: 0 auto;
-        margin-top: -96px;
-        z-index: 10;
-        border-radius: $rounded-slightly + px;
-
-        padding: var(--space-l) var(--space-xl);
-
-        display: flex;
-        justify-content: flex-start;
-        flex-direction: column;
-        flex-wrap: wrap;
-
-        .empty-search-box {
-            background: var(--color-primary-blue-01);
-            width: 100%;
-            height: var(--space-2xl);
-            // margin-bottom: var(--space-s);
-        }
-
-        .input-indicator {
-            width: 100%;
-            height: 2px;
-            border-bottom: 2px solid var(--color-default-cyan-03);
-            margin: var(--space-s) auto;
-        }
-
-        .filters {
-            display: flex;
-            flex-direction: row;
-            gap: var(--space-xs);
-
-            div {
-                background: var(--color-primary-blue-03);
-                height: var(--space-2xl);
-                // width: calc((100% / 3) - (var(--space-xs) * 2));
-                flex-grow: 1;
-            }
-        }
-
-        @media #{$medium} {
-            width: 100%;
-            margin-top: 0;
-        }
-
-        @media #{$small} {
-            .filters {
-                flex-direction: column;
-            }
-        }
-    }
-
-    ::v-deep .divider-way-finder {
-        margin: var(--space-m) auto var(--space-xl);
-    }
-
-    .browse-by {
-        max-width: $container-l-main + px;
-        margin: 0 auto var(--space-xl);
-    }
-
     .section-heading {
         @include step-2;
         color: var(--color-primary-blue-03);
@@ -175,21 +93,7 @@ export default {
         color: var(--color-primary-blue-03);
     }
 
-    @media #{$medium} {
-        .search-container {
-            margin-top: -64px;
-            width: calc(100% - (var(--unit-gutter) * 2));
-        }
-        .browse-by {
-            padding: 0 var(--unit-gutter);
-        }
-    }
-
     @media #{$small} {
-        .search-container {
-            margin-top: -48px;
-        }
-
         .browse-by-options {
             flex-wrap: wrap;
             justify-content: flex-start;
