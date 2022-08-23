@@ -10,7 +10,6 @@ fragment BlockCardWithImageFragment on ElementInterface {
             typeHandle
             contentLink {
                 id
-                # category: typeHandle
                 contentType: sectionHandle
                 to: uri
                 title
