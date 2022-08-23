@@ -67,7 +67,7 @@ export default {
                     to: `/about/news/${obj.to}`,
                     image: _get(obj, "heroImage[0].image[0]", {}),
                     category: _get(obj, "category[0].title", ""),
-                    byline: _get(obj, "articleStaff", ""),
+                    byline: _get(obj, "articleStaff", []),
                     bylineOne: _get(obj, "articleStaff[0].title", ""),
                     bylineTwo: _get(obj, "dateCreated", ""),
                 }
