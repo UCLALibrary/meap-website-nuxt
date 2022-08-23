@@ -60,7 +60,7 @@ export default {
             return this.page.map((obj) => {
                 return {
                     ...obj,
-                    to: `/${obj.to}`,
+                    to: `/applicants/resources/${obj.to}`,
                     image: _get(obj, "image[0].image[0]", {}),
                 }
             })
