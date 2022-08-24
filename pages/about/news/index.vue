@@ -9,6 +9,7 @@
                 Highlighted News
             </h2>
         </section-wrapper>
+
         <banner-header
             :image="parsedBannerHeader.image"
             :title="parsedBannerHeader.title"
@@ -42,6 +43,7 @@
                 section-title="All News"
             />
         </section-wrapper>
+
         <section-wrapper theme="divider">
             <divider-way-finder
                 class="divider"
@@ -120,19 +122,13 @@ export default {
 
 <style lang="scss" scoped>
 .page-news {
-    .section-header {
-        // margin-top: var(--space-3xl);
-        // margin-bottom: var(--space-xl);
-    }
     .section-title {
         @include step-4;
         color: var(--color-primary-blue-03);
-        // max-width: $container-l-main + px;
     }
     .banner {
         max-width: 992px;
         margin: 0 auto;
-        margin-bottom: var(--space-2xl);
     }
 }
 </style>
