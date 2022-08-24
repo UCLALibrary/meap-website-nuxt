@@ -18,6 +18,9 @@ query ArticleNewsList {
                     }
                 }
             }
+            category: articleCategories {
+                title
+            }
             description: summary
             authors: staffMember {
                 id

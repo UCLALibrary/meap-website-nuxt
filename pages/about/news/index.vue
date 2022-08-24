@@ -4,7 +4,11 @@
             :title="summaryData.title"
             :text="summaryData.summary"
         />
-
+        <div class="section-header">
+            <h2 class="section-title">
+                Highlighted News
+            </h2>
+        </div>
         <banner-header
             :image="parsedBannerHeader.image"
             :title="parsedBannerHeader.title"
@@ -12,8 +16,7 @@
             :byline="parsedBannerHeader.byline"
             :locations="parsedBannerHeader.locations"
             :description="parsedBannerHeader.text"
-            :start-date="parsedBannerHeader.dateCreated"
-            :end-date="parsedBannerHeader.dateCreated"
+            :date-created="parsedBannerHeader.dateCreated"
             :to="parsedBannerHeader.to"
             prompt="Read More"
             :align-right="true"
@@ -67,6 +70,7 @@ export default {
                     to: `/about/news/${obj.to}`,
                     image: _get(obj, "heroImage[0].image[0]", {}),
                     category: _get(obj, "category[0].title", ""),
+                    dateCreated: _get(obj, "dateCreated", ""),
                     byline: _get(obj, "articleStaff", []),
                     bylineOne: _get(obj, "articleStaff[0].title", ""),
                     bylineTwo: _get(obj, "dateCreated", ""),
@@ -77,20 +81,26 @@ export default {
             return this.parsedFeaturedNews[0]
         },
         parsedSectionHighlight() {
-            return this.parsedFeaturedNews.slice(1)
+            return this.parsedFeaturedNews.slice(1).map((obj) => {
+                return {
+                    ...obj,
+
+                    bylineTwo:
+                        obj.bylineTwo != null
+                            ? format(new Date(obj.bylineTwo), "MMMM d, yyyy")
+                            : "",
+                }
+            })
         },
         parsedNewsList() {
             return this.page.map((obj) => {
                 return {
                     ...obj,
                     to: `/about/news/${obj.to}`,
-                    image: _get(obj, "heroImage[0].image[0]", null),
+                    image: _get(obj, "heroImage[0].image[0]", {}),
+                    category: _get(obj, "category[0].title", ""),
                 }
             })
-        },
-
-        parsedDate() {
-            return format(new Date(this.page.dateCreated), "MMMM d, Y")
         },
     },
 }
@@ -98,10 +108,19 @@ export default {
 
 <style lang="scss" scoped>
 .page-news {
+    .section-header {
+        margin-top: var(--space-3xl);
+        margin-bottom: var(--space-xl);
+    }
+    .section-title {
+        @include step-4;
+        color: var(--color-primary-blue-03);
+        margin: 0 auto;
+        max-width: $container-l-main + px;
+    }
     .banner {
-        // max-width: $container-l-main + px;
+        max-width: 992px;
         margin: var(--space-2xl) auto;
-        // margin-bottom: var(--space-l);
     }
 
     .section-heading {
@@ -110,6 +129,7 @@ export default {
         margin-bottom: var(--space-m);
     }
     .section {
+        // max-width: $container-l-main + px;
     }
     .divider {
         margin-bottom: var(--space-xl);
