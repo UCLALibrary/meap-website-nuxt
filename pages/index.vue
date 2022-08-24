@@ -115,9 +115,7 @@ import MEAP_HOMEPAGE from "~/gql/queries/HomePage"
 // Helpers
 import _get from "lodash/get"
 export default {
-    async asyncData({ $graphql, params }) {
-        // Do not remove testing live preview
-
+    async asyncData({ $graphql, params, store }) {
         const data = await $graphql.default.request(MEAP_HOMEPAGE, {
             slug: params.slug,
         })
