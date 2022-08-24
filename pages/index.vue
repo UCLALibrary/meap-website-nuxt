@@ -45,7 +45,7 @@
                 <nuxt-link
                     v-if="featuredHighlightedProjects.length"
                     class="button-more"
-                    to="/funded-projects"
+                    to="/projects"
                 >
                     <button-more text="Explore Projects" />
                 </nuxt-link>
