@@ -17,8 +17,8 @@
             :description="parsedBannerHeader.text"
             :date-created="parsedBannerHeader.dateCreated"
             :to="parsedBannerHeader.to"
-            prompt="Read More"
             :align-right="true"
+            prompt="Read More"
             class="banner"
         />
         <section-wrapper>
