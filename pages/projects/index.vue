@@ -78,7 +78,7 @@ export default {
             })
         },
         parsedAssociatedTopics() {
-            return this.summaryData.featuredMeapResources.map((obj) => {
+            return this.summaryData.featuredMeapResourcesListing.map((obj) => {
                 return {
                     ...obj,
                     to: obj.externalResourceUrl
