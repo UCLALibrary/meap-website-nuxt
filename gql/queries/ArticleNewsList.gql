@@ -37,6 +37,7 @@ query ArticleNewsList {
             meapNewsListing {
                 id
                 title
+                to: slug
                 text: summary
                 articleStaff: staffMember {
                     id

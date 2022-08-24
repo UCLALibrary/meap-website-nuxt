@@ -4,11 +4,11 @@
             :title="summaryData.title"
             :text="summaryData.summary"
         />
-        <div class="section-header">
+        <section-wrapper>
             <h2 class="section-title">
                 Highlighted News
             </h2>
-        </div>
+        </section-wrapper>
         <banner-header
             :image="parsedBannerHeader.image"
             :title="parsedBannerHeader.title"
@@ -22,20 +22,32 @@
             :align-right="true"
             class="banner"
         />
-        <section-teaser-highlight
-            class="section"
-            :items="parsedSectionHighlight"
-        />
+        <section-wrapper>
+            <section-teaser-highlight
+                class="section"
+                :items="parsedSectionHighlight"
+            />
+        </section-wrapper>
 
-        <divider-way-finder
-            class="divider"
-            color="about"
-        />
+        <section-wrapper theme="divider">
+            <divider-way-finder
+                class="divider"
+                color="about"
+            />
+        </section-wrapper>
 
-        <section-staff-article-list
-            :items="parsedNewsList"
-            section-title="All News"
-        />
+        <section-wrapper>
+            <section-staff-article-list
+                :items="parsedNewsList"
+                section-title="All News"
+            />
+        </section-wrapper>
+        <section-wrapper theme="divider">
+            <divider-way-finder
+                class="divider"
+                color="about"
+            />
+        </section-wrapper>
         <block-call-to-action :is-meap-global="true" />
     </main>
 </template>
@@ -109,42 +121,18 @@ export default {
 <style lang="scss" scoped>
 .page-news {
     .section-header {
-        margin-top: var(--space-3xl);
-        margin-bottom: var(--space-xl);
+        // margin-top: var(--space-3xl);
+        // margin-bottom: var(--space-xl);
     }
     .section-title {
         @include step-4;
         color: var(--color-primary-blue-03);
-        margin: 0 auto;
-        max-width: $container-l-main + px;
+        // max-width: $container-l-main + px;
     }
     .banner {
         max-width: 992px;
-        margin: var(--space-2xl) auto;
-    }
-
-    .section-heading {
-        @include step-2;
-        color: var(--color-primary-blue-03);
-        margin-bottom: var(--space-m);
-    }
-    .section {
-        // max-width: $container-l-main + px;
-    }
-    .divider {
-        margin-bottom: var(--space-xl);
-    }
-    .all-news-heading {
-        @include step-1;
-        color: var(--color-primary-blue-03);
-    }
-
-    .news-item-link {
-        list-style: none;
-        display: flex;
-        justify-content: space-between;
-        @include step-1;
-        color: var(--color-primary-blue-03);
+        margin: 0 auto;
+        margin-bottom: var(--space-2xl);
     }
 }
 </style>
