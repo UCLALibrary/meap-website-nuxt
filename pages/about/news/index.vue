@@ -4,11 +4,11 @@
             :title="summaryData.title"
             :text="summaryData.summary"
         />
-        <section-wrapper>
+        <div class="section-header">
             <h2 class="section-title">
                 Highlighted News
             </h2>
-        </section-wrapper>
+        </div>
 
         <banner-header
             :image="parsedBannerHeader.image"
@@ -122,9 +122,15 @@ export default {
 
 <style lang="scss" scoped>
 .page-news {
+    .section-header {
+        margin-top: var(--space-3xl);
+        margin-bottom: var(--space-xl);
+    }
     .section-title {
         @include step-4;
         color: var(--color-primary-blue-03);
+        margin: 0 auto;
+        max-width: $container-l-main + px;
     }
     .banner {
         max-width: 992px;
