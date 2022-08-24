@@ -4,16 +4,14 @@
             :title="summaryData.title"
             :text="summaryData.summary"
         />
-        <div class="section-header">
-            <h2 class="section-title">
-                Highlighted News
-            </h2>
-        </div>
+        <h2 class="visually-hidden">
+            Highlighted News
+        </h2>
 
         <banner-header
             :image="parsedBannerHeader.image"
             :title="parsedBannerHeader.title"
-            :category="parsedBannerHeader.category"
+            category="Highlighted News"
             :byline="parsedBannerHeader.byline"
             :locations="parsedBannerHeader.locations"
             :description="parsedBannerHeader.text"
@@ -122,19 +120,13 @@ export default {
 
 <style lang="scss" scoped>
 .page-news {
-    .section-header {
-        margin-top: var(--space-3xl);
-        margin-bottom: var(--space-xl);
-    }
-    .section-title {
-        @include step-4;
-        color: var(--color-primary-blue-03);
-        margin: 0 auto;
-        max-width: $container-l-main + px;
+    .visually-hidden {
+        @include visually-hidden;
     }
     .banner {
-        max-width: 992px;
         margin: 0 auto;
+        margin-top: var(--space-3xl);
+        margin-bottom: var(--space-xl);
     }
 }
 </style>
