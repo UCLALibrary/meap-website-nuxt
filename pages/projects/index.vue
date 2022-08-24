@@ -7,7 +7,9 @@
 
         <section-wrapper>
             <div class="section-header">
-                <h2 class="section-title">All Projects</h2>
+                <h2 class="section-title">
+                    All Projects
+                </h2>
             </div>
             <section-teaser-card :items="projectList" />
         </section-wrapper>
@@ -28,7 +30,10 @@
                 to="/applicants/resources"
             />
         </section-wrapper>
-        <section-teaser-card class="content" :items="projectList" />
+        <section-teaser-card
+            class="content"
+            :items="projectList"
+        />
         <divider-way-finder color="help" />
         <section-cards-with-illustrations
             v-if="parsedAssociatedTopics.length"
@@ -43,28 +48,14 @@
 
 <script>
 // GQL
-import PROJECT_LISTING_PAGE from "~/gql/queries/ProjectListingPage"
 import PROJECT_LIST from "~/gql/queries/ProjectList"
-
 // Helpers
 import _get from "lodash/get"
-
 export default {
     async asyncData({ $graphql, params, store }) {
-<<<<<<< HEAD
         const data = await $graphql.default.request(PROJECT_LIST, {})
         return {
             summaryData: _get(data, "entry", {}),
-=======
-        // Do not remove testing live preview
-        const summaryData = await $graphql.default.request(
-            PROJECT_LISTING_PAGE,
-            {}
-        )
-        const data = await $graphql.default.request(PROJECT_LIST, {})
-        return {
-            summaryData: _get(summaryData, "entries[0]", {}),
->>>>>>> cfbf352 (update queries)
             page: _get(data, "entries", {}),
         }
     },
@@ -108,28 +99,6 @@ export default {
     .section-title {
         @include step-4;
         color: var(--color-primary-blue-03);
-<<<<<<< HEAD
-=======
-        margin: 0 auto;
-        max-width: $container-l-main + px;
     }
-    .content {
-        margin: 0 auto;
-    }
-
-    .section-cards {
-        margin: var(--space-3xl) auto;
-    }
-<<<<<<< HEAD
-
-    @media #{$medium} {
-        .content,
-        .section-title {
-            padding: 0 var(--unit-gutter);
-        }
->>>>>>> 0507e24 (rebase)
-    }
-=======
->>>>>>> cfbf352 (update queries)
 }
 </style>
