@@ -13,7 +13,7 @@
         />
 
         <banner-header
-            v-if="page.heroImage && page.heroImage.length == 1"
+            v-if="page.heroImage && page.heroImage.length >= 1"
             :image="page.heroImage[0].image[0]"
             :to="parsedButtonTo"
             :prompt="parsedButtonText"
@@ -22,18 +22,18 @@
             :text="page.text"
         />
 
-        <section-wrapper v-if="page.blocks.length">
+        <section-wrapper v-if="(page.blocks && page.blocks.length)">
             <flexible-blocks
                 :blocks="page.blocks"
             />
         </section-wrapper>
 
-        <section-wrapper v-if="page.blocks.length && page.parsedAssociatedTopics.length">
+        <section-wrapper v-if="(page.blocks && page.blocks.length) && (page.parsedAssociatedTopics && page.parsedAssociatedTopics.length)">
             <divider-way-finder color="help" />
         </section-wrapper>
 
         <section-cards-with-illustrations
-            v-if="parsedAssociatedTopics.length"
+            v-if="(parsedAssociatedTopics && parsedAssociatedTopics.length)"
             :items="parsedAssociatedTopics"
             title="Associated Topics"
             button-text="All Services and Resources"

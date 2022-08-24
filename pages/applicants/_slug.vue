@@ -17,10 +17,10 @@
             />
         </section-wrapper>
 
-        <section-wrapper theme="divider" v-if="page.richText && page.helpTopicBlocks.length">
+        <section-wrapper theme="divider" v-if="page.richText && (page.helpTopicBlocks && page.helpTopicBlocks.length)">
             <divider-way-finder color="about" />
         </section-wrapper>
-        <section-wrapper v-if="page.helpTopicBlocks.length">
+        <section-wrapper v-if="(page.helpTopicBlocks && page.helpTopicBlocks.length)">
             <div
                 v-for="(block, index) in page.helpTopicBlocks"
                 :key="`HelpTopicBlocksKey${index}`"
@@ -35,11 +35,11 @@
             </div>
         </section-wrapper>
 
-        <section-wrapper theme="divider" v-if="(page.richText || page.helpTopicBlocks.length) && page.blocks.length">
+        <section-wrapper theme="divider" v-if="(page.richText || (page.helpTopicBlocks && page.helpTopicBlocks.length)) && (page.blocks && page.blocks.length)">
             <divider-way-finder color="about" />
         </section-wrapper>
         <flexible-blocks
-            v-if="page.blocks.length"
+            v-if="(page.blocks && page.blocks.length)"
             class="flexible-content"
             :blocks="page.blocks"
         />

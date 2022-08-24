@@ -14,10 +14,10 @@
             <section-teaser-card :items="projectList" />
         </section-wrapper>
 
-        <section-wrapper v-if="parsedAssociatedTopics.length" theme="divider" >
+        <section-wrapper v-if="(parsedAssociatedTopics && parsedAssociatedTopics.length)" theme="divider" >
             <divider-way-finder color="help" />
         </section-wrapper>
-        <section-wrapper v-if="parsedAssociatedTopics.length" >
+        <section-wrapper v-if="(parsedAssociatedTopics && parsedAssociatedTopics.length)" >
             <section-cards-with-illustrations
                 :items="parsedAssociatedTopics"
                 title="Associated Topics"
