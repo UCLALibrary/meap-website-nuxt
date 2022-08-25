@@ -9,7 +9,7 @@ fragment BlockSimpleCardsFragment on ElementInterface {
             title: titleGeneral
             summary
             contentLink {
-                slug
+                uri
                 title
                 summary
                 externalResourceUrl
