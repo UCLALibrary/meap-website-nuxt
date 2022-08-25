@@ -66,10 +66,10 @@ export default {
             })
         },
         parsedAssociatedTopics() {
-            if (!this.summaryData.featuredMeapResources) {
+            if (!this.summaryData.featuredMeapResourcesListing) {
                 return []
             }
-            return this.summaryData.featuredMeapResources.map((obj) => {
+            return this.summaryData.featuredMeapResourcesListing.map((obj) => {
                 return {
                     ...obj,
                     to: obj.externalResourceUrl
