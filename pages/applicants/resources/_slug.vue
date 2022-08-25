@@ -41,8 +41,8 @@
             v-if="parsedAssociatedTopics && parsedAssociatedTopics.length"
             :items="parsedAssociatedTopics"
             title="Associated Topics"
-            button-text="All Services and Resources"
-            to="/help/services-resources"
+            button-text="All Resources"
+            to="/applicants/resources"
         />
 
         <block-call-to-action :is-global="true" />
