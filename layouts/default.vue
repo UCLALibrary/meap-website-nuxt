@@ -47,7 +47,7 @@ export default {
     data() {
         return {
             pageMeta: {
-                title: "UCLA Library",
+                title: "MEAP",
             },
         }
     },
@@ -55,7 +55,7 @@ export default {
         htmlAttrs: {
             lang: "en",
         },
-        titleTemplate: "%s | UCLA Library",
+        titleTemplate: "%s | MEAP",
         meta: [
             { charset: "utf-8" },
             {
@@ -140,7 +140,7 @@ export default {
     z-index: 200;
 
     position: relative;
-    height: 128px;
+    height: 168px;
 
     .primary {
         position: absolute;
