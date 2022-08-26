@@ -10,7 +10,7 @@
             :title="page.title"
             :text="page.text"
             :category="parsedCategory"
-            :byline="parsedBylines"
+            :byline="page.byline"
             :locations="page.locations"
             :date-created="page.dateCreated"
             :align-right="true"
@@ -52,9 +52,6 @@ export default {
         }
     },
     computed: {
-        parsedBylines() {
-            return _get(this.page, "byline", "[]")
-        },
         parsedCategory() {
             return _get(this.page, "category[0].title", "")
         },
