@@ -11,7 +11,6 @@
             :title="page.title"
             :text="page.text"
             :byline="page.byline"
-            :date-created="page.dateCreated"
         />
 
         <banner-header
