@@ -4,13 +4,13 @@
         class="page page-news-detail"
     >
         <nav-breadcrumb :title="page.title" />
-
         <banner-header
             v-if="page.heroImage && page.heroImage.length == 1"
             :image="page.heroImage[0].image[0]"
             :title="page.title"
-            category="Library News"
-            :byline="page.staffMember.title"
+            :text="page.text"
+            :category="parsedCategory"
+            :byline="parsedBylines"
             :locations="page.locations"
             :date-created="page.dateCreated"
             :align-right="true"
@@ -32,7 +32,7 @@ import format from "date-fns/format"
 import ARTICLE_NEWS_DETAIL from "~/gql/queries/ArticleNewsDetail"
 
 export default {
-    async asyncData({ $graphql, params, store  }) {
+    async asyncData({ $graphql, params, store }) {
         // Do not remove testing live preview
         console.log(
             "fetching graphql data for News detail from Craft for live preview"
@@ -53,15 +53,10 @@ export default {
     },
     computed: {
         parsedBylines() {
-            if (this.page.byline)
-                return [
-                    `${this.page.byline.title}`,
-                ]
-            return []
+            return _get(this.page, "byline", "[]")
         },
-
-        parsedDate() {
-            return format(new Date(this.page.dateCreated), "MMMM d, Y")
+        parsedCategory() {
+            return _get(this.page, "category[0].title", "")
         },
     },
 }
