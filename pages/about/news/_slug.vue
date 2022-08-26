@@ -4,6 +4,16 @@
         class="page page-news-detail"
     >
         <nav-breadcrumb :title="page.title" />
+        <banner-text
+            v-if="!page.heroImage || page.heroImage.length == 0"
+            class="banner-text"
+            :category="parsedCategory"
+            :title="page.title"
+            :text="page.text"
+            :byline="page.byline"
+            :date-created="page.dateCreated"
+        />
+
         <banner-header
             v-if="page.heroImage && page.heroImage.length == 1"
             :image="page.heroImage[0].image[0]"
