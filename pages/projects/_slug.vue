@@ -1,5 +1,8 @@
 <template lang="html">
-    <section class="page-project-detail">
+    <main
+        id="main"
+        class="page-project-detail"
+    >
         <nav-breadcrumb
             :title="page.title"
             class="nav-breadcrumb"
@@ -113,7 +116,7 @@
             class="block-call-to-action"
             :is-meap-global="true"
         />
-    </section>
+    </main>
 </template>
 
 <script>

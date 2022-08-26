@@ -1,6 +1,9 @@
 <template lang="html">
-    <section class="page-news-detail">
-        <nav-breadcrumb :title="page.title" /> 
+    <main
+        id="main"
+        class="page-news-detail"
+    >
+        <nav-breadcrumb :title="page.title" />
 
         <banner-header
             v-if="page.heroImage && page.heroImage.length == 1"
@@ -19,7 +22,7 @@
                 :blocks="page.blocks"
             />
         </section-wrapper>
-    </section>
+    </main>
 </template>
 
 <script>
@@ -31,7 +34,7 @@ import format from "date-fns/format"
 import ARTICLE_NEWS_DETAIL from "~/gql/queries/ArticleNewsDetail"
 
 export default {
-    async asyncData({ $graphql, params, store  }) {
+    async asyncData({ $graphql, params, store }) {
         // Do not remove testing live preview
         console.log(
             "fetching graphql data for News detail from Craft for live preview"
@@ -52,10 +55,7 @@ export default {
     },
     computed: {
         parsedBylines() {
-            if (this.page.byline)
-                return [
-                    `${this.page.byline.title}`,
-                ]
+            if (this.page.byline) return [`${this.page.byline.title}`]
             return []
         },
 

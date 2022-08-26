@@ -1,5 +1,8 @@
 <template>
-    <main class="page page-news">
+    <main
+        id="main"
+        class="page page-news"
+    >
         <masthead-secondary
             :title="summaryData.title"
             :text="summaryData.summary"

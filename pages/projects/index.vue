@@ -1,5 +1,8 @@
 <template lang="html">
-    <main class="page page-project-list">
+    <main
+        id="main"
+        class="page page-project-list"
+    >
         <masthead-secondary
             :title="summaryData.projectListTitle"
             :text="summaryData.projectListSummary"

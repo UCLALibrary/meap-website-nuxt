@@ -1,5 +1,8 @@
 <template lang="html">
-    <section class="page">
+    <main
+        id="main"
+        class="page"
+    >
         <masthead-secondary
             title="Modern Endangered Archives Program"
             text="Our grants enable digitization and access to at-risk cultural heritage collections from around the world. Explore our projects and learn more about available grant opportunities."
@@ -105,7 +108,7 @@
                 <button-more text="See all news" />
             </nuxt-link>
         </div>
-    </section>
+    </main>
 </template>
 
 <script>

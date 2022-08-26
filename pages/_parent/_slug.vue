@@ -1,5 +1,8 @@
 <template lang="html">
-    <main class="page page-general-content">
+    <main
+        id="main"
+        class="page page-general-content"
+    >
         <nav-breadcrumb
             :title="page.title"
             class="breadcrumb"

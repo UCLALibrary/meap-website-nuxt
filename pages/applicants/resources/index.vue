@@ -1,5 +1,8 @@
 <template lang="html">
-    <div class="page page-resources-list">
+    <main
+        id="main"
+        class="page page-resources-list"
+    >
         <masthead-secondary
             :title="summaryData.title"
             :text="summaryData.text"
@@ -30,7 +33,7 @@
             class="block-call-to-action"
             :is-meap-global="true"
         />
-    </div>
+    </main>
 </template>
 <script>
 // GQL
