@@ -134,7 +134,7 @@ export default {
         }
     },
     head() {
-        let title = "Modern Endagered Archives"
+        let title = "Modern Endagered Archives Program"
         return {
             title: title,
         }
