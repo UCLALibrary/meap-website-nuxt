@@ -134,7 +134,7 @@ export default {
         }
     },
     head() {
-        let title = this.page ? this.page.title : "... loading"
+        let title = "Modern Endagered Archives"
         return {
             title: title,
         }
