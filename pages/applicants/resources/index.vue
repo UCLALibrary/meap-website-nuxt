@@ -1,12 +1,25 @@
 <template lang="html">
-    <div class="page page-resources-list">
+    <main
+        id="main"
+        class="page page-resources-list"
+    >
         <masthead-secondary
             :title="summaryData.title"
             :text="summaryData.text"
         />
 
-        <div
-            v-if="sortedData"
+        <section-wrapper
+            v-if="resourceList"
+            class="section"
+        >
+            <divider-way-finder
+                class="divider-way-finder"
+                color="about"
+            />
+        </section-wrapper>
+
+        <section-wrapper
+            v-if="resourceList"
             class="section"
         >
             <section-cards-with-illustrations
@@ -14,18 +27,23 @@
                 :items="sortedData"
                 :is-horizontal="true"
             />
+        </section-wrapper>
 
+        <section-wrapper
+            v-if="resourceList"
+            class="section"
+        >
             <divider-way-finder
                 class="divider-way-finder"
                 color="about"
             />
-        </div>
+        </section-wrapper>
 
         <block-call-to-action
             class="block-call-to-action"
             :is-meap-global="true"
         />
-    </div>
+    </main>
 </template>
 <script>
 // Helpers
