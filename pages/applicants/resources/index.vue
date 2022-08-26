@@ -59,11 +59,14 @@ import _get from "lodash/get"
 export default {
     async asyncData({ $graphql, params, store }) {
         const data = await $graphql.default.request(RESOURCE_LIST, {})
-        const externalData = await $graphql.default.request(RESOURCE_EXTERNAL_LIST, {})
+        const externalData = await $graphql.default.request(
+            RESOURCE_EXTERNAL_LIST,
+            {}
+        )
         return {
             summaryData: _get(data, "entry", {}),
             page: _get(data, "entries", {}),
-            externalResourceData: _get(externalData, "entries", {})
+            externalResourceData: _get(externalData, "entries", {}),
         }
     },
     head() {
@@ -95,11 +98,10 @@ export default {
             })
         },
         sortedData() {
-            return this.allData.sort( sortByTitle )
-        }
-    }
+            return this.allData.sort(sortByTitle)
+        },
+    },
 }
-
 </script>
 
 <style lang="scss" scoped>
@@ -128,6 +130,5 @@ export default {
             padding: 0 var(--unit-gutter);
         }
     }
-    }
+}
 </style>
-</template>
