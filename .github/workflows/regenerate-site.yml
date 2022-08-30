@@ -4,13 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       siteMap:
-        description: 'Sitemap'     
+        description: 'Environment'     
         required: true
-        default: 'sitemap'
-      craftToken:
-        description: 'Craft Token'     
-        required: true
-        default: 'craft_token'
+        default: 'test or prod'
 
 jobs:
   nuxt-deploy:
