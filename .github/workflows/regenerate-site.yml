@@ -1,12 +1,19 @@
 name: Regenerate static site when craft data is updated.
 
 on:
-  push:
   workflow_dispatch:
-    inputs: {}
+    inputs:
+      siteMap:
+        description: 'Sitemap'     
+        required: true
+        default: 'sitemap'
+      craftToken:
+        description: 'Craft Token'     
+        required: true
+        default: 'craft_token'
 
 jobs:
-  nuxt-test:
+  nuxt-deploy:
     name: Netlify deploy
     runs-on: ubuntu-latest
     timeout-minutes: 20
