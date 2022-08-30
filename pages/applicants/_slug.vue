@@ -102,13 +102,6 @@ export default {
                     ),
                 }
             })
-            // return this.page.helpTopicBlocks.map((obj) =>
-            //     obj.associatedEntries.map((entry) =>
-            //         entry.externalResourceUrl
-            //             ? entry.externalResourceUrl
-            //             : `/${entry.uri}`
-            //     )
-            // )
         },
     },
 }
