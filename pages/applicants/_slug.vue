@@ -107,7 +107,7 @@ export default {
 }
 </script>
 
-<<<<<<< HEAD
+
 <style lang="scss" scoped>
 .page-help-topic {
     .banner-text,
@@ -122,6 +122,3 @@ export default {
     }
 }
 </style>
-=======
-<style lang="scss" scoped></style>
->>>>>>> 6eb8028 (fix: update help topic page)
