@@ -41,17 +41,6 @@
                 :section-summary="block.sectionSummary"
                 :items="block.parsedAssociatedEntries"
             />
-        </section-wrapper>
-
-        <section-wrapper
-            v-if="
-                (page.richText ||
-                    (page.helpTopicBlocks && page.helpTopicBlocks.length)) &&
-                    page.blocks &&
-                    page.blocks.length
-            "
-            theme="divider"
-        >
             <divider-way-finder color="about" />
         </section-wrapper>
 
