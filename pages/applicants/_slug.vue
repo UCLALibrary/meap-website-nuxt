@@ -41,6 +41,7 @@
                 :section-summary="block.sectionSummary"
                 :items="block.parsedAssociatedEntries"
             />
+        </section-wrapper>
 
         <section-wrapper
             v-if="
@@ -107,12 +108,11 @@ export default {
 }
 </script>
 
-
 <style lang="scss" scoped>
 .page-help-topic {
     .banner-text,
     .banner-header {
-      --color-theme: var(--color-about-purple-03);
+        --color-theme: var(--color-about-purple-03);
     }
 
     .help-topic-section:last-child {
