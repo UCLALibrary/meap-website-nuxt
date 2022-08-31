@@ -9,7 +9,8 @@
             :hero-image="parsedMastheadHeroImage"
             theme="meap"
         />
-
+        <h4>{{ mapping }}</h4>
+        <h4>{{ searchResponse }}</h4>
         <section-wrapper
             v-if="featuredProjects"
             class="section-featured-projects"
@@ -126,12 +127,18 @@ import MEAP_HOMEPAGE from "~/gql/queries/HomePage"
 // Helpers
 import _get from "lodash/get"
 export default {
-    async asyncData({ $graphql, params, store }) {
+    async asyncData({ $graphql, params, store, $dataApi }) {
+        const mapping = await $dataApi.getMapping()
+        console.log(JSON.stringify(mapping))
+        const searchResponse = await $dataApi.keywordSearch("*")
+        console.log(JSON.stringify(searchResponse))
         const data = await $graphql.default.request(MEAP_HOMEPAGE, {
             slug: params.slug,
         })
         return {
             page: _get(data, "entries", {}),
+            mapping: mapping,
+            searchResponse: searchResponse,
         }
     },
     computed: {

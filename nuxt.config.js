@@ -88,6 +88,7 @@ export default {
         "~/plugins/craft.js",
         "~/plugins/add-library-website-vue-components.js",
         "~/plugins/add-skip-to.js",
+        "~/plugins/data-api.js",
     ],
 
     /*
