@@ -80,23 +80,25 @@ export default {
     },
     computed: {
         parsedHelpTopicBlocks() {
-            if (this.page.helpTopicBlocks && this.page.helpTopicBlocks.length)
-                return []
-            return this.page.helpTopicBlocks.map((obj) => {
-                return {
-                    ...obj,
-                    parsedAssociatedEntries: obj.associatedEntries.map(
-                        (entry) => {
-                            return {
-                                ...entry,
-                                to: entry.externalResourceUrl
-                                    ? entry.externalResourceUrl
-                                    : `/${entry.uri}`,
+            if (this.page.helpTopicBlocks && this.page.helpTopicBlocks.length) {
+                return this.page.helpTopicBlocks.map((obj) => {
+                    return {
+                        ...obj,
+                        parsedAssociatedEntries: obj.associatedEntries.map(
+                            (entry) => {
+                                return {
+                                    ...entry,
+                                    to: entry.externalResourceUrl
+                                        ? entry.externalResourceUrl
+                                        : `/${entry.uri}`,
+                                }
                             }
-                        }
-                    ),
-                }
-            })
+                        ),
+                    }
+                })
+            }
+
+            return []
         },
     },
 }
