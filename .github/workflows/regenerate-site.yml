@@ -3,10 +3,10 @@ name: Regenerate static site when craft data is updated.
 on:
   workflow_dispatch:
     inputs:
-      siteMap:
+      environment:
         description: 'Environment'     
         required: true
-        default: 'test or prod'
+        default: 'test'
 
 jobs:
   nuxt-deploy:
@@ -23,7 +23,7 @@ jobs:
           key: nuxt-site-${{ github.sha }}
       - run: npm run generate
         env:
-          CRAFT_ENDPOINT: ${{ secrets.CRAFT_ENDPOINT_TEST }}
+          CRAFT_ENDPOINT: "${{ github.event.inputs.environment == 'test' && secrets.CRAFT_ENDPOINT_TEST || secrets.CRAFT_PROD_ENDPOINT }}"
           S3_BUCKET: "https://static.library.ucla.edu/"
           SITEMAP_HOST: "https://test-meap.library.ucla.edu"
       - name: Deploy to Netlify on release
