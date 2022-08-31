@@ -17,7 +17,6 @@
                 :image="parsedBannerHeader.image"
                 :title="parsedBannerHeader.title"
                 breadcrumb="Featured"
-                :byline="parsedByline"
                 :locations="parsedBannerHeader.locations"
                 :description="parsedBannerHeader.text"
                 :date-created="parsedBannerHeader.dateCreated"
@@ -128,7 +127,7 @@ export default {
                 output.push(this.parsedBannerHeader.byline[0].title)
             }
             return output
-        }
+        },
     },
 }
 </script>
@@ -149,7 +148,7 @@ export default {
     }
 
     ::v-deep .block-highlight.color-about {
-        --floating-highlight-color-theme:  var(--color-visit-fushia-03);
+        --floating-highlight-color-theme: var(--color-visit-fushia-03);
     }
 
     @media #{$medium} {
