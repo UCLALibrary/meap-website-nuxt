@@ -18,6 +18,12 @@
     </main>
 </template>
 
+<router>
+    {
+      redirect: '/applicants/resources'
+    }
+  </router>
+
 <script>
 // GQL
 import HELP_TOPIC_LIST from "~/gql/queries/HelpTopicList"
@@ -54,5 +60,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

@@ -52,6 +52,12 @@
     </main>
 </template>
 
+<router>
+    {
+      path: '/applicants/:slug'
+    }
+  </router>
+
 <script>
 // GQL
 import HELP_TOPIC_DETAIL from "~/gql/queries/HelpTopicDetail"
@@ -77,6 +83,8 @@ export default {
     },
     computed: {
         parsedHelpTopicBlocks() {
+            if (this.page.helpTopicBlocks && this.page.helpTopicBlocks.length)
+                return []
             return this.page.helpTopicBlocks.map((obj) => {
                 return {
                     ...obj,
