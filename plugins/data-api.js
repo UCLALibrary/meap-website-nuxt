@@ -31,6 +31,12 @@ export default function ({ $graphql, query }, inject) {
                 'Authorization': `ApiKey ${ESApiKey}`,
                 // 'Content-Type': 'application/x-www-form-urlencoded',
             },
+            method: 'POST',
+            body: JSON.stringify({
+                filters: `homeId:${homeId}`,
+                hitsPerPage: 6,
+                attributesToHighlight: [],
+            })
         })
         const data = await response.json()
         return data
