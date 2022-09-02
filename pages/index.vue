@@ -4,8 +4,8 @@
         class="page page-home"
     >
         <masthead-secondary
-            title="Modern Endangered Archives Program"
-            :text="parsedMastheadSummary"
+            :title="homePage.titleGeneral"
+            :text="homePage.summary"
             :hero-image="parsedMastheadHeroImage"
             theme="meap"
         />
@@ -142,9 +142,6 @@ export default {
                     to: `/${obj.to}`,
                 }
             })[0]
-        },
-        parsedMastheadSummary() {
-            return this.homePage.summary
         },
         parsedMastheadHeroImage() {
             return this.homePage.heroImage[0].image[0]
