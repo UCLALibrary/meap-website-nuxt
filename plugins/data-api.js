@@ -33,9 +33,11 @@ export default function ({ $graphql, query }, inject) {
             },
             method: 'POST',
             body: JSON.stringify({
-                filters: `homeId:${homeId}`,
-                hitsPerPage: 6,
-                attributesToHighlight: [],
+                "query": {
+                    "match": {
+                        "user.id": "kimchy"
+                    }
+                }
             })
         })
         const data = await response.json()
