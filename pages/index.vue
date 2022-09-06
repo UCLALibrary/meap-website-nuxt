@@ -9,8 +9,11 @@
             :hero-image="parsedMastheadHeroImage"
             theme="meap"
         />
-        <h4>{{ mapping }}</h4>
-        <h4>{{ searchResponse }}</h4>
+
+        <h4>Mapping:</h4>
+        <p>{{ mapping }}</p>
+        <h4>Search Responsee</h4>
+        <p>{{ searchResponse }}</p>
         <section-wrapper
             v-if="featuredProjects"
             class="section-featured-projects"
@@ -131,7 +134,7 @@ export default {
         const mapping = await $dataApi.getMapping()
         console.log(JSON.stringify(mapping))
         const searchResponse = await $dataApi.keywordSearch("*")
-        console.log(JSON.stringify(searchResponse))
+        console.log("Search Response: " + JSON.stringify(searchResponse))
         const data = await $graphql.default.request(MEAP_HOMEPAGE, {
             slug: params.slug,
         })

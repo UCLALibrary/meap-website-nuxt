@@ -16,26 +16,30 @@ export default function ({ $graphql, query }, inject) {
     async function keywordSearch(keyword){
         //var data_url = new URL(`${ES_URL}/apps-dev-library-website/_search`)
 
-        var params = {
-            query: {
-                query_string: {
-                    query: "*"
-                }
-            }
-        }
+        // var params = {
+        //     query: {
+        //         query_string: {
+        //             query: "*"
+        //         }
+        //     }
+        // }
         
-        const urlParams = new URLSearchParams(params).toString()
-        console.log("paranaters: "+urlParams)
+        // const urlParams = new URLSearchParams(params).toString()
+        // console.log("paranaters: "+urlParams)
+        // `${ES_URL}/apps-dev-library-website/_search?q=*:*` GET request
         const response = await fetch(`${ES_URL}/apps-dev-library-website/_search?q=*:*`, {
             headers: {
                 'Authorization': `ApiKey ${ESApiKey}`,
-                // 'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/json',
             },
             method: 'POST',
             body: JSON.stringify({
+                /* "query": {
+                    "match_all": {}
+                } */
                 "query": {
-                    "match": {
-                        "user.id": "kimchy"
+                    "query_string" : {
+                        "query" : "*:*"
                     }
                 }
             })
