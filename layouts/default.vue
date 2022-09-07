@@ -76,6 +76,14 @@ export default {
             ]
         },
     },
+    mounted() {
+        if (!this.$store.state.navsReady) {
+            console.log("nav menus aren't populated - fixing that")
+            this.$store.dispatch("populateNavMenus")
+        } else {
+            console.log("nav menus ready! nothing to do :)")
+        }
+    }
 }
 </script>
 

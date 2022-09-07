@@ -17,6 +17,7 @@ export const state = () => ({
     footerSponsor: {},
     footerPrimary: {},
     footerSock: {},
+    navsReady: false,
 })
 
 export const mutations = {
@@ -42,11 +43,18 @@ export const mutations = {
     SET_FOOTER_SOCK(state, data) {
         state.footerSock = data
     },
+    SET_NAV_MENUS_READY(state, navsReady) {
+        state.navsReady = navsReady
+    }
 }
 
 // Define actions
 export const actions = {
-    async nuxtServerInit({ commit }) {
+    async nuxtServerInit({ dispatch }) {
+        dispatch('populateNavMenus')
+    },
+      
+    async populateNavMenus({ commit }) {
         try {
             // console.log("Get Global data from Craft")
             
@@ -93,6 +101,8 @@ export const actions = {
                 FOOTER_SOCK_ITEMS
             )
             commit("SET_FOOTER_SOCK", footerSockData)
+
+            commit("SET_NAV_MENUS_READY", true)
         } catch (e) {
             throw new Error("Craft API error, trying to set gobals. " + e)
         }
