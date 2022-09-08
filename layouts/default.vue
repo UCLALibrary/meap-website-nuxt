@@ -57,7 +57,7 @@ export default {
             return this.$store.state.header.secondary
         },
         isMobile() {
-            return this.$store.state.winWidth <= 1024 ? true : false
+            return (process.client) && (this.$store.state.winWidth <= 1024)
         },
         whichHeader() {
             return this.isMobile ? "header-main-responsive" : "header-main"
