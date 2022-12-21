@@ -125,6 +125,8 @@
 import MEAP_HOMEPAGE from "~/gql/queries/HomePage"
 // Helpers
 import _get from "lodash/get"
+import stripMeapFromURI from "~/utils/stripMeapFromURI"
+
 export default {
     async asyncData({ $graphql, params, store }) {
         const data = await $graphql.default.request(MEAP_HOMEPAGE, {
@@ -139,7 +141,7 @@ export default {
             return this.page.map((obj) => {
                 return {
                     ...obj,
-                    to: `/${obj.to}`,
+                    to: `/${stripMeapFromURI(obj.to)}`,
                 }
             })[0]
         },
@@ -152,7 +154,7 @@ export default {
                     ...obj,
                     to: obj.externalResourceUrl
                         ? obj.externalResourceUrl
-                        : `/${obj.uri}`,
+                        : `/${stripMeapFromURI(obj.uri)}`,
                 }
             })
         },
