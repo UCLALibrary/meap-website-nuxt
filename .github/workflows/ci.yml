@@ -28,7 +28,7 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Comment with percy instructions
-        uses: bubkoo/auto-comment@6243796c38c8dfab43eefde0ad389440d63a6685
+        uses: bubkoo/auto-comment@v1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           pullRequestOpened: >
@@ -67,7 +67,7 @@ jobs:
         SITEMAP_HOST: "https://test-meap.library.ucla.edu"
     - name: Deploy to Netlify (test)
       if: github.ref_name=='main'
-      uses: nwtgck/actions-netlify@2 # 
+      uses: nwtgck/actions-netlify@v2 # 
       with:
         production-deploy: true
         deploy-message: https://github.com/UCLALibrary/meap-website-nuxt/commit/${{ github.sha }}
