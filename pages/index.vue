@@ -8,6 +8,7 @@
             :text="homePage.summary"
             :hero-image="parsedMastheadHeroImage"
             theme="meap"
+            class="meap-masthead-secondary"
         />
 
         <section-wrapper
@@ -183,6 +184,15 @@ export default {
 
 <style lang="scss" scoped>
 .page-home {
+    .meap-masthead-secondary {
+        ::v-deep .container .meta .rich-text a {
+            color: var(--color-white);
+            &:hover {
+                color: var(--color-white);
+                font-weight: 500;
+            }
+        }
+    }
     .banner {
         margin-bottom: var(--space-3xl);
     }
