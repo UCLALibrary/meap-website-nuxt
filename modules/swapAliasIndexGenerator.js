@@ -1,4 +1,4 @@
-// eslint-disable no-undef
+/* eslint-disable no-undef */
 import fetch from "node-fetch"
 const consola = require("consola")
 consola.level = 5

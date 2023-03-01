@@ -1,5 +1,4 @@
-// eslint-disable no-undef
-
+/* eslint-disable no-undef */
 export default function ({ $config }, inject) {
     const esIndex = $config.esTempIndex
     async function index(data, slug) {
