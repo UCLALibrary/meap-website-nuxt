@@ -3,7 +3,7 @@ export default function ({ $config }, inject) {
     async function index(data, slug) {
         console.log("elastic search plugin index function :" + esIndex)
         try {
-            // eslint-disable-next-line no-undef
+            // eslint-disable no-undef
             if (
                 process.server &&
                 process.env.NODE_ENV !== "development" &&
