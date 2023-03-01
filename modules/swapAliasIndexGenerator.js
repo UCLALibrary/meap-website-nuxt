@@ -30,8 +30,6 @@ export default function () {
                                 indices: [
                                     this.nuxt.options.publicRuntimeConfig
                                         .esTempIndex,
-                                    this.nuxt.options.publicRuntimeConfig
-                                        .libguidesEsIndex,
                                 ],
                                 alias: this.nuxt.options.publicRuntimeConfig
                                     .esIndex,
