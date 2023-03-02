@@ -103,6 +103,7 @@ export default {
         "~/plugins/craft.js",
         "~/plugins/add-library-website-vue-components.js",
         "~/plugins/add-skip-to.js",
+        "~/plugins/elasticsearchplugin.js",
     ],
 
     /*
@@ -184,6 +185,8 @@ export default {
         "@nuxtjs/style-resources",
         "nuxt-graphql-request",
         "@/modules/sitemapRouteGenerator",
+        "@/modules/indexAliasGenerator",
+        "@/modules/swapAliasIndexGenerator",
     ],
 
     /*
