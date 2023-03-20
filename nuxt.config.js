@@ -2,26 +2,9 @@
 import axios from "axios"
 
 export default {
-    server: {
-        port: 3000,
-        host: "0.0.0.0",
-    },
-    target: "static",
-    components: true,
-    privateRuntimeConfig: {
-        esWriteKey: process.env.ES_WRITE_KEY,
-    },
-    publicRuntimeConfig: {
-        esReadKey: process.env.ES_READ_KEY || "",
-        esIndex: process.env.ES_INDEX || "",
-        esIndexPrefix: process.env.ES_INDEX_PREFIX || "",
-        esTempIndex: "",
-        esURL: process.env.ES_URL || "",
-    },
     generate: {
         routes() {
-            return
-            axios({
+            return axios({
                 url: "https://craft.library.ucla.edu/api",
                 method: "post",
                 data: {
@@ -39,12 +22,28 @@ export default {
                 },
             }).then((result) => {
                 // console.log("in nuxt config" + result.data)
-                return result.data.map((project) => {
+                return result.data.entries.map((project) => {
                     console.log(project)
                     return "/" + project.to
                 })
             })
         },
+    },
+    server: {
+        port: 3000,
+        host: "0.0.0.0",
+    },
+    target: "static",
+    components: true,
+    privateRuntimeConfig: {
+        esWriteKey: process.env.ES_WRITE_KEY,
+    },
+    publicRuntimeConfig: {
+        esReadKey: process.env.ES_READ_KEY || "",
+        esIndex: process.env.ES_INDEX || "",
+        esIndexPrefix: process.env.ES_INDEX_PREFIX || "",
+        esTempIndex: "",
+        esURL: process.env.ES_URL || "",
     },
 
     /*
