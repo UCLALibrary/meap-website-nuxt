@@ -2,33 +2,6 @@
 import axios from "axios"
 
 export default {
-    generate: {
-        routes() {
-            return axios({
-                url: "https://craft.library.ucla.edu/api",
-                method: "post",
-                data: {
-                    query: `
-        query ProjectList {
-    entries(section: "meapProject", orderBy: "dateCreated asc") {
-      ... on meapProject_meapProject_Entry {
-        id
-        to: uri
-        title
-      }
-    }
-  }
-    `,
-                },
-            }).then((result) => {
-                // console.log("in nuxt config" + result.data)
-                return result.data.entries.map((project) => {
-                    console.log(project)
-                    return "/" + project.to
-                })
-            })
-        },
-    },
     server: {
         port: 3000,
         host: "0.0.0.0",
@@ -161,6 +134,31 @@ export default {
      */
     generate: {
         fallback: "404.html",
+        routes() {
+            return axios({
+                url: "https://craft.library.ucla.edu/api",
+                method: "post",
+                data: {
+                    query: `
+        query ProjectList {
+    entries(section: "meapProject", orderBy: "dateCreated asc") {
+      ... on meapProject_meapProject_Entry {
+        id
+        to: uri
+        title
+      }
+    }
+  }
+    `,
+                },
+            }).then((result) => {
+                // console.log("in nuxt config" + result.data)
+                return result.data.entries.map((project) => {
+                    console.log(project)
+                    return "/" + project.to
+                })
+            })
+        },
     },
 
     /*
