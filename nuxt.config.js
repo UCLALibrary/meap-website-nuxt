@@ -1,4 +1,6 @@
 /* eslint-env node */
+import axios from "axios"
+
 export default {
     server: {
         port: 3000,
@@ -15,6 +17,34 @@ export default {
         esIndexPrefix: process.env.ES_INDEX_PREFIX || "",
         esTempIndex: "",
         esURL: process.env.ES_URL || "",
+    },
+    generate: {
+        routes() {
+            return
+            axios({
+                url: "https://craft.library.ucla.edu/api",
+                method: "post",
+                data: {
+                    query: `
+        query ProjectList {
+    entries(section: "meapProject", orderBy: "dateCreated asc") {
+      ... on meapProject_meapProject_Entry {
+        id
+        to: uri
+        title
+      }
+    }
+  }
+    `,
+                },
+            }).then((result) => {
+                // console.log("in nuxt config" + result.data)
+                return result.data.map((project) => {
+                    console.log(project)
+                    return "/" + project.to
+                })
+            })
+        },
     },
 
     /*
