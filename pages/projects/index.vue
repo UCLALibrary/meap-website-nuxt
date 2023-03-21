@@ -7,6 +7,14 @@
             :title="summaryData.projectListTitle"
             :text="summaryData.projectListSummary"
         />
+        <search-generic
+            search-type="about"
+            :filters="searchFilters"
+            class="generic-search"
+            :search-generic-query="searchGenericQuery"
+            :placeholder="parsedPlaceholder"
+            @search-ready="getSearchData"
+        />
 
         <section-wrapper section-title="All Projects">
             <section-teaser-card :items="projectList" />
