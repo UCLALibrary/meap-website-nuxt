@@ -45,6 +45,8 @@ import PROJECT_LIST from "~/gql/queries/ProjectList"
 // Helpers
 import _get from "lodash/get"
 import stripMeapFromURI from "~/utils/stripMeapFromURI"
+import getListingFilters from "~/utils/getListingFilters"
+import config from "~/utils/searchConfig"
 
 export default {
     async asyncData({ $graphql, params, store }) {
