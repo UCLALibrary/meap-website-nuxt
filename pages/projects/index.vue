@@ -199,7 +199,7 @@ export default {
         async setFilters() {
             const searchAggsResponse = await this.$dataApi.getAggregations(
                 config.project.filters,
-                "location"
+                "meapProject"
             )
             /*console.log(
                 "Search Aggs Response: " + JSON.stringify(searchAggsResponse)

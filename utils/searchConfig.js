@@ -1,24 +1,24 @@
 const config = {
     project: {
-        searchFields: ["title^3", "text^3"],
+        searchFields: ["title^3", "summary^3"],
         filters: [
             {
                 label: "Topic",
-                esFieldName: "meapProjectTopic.title",
+                esFieldName: "meapProjectTopic.title.keyword",
                 inputType: "checkbox",
             },
             {
                 label: "Region",
-                esFieldName: "region.title",
+                esFieldName: "region.title.keyword",
                 inputType: "checkbox",
             },
             {
                 label: "Project Type",
-                esFieldName: "projectType",
+                esFieldName: "projectType.keyword",
                 inputType: "checkbox",
             },
         ],
-        resultFields: ["title", "text", "uri", "heroImage"],
+        resultFields: ["title", "summary", "uri", "heroImage"],
         sortField: "title.keyword",
         orderBy: "asc",
     },
