@@ -1,6 +1,6 @@
 const config = {
     project: {
-        searchFields: ["title^3", "text^3", "richTextSimplified^2"],
+        searchFields: ["title^3", "text^3"],
         filters: [
             {
                 label: "Topic",
@@ -18,7 +18,7 @@ const config = {
                 inputType: "checkbox",
             },
         ],
-        resultFields: ["title", "text", "physicalDigital", "uri", "heroImage"],
+        resultFields: ["title", "text", "uri", "heroImage"],
         sortField: "title.keyword",
         orderBy: "asc",
     },

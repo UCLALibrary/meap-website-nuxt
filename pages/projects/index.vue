@@ -56,6 +56,77 @@ export default {
             page: _get(data, "entries", {}),
         }
     },
+    data() {
+        return {
+            summaryData: {},
+            page: [],
+            hits: [],
+            title: "",
+            noResultsFound: false,
+            searchFilters: [],
+            searchGenericQuery: {
+                queryText: this.$route.query.q || "",
+                queryFilters:
+                    (this.$route.query.filters &&
+                        JSON.parse(this.$route.query.filters)) ||
+                    {},
+            },
+        }
+    },
+    async fetch() {
+        this.page = []
+        this.hits = []
+        if (
+            (this.$route.query.q && this.$route.query.q !== "") ||
+            this.$route.query.filters
+        ) {
+            if (!this.page.title) {
+                const data = await this.$graphql.default.request(PROJECT_LIST)
+                //console.log("data for masthead:" + data)
+                this.page["title"] = _get(data, "entry.title", "")
+                this.page["text"] = _get(data, "entry.text", "")
+            }
+            let query_text = this.$route.query.q || "*"
+            //console.log("in router query in asyc data")
+            const results = await this.$dataApi.keywordSearchWithFilters(
+                query_text,
+                config.project.searchFields,
+                "sectionHandle:meapProject",
+                JSON.parse(this.$route.query.filters) || {},
+                config.project.sortField,
+                config.project.orderBy,
+                config.project.resultFields,
+                config.project.filters
+            )
+            //console.log("getsearchdata method:" + JSON.stringify(results))
+            this.page = []
+            this.hits = []
+            if (results && results.hits && results.hits.total.value > 0) {
+                this.hits = results.hits.hits
+                this.page = []
+                this.noResultsFound = false
+            } else {
+                this.hits = []
+                this.page = []
+                this.noResultsFound = true
+            }
+            this.searchGenericQuery = {
+                queryText: this.$route.query.q || "",
+                queryFilters:
+                    (this.$route.query.filters &&
+                        JSON.parse(this.$route.query.filters)) ||
+                    {},
+            }
+        } else {
+            this.hits = []
+            this.noResultsFound = false
+            // if route queries are empty fetch data from craft
+            const data = await this.$graphql.default.request(PROJECT_LIST)
+            // //console.log("data:" + data)
+            this.summaryData = _get(data, "entry", {})
+            this.page = _get(data, "entries", [])
+        }
+    },
     head() {
         let title = this.summaryData
             ? this.summaryData.projectListTitle
@@ -88,6 +159,85 @@ export default {
             })
         },
     },
+    watch: {
+        "$route.query": "$fetch",
+        "$route.query.q"(newValue) {
+            //console.log("watching querytEXT:" + newValue)
+        },
+        "$route.query.filters"(newValue) {
+            //console.log("watching filters:" + newValue)
+        },
+    },
+    async mounted() {
+        //console.log("In mounted")
+        this.setFilters()
+    },
+    methods: {
+        queryFilterHasValues() {
+            if (!this.$route.query.filters) return false
+            let routeQueryFilters = JSON.parse(this.$route.query.filters)
+            // //console.log(
+            //     "is route query exixts:" + JSON.stringify(routeQueryFilters)
+            // )
+            let configFilters = config.locationsList.filters
+            for (const filter of configFilters) {
+                if (
+                    Array.isArray(routeQueryFilters[filter.esFieldName]) &&
+                    routeQueryFilters[filter.esFieldName].length > 0
+                ) {
+                    return true
+                } else if (
+                    routeQueryFilters[filter.esFieldName] &&
+                    !Array.isArray(routeQueryFilters[filter.esFieldName]) &&
+                    routeQueryFilters[filter.esFieldName] != ""
+                ) {
+                    return true
+                }
+            }
+            return false
+        },
+        async setFilters() {
+            const searchAggsResponse = await this.$dataApi.getAggregations(
+                config.project.filters,
+                "location"
+            )
+            /*console.log(
+                "Search Aggs Response: " + JSON.stringify(searchAggsResponse)
+            )*/
+            this.searchFilters = getListingFilters(
+                searchAggsResponse,
+                config.project.filters
+            )
+        },
+        parseHits(hits = []) {
+            return hits.map((obj) => {
+                // //console.log(obj["_source"]["_source"]["image"])
+                return {
+                    ...obj["_source"],
+                    to:
+                        obj["_source"].locationType === "affiliateLibrary"
+                            ? obj["_source"].affiliateLibraryUrl
+                            : `/${obj["_source"].uri}`,
+                    image: _get(obj["_source"], "heroImage[0].image[0]", null),
+                }
+            })
+        },
+        getSearchData(data) {
+            //console.log("On the page getsearchdata called " + data)
+            /*this.page = {}
+            this.hits = []*/
+            this.$router.push({
+                path: "/visit/locations",
+                query: {
+                    q: data.text,
+                    filters: JSON.stringify(data.filters),
+                },
+            })
+        },
+    },
+    fetchOnServer: false,
+    // multiple components can return the same `fetchKey` and Nuxt will track them both separately
+    fetchKey: "projects-index",
 }
 </script>
 
