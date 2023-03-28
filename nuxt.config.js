@@ -106,6 +106,7 @@ export default {
         "~/plugins/add-library-website-vue-components.js",
         "~/plugins/add-skip-to.js",
         "~/plugins/elasticsearchplugin.js",
+        "~/plugins/data-api.js",
     ],
 
     /*

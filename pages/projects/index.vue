@@ -51,7 +51,6 @@ import config from "~/utils/searchConfig"
 export default {
     async asyncData({ $graphql, params, store }) {
         const data = await $graphql.default.request(PROJECT_LIST, {})
-        console.log(config.meapProject.filters)
         return {
             summaryData: _get(data, "entry", {}),
             page: _get(data, "entries", {}),
@@ -183,6 +182,7 @@ export default {
             // )
             let configFilters = config.meapProject.filters
             for (const filter of configFilters) {
+                console.log(filter)
                 if (
                     Array.isArray(routeQueryFilters[filter.esFieldName]) &&
                     routeQueryFilters[filter.esFieldName].length > 0
