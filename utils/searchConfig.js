@@ -37,7 +37,7 @@ const config = {
         orderBy: "asc",
     },
     meapArticle: {
-        searchFields: ["title^3", "text^3", "byline.title*^2"],
+        searchFields: ["title^3", "text^3"],
         filters: [
             {
                 label: "Category",
@@ -45,15 +45,7 @@ const config = {
                 inputType: "checkbox",
             },
         ],
-        resultFields: [
-            "title",
-            "text",
-            "articleTopics",
-            "uri",
-            "heroImage",
-            "date",
-            "category",
-        ],
+        resultFields: ["title", "text", "uri", "heroImage", "date", "category"],
         sortField: "date",
         orderBy: "desc",
     },

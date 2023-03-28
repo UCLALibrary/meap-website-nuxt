@@ -20,6 +20,12 @@
         </h2>
 
         <section-wrapper
+            v-show="
+                summaryData &&
+                    parsedFeaturedNews.length &&
+                    hits.length == 0 &&
+                    !noResultsFound
+            "
             v-if="parsedFeaturedNews.length"
             class="section-no-top-margin"
         >
