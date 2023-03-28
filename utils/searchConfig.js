@@ -36,6 +36,27 @@ const config = {
         sortField: "title.keyword",
         orderBy: "asc",
     },
+    meapArticle: {
+        searchFields: ["title^3", "text^3", "byline.title*^2"],
+        filters: [
+            {
+                label: "Category",
+                esFieldName: "category.title.keyword",
+                inputType: "checkbox",
+            },
+        ],
+        resultFields: [
+            "title",
+            "text",
+            "articleTopics",
+            "uri",
+            "heroImage",
+            "date",
+            "category",
+        ],
+        sortField: "date",
+        orderBy: "desc",
+    },
 }
 
 export default config

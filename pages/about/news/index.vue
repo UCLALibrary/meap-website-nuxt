@@ -6,14 +6,20 @@
         <masthead-secondary
             :title="summaryData.title"
             :text="summaryData.summary"
-            class="meap-masthead-secondary"
         />
-
+        <search-generic
+            search-type="about"
+            :filters="searchFilters"
+            class="generic-search"
+            :search-generic-query="searchGenericQuery"
+            placeholder="Search News"
+            @search-ready="getSearchData"
+        />
         <h2 class="visually-hidden">
             Highlighted News
         </h2>
 
-        <section-wrapper 
+        <section-wrapper
             v-if="parsedFeaturedNews.length"
             class="section-no-top-margin"
         >
@@ -70,6 +76,10 @@
 // Helpers
 import _get from "lodash/get"
 import format from "date-fns/format"
+
+// Search
+import getListingFilters from "~/utils/getListingFilters"
+import config from "~/utils/searchConfig"
 
 // GQL
 import ARTICLE_NEWS_LIST from "~/gql/queries/ArticleNewsList"
@@ -143,7 +153,7 @@ export default {
     //     margin: 0 auto;
     //     margin-bottom: var(--space-2xl);
     // }
-    .meap-masthead-secondary {
+    .generic-search {
         margin-bottom: var(--space-3xl);
     }
     ::v-deep .block-staff-article-item {
