@@ -55,7 +55,7 @@
         <section-wrapper theme="divider">
             <divider-way-finder
                 class="divider"
-                color="visit"
+                color="search-margin"
             />
         </section-wrapper>
 

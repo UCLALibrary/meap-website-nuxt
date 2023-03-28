@@ -16,6 +16,9 @@
             placeholder="Search Projects"
             @search-ready="getSearchData"
         />
+        <section-wrapper theme="divider">
+            <divider-way-finder class="search-margin" />
+        </section-wrapper>
         <section-wrapper
             v-show="
                 page &&
