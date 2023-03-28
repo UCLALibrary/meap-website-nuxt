@@ -225,24 +225,16 @@ export default {
     },
     watch: {
         "$route.query": "$fetch",
-        "$route.query.q"(newValue) {
-            //console.log("watching querytEXT:" + newValue)
-        },
-        "$route.query.filters"(newValue) {
-            //console.log("watching filters:" + newValue)
-        },
+        "$route.query.q"(newValue) {},
+        "$route.query.filters"(newValue) {},
     },
     async mounted() {
-        //console.log("In mounted")
         this.setFilters()
     },
     methods: {
         queryFilterHasValues() {
             if (!this.$route.query.filters) return false
             let routeQueryFilters = JSON.parse(this.$route.query.filters)
-            // //console.log(
-            //     "is route query exixts:" + JSON.stringify(routeQueryFilters)
-            // )
             let configFilters = config.meapProject.filters
             for (const filter of configFilters) {
                 console.log(filter)
@@ -266,9 +258,6 @@ export default {
                 config.meapProject.filters,
                 "meapProject"
             )
-            console.log(
-                "Search Aggs Response: " + JSON.stringify(searchAggsResponse)
-            )
             this.searchFilters = getListingFilters(
                 searchAggsResponse,
                 config.meapProject.filters
@@ -276,11 +265,11 @@ export default {
         },
         parseHits(hits = []) {
             return hits.map((obj) => {
-                // //console.log(obj["_source"]["_source"]["image"])
                 return {
                     ...obj["_source"],
-                    to: `/${obj["_source"].uri}`,
+                    to: `/${stripMeapFromURI(obj["_source"].uri)}`,
                     image: _get(obj["_source"], "heroImage[0].image[0]", null),
+                    text: _get(obj["_source"], "summary", null),
                 }
             })
         },
