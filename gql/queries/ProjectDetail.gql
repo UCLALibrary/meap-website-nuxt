@@ -5,6 +5,7 @@ query ProjectDetail($slug: [String!]) {
     entry(section: "meapProject", slug: $slug) {
         id
         uri
+        sectionHandle
         title
         summary
         heroImage {

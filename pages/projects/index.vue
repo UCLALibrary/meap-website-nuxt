@@ -7,15 +7,15 @@
             :title="summaryData.projectListTitle"
             :text="summaryData.projectListSummary"
         />
+
         <search-generic
             search-type="about"
             :filters="searchFilters"
             class="generic-search"
             :search-generic-query="searchGenericQuery"
-            :placeholder="parsedPlaceholder"
+            placeholder="Search Projects"
             @search-ready="getSearchData"
         />
-
         <section-wrapper section-title="All Projects">
             <section-teaser-card :items="projectList" />
         </section-wrapper>
@@ -51,6 +51,7 @@ import config from "~/utils/searchConfig"
 export default {
     async asyncData({ $graphql, params, store }) {
         const data = await $graphql.default.request(PROJECT_LIST, {})
+        console.log(config.meapProject.filters)
         return {
             summaryData: _get(data, "entry", {}),
             page: _get(data, "entries", {}),
@@ -74,29 +75,30 @@ export default {
         }
     },
     async fetch() {
+        this.summaryData = {}
         this.page = []
         this.hits = []
         if (
             (this.$route.query.q && this.$route.query.q !== "") ||
             this.$route.query.filters
         ) {
-            if (!this.page.title) {
+            if (!this.summaryData.title) {
                 const data = await this.$graphql.default.request(PROJECT_LIST)
                 //console.log("data for masthead:" + data)
-                this.page["title"] = _get(data, "entry.title", "")
-                this.page["text"] = _get(data, "entry.text", "")
+                this.summaryData["title"] = _get(data, "entry.title", "")
+                this.summaryData["text"] = _get(data, "entry.text", "")
             }
             let query_text = this.$route.query.q || "*"
             //console.log("in router query in asyc data")
             const results = await this.$dataApi.keywordSearchWithFilters(
                 query_text,
-                config.project.searchFields,
+                config.meapProject.searchFields,
                 "sectionHandle:meapProject",
                 JSON.parse(this.$route.query.filters) || {},
-                config.project.sortField,
-                config.project.orderBy,
-                config.project.resultFields,
-                config.project.filters
+                config.meapProject.sortField,
+                config.meapProject.orderBy,
+                config.meapProject.resultFields,
+                config.meapProject.filters
             )
             //console.log("getsearchdata method:" + JSON.stringify(results))
             this.page = []
@@ -179,7 +181,7 @@ export default {
             // //console.log(
             //     "is route query exixts:" + JSON.stringify(routeQueryFilters)
             // )
-            let configFilters = config.locationsList.filters
+            let configFilters = config.meapProject.filters
             for (const filter of configFilters) {
                 if (
                     Array.isArray(routeQueryFilters[filter.esFieldName]) &&
@@ -198,15 +200,15 @@ export default {
         },
         async setFilters() {
             const searchAggsResponse = await this.$dataApi.getAggregations(
-                config.project.filters,
+                config.meapProject.filters,
                 "meapProject"
             )
-            /*console.log(
+            console.log(
                 "Search Aggs Response: " + JSON.stringify(searchAggsResponse)
-            )*/
+            )
             this.searchFilters = getListingFilters(
                 searchAggsResponse,
-                config.project.filters
+                config.meapProject.filters
             )
         },
         parseHits(hits = []) {
@@ -214,10 +216,7 @@ export default {
                 // //console.log(obj["_source"]["_source"]["image"])
                 return {
                     ...obj["_source"],
-                    to:
-                        obj["_source"].locationType === "affiliateLibrary"
-                            ? obj["_source"].affiliateLibraryUrl
-                            : `/${obj["_source"].uri}`,
+                    to: `/${obj["_source"].uri}`,
                     image: _get(obj["_source"], "heroImage[0].image[0]", null),
                 }
             })
@@ -227,7 +226,7 @@ export default {
             /*this.page = {}
             this.hits = []*/
             this.$router.push({
-                path: "/visit/locations",
+                path: "/projects",
                 query: {
                     q: data.text,
                     filters: JSON.stringify(data.filters),

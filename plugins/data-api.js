@@ -280,7 +280,7 @@ export default function ({ $config }, inject) {
                 },
             }
         }
-        // console.log("aggsFields:" + JSON.stringify(aggsFields))
+        console.log("aggsFields:" + JSON.stringify(aggsFields))
         return aggsFields
     }
 }
