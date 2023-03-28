@@ -19,9 +19,10 @@
             Highlighted News
         </h2>
 
-        <section-wrapper
+        <!-- <section-wrapper
             v-show="
                 summaryData &&
+                    parsedFeaturedNews &&
                     parsedFeaturedNews.length &&
                     hits.length == 0 &&
                     !noResultsFound
@@ -49,7 +50,7 @@
                 class="section"
                 :items="parsedSectionHighlight"
             />
-        </section-wrapper>
+        </section-wrapper> -->
 
         <section-wrapper theme="divider">
             <divider-way-finder
@@ -58,11 +59,40 @@
             />
         </section-wrapper>
 
-        <section-wrapper>
+        <section-wrapper
+            v-show="
+                page &&
+                    parsedNewsList &&
+                    parsedNewsList.length &&
+                    hits.length == 0 &&
+                    !noResultsFound
+            "
+        >
             <section-staff-article-list
                 :items="parsedNewsList"
                 section-title="All News"
             />
+        </section-wrapper>
+
+        <section-wrapper
+            v-show="hits && hits.length > 0"
+            class="section-no-top-margin"
+        >
+            <h2
+                v-if="$route.query.q"
+                class="about-results"
+            >
+                Displaying {{ hits.length }} results for
+                <strong><em>“{{ $route.query.q }}</em></strong>”
+            </h2>
+            <h2
+                v-else
+                class="about-results"
+            >
+                Displaying {{ hits.length }} results
+            </h2>
+
+            <section-staff-article-list :items="parseHitsResults" />
         </section-wrapper>
 
         <section-wrapper theme="divider">
@@ -89,6 +119,7 @@ import config from "~/utils/searchConfig"
 
 // GQL
 import ARTICLE_NEWS_LIST from "~/gql/queries/ArticleNewsList"
+
 export default {
     async asyncData({ $graphql, params }) {
         const data = await $graphql.default.request(ARTICLE_NEWS_LIST, {})
@@ -223,6 +254,9 @@ export default {
             }
             return output
         },
+        parseHitsResults() {
+            return this.parseHits(this.hits)
+        },
     },
     watch: {
         "$route.query": "$fetch",
@@ -268,7 +302,9 @@ export default {
             return hits.map((obj) => {
                 return {
                     ...obj["_source"],
-                    to: `/${stripMeapFromURI(obj["_source"].uri)}`,
+                    to: `/about/news/${obj["_source"].to}`,
+                    image: _get(obj["_source"], "heroImage[0].image[0]", {}),
+                    category: _get(obj["_source"], "category[0].title", ""),
                 }
             })
         },
@@ -277,7 +313,7 @@ export default {
             /*this.page = {}
             this.hits = []*/
             this.$router.push({
-                path: "/news",
+                path: "/about/news",
                 query: {
                     q: data.text,
                     filters: JSON.stringify(data.filters),
