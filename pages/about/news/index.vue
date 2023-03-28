@@ -263,8 +263,6 @@ export default {
                 return {
                     ...obj["_source"],
                     to: `/${stripMeapFromURI(obj["_source"].uri)}`,
-                    image: _get(obj["_source"], "heroImage[0].image[0]", null),
-                    text: _get(obj["_source"], "summary", null),
                 }
             })
         },
