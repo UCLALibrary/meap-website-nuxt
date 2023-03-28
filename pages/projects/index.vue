@@ -29,7 +29,7 @@
         </section-wrapper>
         <section-wrapper
             v-show="hits && hits.length > 0"
-            class="meta section-no-top-margin"
+            class="section-no-top-margin"
         >
             <h2
                 v-if="$route.query.q"
@@ -47,16 +47,11 @@
 
             <section-teaser-card :items="parseHitsResults" />
         </section-wrapper>
-        <section-wrapper
-            v-if="parsedAssociatedTopics && parsedAssociatedTopics.length"
-            theme="divider"
-        >
-            <divider-way-finder color="help" />
-        </section-wrapper>
+
         <!-- NO RESULTS -->
         <section-wrapper
             v-show="noResultsFound"
-            class="meta section-no-top-margin"
+            class="section-no-top-margin"
         >
             <div class="error-text">
                 <rich-text>
@@ -84,6 +79,12 @@
                     </ul>
                 </rich-text>
             </div>
+        </section-wrapper>
+        <section-wrapper
+            v-if="parsedAssociatedTopics && parsedAssociatedTopics.length"
+            theme="divider"
+        >
+            <divider-way-finder color="help" />
         </section-wrapper>
 
         <section-wrapper
