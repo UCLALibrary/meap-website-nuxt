@@ -91,6 +91,80 @@ export default {
             page: _get(data, "entries", {}),
         }
     },
+    data() {
+        return {
+            summaryData: {},
+            page: [],
+            hits: [],
+            title: "",
+            noResultsFound: false,
+            searchFilters: [],
+            searchGenericQuery: {
+                queryText: this.$route.query.q || "",
+                queryFilters:
+                    (this.$route.query.filters &&
+                        JSON.parse(this.$route.query.filters)) ||
+                    {},
+            },
+        }
+    },
+    async fetch() {
+        this.summaryData = {}
+        this.page = []
+        this.hits = []
+        if (
+            (this.$route.query.q && this.$route.query.q !== "") ||
+            this.$route.query.filters
+        ) {
+            if (!this.summaryData.title) {
+                const data = await this.$graphql.default.request(
+                    ARTICLE_NEWS_LIST
+                )
+                //console.log("data for masthead:" + data)
+                this.summaryData["title"] = _get(data, "entry.title", "")
+                this.summaryData["text"] = _get(data, "entry.text", "")
+            }
+            let query_text = this.$route.query.q || "*"
+            //console.log("in router query in asyc data")
+            const results = await this.$dataApi.keywordSearchWithFilters(
+                query_text,
+                config.meapArticle.searchFields,
+                "sectionHandle:meapArticle",
+                JSON.parse(this.$route.query.filters) || {},
+                config.meapArticle.sortField,
+                config.meapArticle.orderBy,
+                config.meapArticle.resultFields,
+                config.meapArticle.filters
+            )
+            //console.log("getsearchdata method:" + JSON.stringify(results))
+            this.page = []
+            this.hits = []
+            if (results && results.hits && results.hits.total.value > 0) {
+                this.hits = results.hits.hits
+                this.page = []
+                this.noResultsFound = false
+            } else {
+                this.hits = []
+                this.page = []
+                this.noResultsFound = true
+            }
+            this.searchGenericQuery = {
+                queryText: this.$route.query.q || "",
+                queryFilters:
+                    (this.$route.query.filters &&
+                        JSON.parse(this.$route.query.filters)) ||
+                    {},
+            }
+        } else {
+            this.hits = []
+            this.noResultsFound = false
+            // if route queries are empty fetch data from craft
+            const data = await this.$graphql.default.request(ARTICLE_NEWS_LIST)
+            // //console.log("data:" + data)
+            this.summaryData = _get(data, "entry", {})
+            this.page = _get(data, "entries", [])
+        }
+    },
     head() {
         let title = this.summaryData ? this.summaryData.title : "... loading"
         return {
@@ -144,6 +218,72 @@ export default {
             return output
         },
     },
+    watch: {
+        "$route.query": "$fetch",
+        "$route.query.q"(newValue) {},
+        "$route.query.filters"(newValue) {},
+    },
+    async mounted() {
+        this.setFilters()
+    },
+    methods: {
+        queryFilterHasValues() {
+            if (!this.$route.query.filters) return false
+            let routeQueryFilters = JSON.parse(this.$route.query.filters)
+            let configFilters = config.meapArticle.filters
+            for (const filter of configFilters) {
+                console.log(filter)
+                if (
+                    Array.isArray(routeQueryFilters[filter.esFieldName]) &&
+                    routeQueryFilters[filter.esFieldName].length > 0
+                ) {
+                    return true
+                } else if (
+                    routeQueryFilters[filter.esFieldName] &&
+                    !Array.isArray(routeQueryFilters[filter.esFieldName]) &&
+                    routeQueryFilters[filter.esFieldName] != ""
+                ) {
+                    return true
+                }
+            }
+            return false
+        },
+        async setFilters() {
+            const searchAggsResponse = await this.$dataApi.getAggregations(
+                config.meapArticle.filters,
+                "meapArticle"
+            )
+            this.searchFilters = getListingFilters(
+                searchAggsResponse,
+                config.meapArticle.filters
+            )
+        },
+        parseHits(hits = []) {
+            return hits.map((obj) => {
+                return {
+                    ...obj["_source"],
+                    to: `/${stripMeapFromURI(obj["_source"].uri)}`,
+                    image: _get(obj["_source"], "heroImage[0].image[0]", null),
+                    text: _get(obj["_source"], "summary", null),
+                }
+            })
+        },
+        getSearchData(data) {
+            //console.log("On the page getsearchdata called " + data)
+            /*this.page = {}
+            this.hits = []*/
+            this.$router.push({
+                path: "/news",
+                query: {
+                    q: data.text,
+                    filters: JSON.stringify(data.filters),
+                },
+            })
+        },
+    },
+    fetchOnServer: false,
+    // multiple components can return the same `fetchKey` and Nuxt will track them both separately
+    fetchKey: "article-index",
 }
 </script>
 
