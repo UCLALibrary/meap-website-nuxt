@@ -16,16 +16,76 @@
             placeholder="Search Projects"
             @search-ready="getSearchData"
         />
-        <section-wrapper section-title="All Projects">
+        <section-wrapper
+            v-show="
+                page &&
+                    projectList.length &&
+                    hits.length == 0 &&
+                    !noResultsFound
+            "
+            section-title="All Projects"
+        >
             <section-teaser-card :items="projectList" />
         </section-wrapper>
+        <section-wrapper
+            v-show="hits && hits.length > 0"
+            class="meta section-no-top-margin"
+        >
+            <h2
+                v-if="$route.query.q"
+                class="about-results"
+            >
+                Displaying {{ hits.length }} results for
+                <strong><em>“{{ $route.query.q }}</em></strong>”
+            </h2>
+            <h2
+                v-else
+                class="about-results"
+            >
+                Displaying {{ hits.length }} results
+            </h2>
 
+            <section-teaser-card :items="parseHitsResults" />
+        </section-wrapper>
         <section-wrapper
             v-if="parsedAssociatedTopics && parsedAssociatedTopics.length"
             theme="divider"
         >
             <divider-way-finder color="help" />
         </section-wrapper>
+        <!-- NO RESULTS -->
+        <section-wrapper
+            v-show="noResultsFound"
+            class="meta section-no-top-margin"
+        >
+            <div class="error-text">
+                <rich-text>
+                    <h2>Search for “{{ $route.query.q }}” not found.</h2>
+                    <p>
+                        We can’t find the term you are looking for on this page,
+                        but we're here to help. <br>
+                        Try searching the whole site from
+                        <a href="https://library.ucla.edu">UCLA Library Home</a>, or try one of the these regularly visited links:
+                    </p>
+                    <ul>
+                        <li>
+                            <a
+                                href="https://www.library.ucla.edu/research-teaching-support/research-help"
+                            >Research Help</a>
+                        </li>
+                        <li>
+                            <a href="/help/services-resources/ask-us">Ask Us</a>
+                        </li>
+                        <li>
+                            <a
+                                href="https://www.library.ucla.edu/use/access-privileges/disability-resources"
+                            >Accessibility Resources</a>
+                        </li>
+                    </ul>
+                </rich-text>
+            </div>
+        </section-wrapper>
+
         <section-wrapper
             v-if="parsedAssociatedTopics && parsedAssociatedTopics.length"
         >
@@ -158,6 +218,9 @@ export default {
                         : `/${stripMeapFromURI(obj.uri)}`,
                 }
             })
+        },
+        parseHitsResults() {
+            return this.parseHits(this.hits)
         },
     },
     watch: {
