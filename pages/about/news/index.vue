@@ -24,7 +24,6 @@
                 summaryData &&
                     parsedFeaturedNews &&
                     parsedFeaturedNews.length &&
-                    parsedBannerHeader &&
                     hits.length == 0 &&
                     !noResultsFound
             "
@@ -187,7 +186,6 @@ export default {
             if (results && results.hits && results.hits.total.value > 0) {
                 this.hits = results.hits.hits
                 this.page = []
-                this.summaryData = {}
                 this.noResultsFound = false
                 console.log("1" + this.summaryData)
             } else {
@@ -332,6 +330,7 @@ export default {
                     to: `/about/news/${obj["_source"].to}`,
                     image: _get(obj["_source"], "heroImage[0].image[0]", {}),
                     category: _get(obj["_source"], "category[0].title", ""),
+                    description: _get(obj["_source"], "text", ""),
                 }
             })
         },
