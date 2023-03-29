@@ -42,24 +42,10 @@
                 class="banner section-featured-banner"
             />
 
-            <divider-general
-                v-show="
-                    summaryData &&
-                        parsedSectionHighlight &&
-                        parsedSectionHighlight.length &&
-                        hits.length == 0 &&
-                        !noResultsFound
-                "
-            />
+            <divider-general v-if="parsedSectionHighlight.length" />
 
             <section-teaser-highlight
-                v-show="
-                    summaryData &&
-                        parsedSectionHighlight &&
-                        parsedSectionHighlight.length &&
-                        hits.length == 0 &&
-                        !noResultsFound
-                "
+                v-if="parsedSectionHighlight.length"
                 class="section"
                 :items="parsedSectionHighlight"
             />
@@ -164,12 +150,10 @@ export default {
                 const data = await this.$graphql.default.request(
                     ARTICLE_NEWS_LIST
                 )
-                //console.log("data for masthead:" + data)
                 this.summaryData["title"] = _get(data, "entry.title", "")
                 this.summaryData["summary"] = _get(data, "entry.summary", "")
             }
             let query_text = this.$route.query.q || "*"
-            //console.log("in router query in asyc data")
             const results = await this.$dataApi.keywordSearchWithFilters(
                 query_text,
                 config.meapArticle.searchFields,
@@ -180,19 +164,16 @@ export default {
                 config.meapArticle.resultFields,
                 config.meapArticle.filters
             )
-            //console.log("getsearchdata method:" + JSON.stringify(results))
             this.page = []
             this.hits = []
             if (results && results.hits && results.hits.total.value > 0) {
                 this.hits = results.hits.hits
                 this.page = []
                 this.noResultsFound = false
-                console.log("1" + this.summaryData)
             } else {
                 this.hits = []
                 this.page = []
                 this.noResultsFound = true
-                console.log("2" + this.summaryData)
             }
             this.searchGenericQuery = {
                 queryText: this.$route.query.q || "",
@@ -207,11 +188,6 @@ export default {
             // if route queries are empty fetch data from craft
             const data = await this.$graphql.default.request(ARTICLE_NEWS_LIST)
             this.summaryData = _get(data, "entry", {})
-            console.log("3" + this.summaryData)
-            console.log(
-                "this is summary data" +
-                    JSON.stringify(this.summaryData.meapNewsListing)
-            )
             this.page = _get(data, "entries", [])
         }
     },
