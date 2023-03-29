@@ -51,6 +51,13 @@ jobs:
               with:
                   path: ./dist
                   key: nuxt-site-${{ github.sha }}
+            - name: Sets env vars for PR preview
+              run: |
+                  echo "ES_INDEX=${{secrets.ES_INDEX_TEST}}-deploy-preview" >> $GITHUB_ENV
+              if: github.ref_name!='main'
+            - name: Sets env vars for main merge
+              run: |
+                  echo "ES_INDEX=${{secrets.ES_INDEX_TEST}}" >> $GITHUB_ENV
             - run: npm run generate
               env:
                   CRAFT_ENDPOINT: ${{ secrets.CRAFT_ENDPOINT_TEST }}
