@@ -9,8 +9,8 @@ const config = {
         ],
         filters: [
             {
-                label: "Topic",
-                esFieldName: "meapProjectTopic.title.keyword",
+                label: "Project Type",
+                esFieldName: "projectType.keyword",
                 inputType: "checkbox",
             },
             {
@@ -19,8 +19,8 @@ const config = {
                 inputType: "checkbox",
             },
             {
-                label: "Project Type",
-                esFieldName: "projectType.keyword",
+                label: "Topic",
+                esFieldName: "meapProjectTopic.title.keyword",
                 inputType: "checkbox",
             },
         ],

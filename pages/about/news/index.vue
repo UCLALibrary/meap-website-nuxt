@@ -18,16 +18,16 @@
         <h2 class="visually-hidden">
             Highlighted News
         </h2>
-
-        <!-- <section-wrapper
+        {{ summaryData }}
+        {{ parsedFeaturedNews }}
+        <section-wrapper
             v-show="
                 summaryData &&
-                    parsedFeaturedNews &&
-                    parsedFeaturedNews.length &&
+                    summaryData.meapNewsListing &&
+                    summaryData.meapNewsListing.length &&
                     hits.length == 0 &&
                     !noResultsFound
             "
-            v-if="parsedFeaturedNews.length"
             class="section-no-top-margin"
         >
             <banner-featured
@@ -44,13 +44,22 @@
                 class="banner section-featured-banner"
             />
 
-            <divider-general v-if="parsedSectionHighlight.length" />
+            <divider-general
+                v-show="
+                    summaryData &&
+                        summaryData.meapNewsListing &&
+                        summaryData.meapNewsListing.length &&
+                        hits.length == 0 &&
+                        !noResultsFound
+                "
+            />
 
             <section-teaser-highlight
+                v-show="parsedSectionHighlight.length"
                 class="section"
                 :items="parsedSectionHighlight"
             />
-        </section-wrapper> -->
+        </section-wrapper>
 
         <section-wrapper theme="divider">
             <divider-way-finder
@@ -60,13 +69,7 @@
         </section-wrapper>
 
         <section-wrapper
-            v-show="
-                page &&
-                    parsedNewsList &&
-                    parsedNewsList.length &&
-                    hits.length == 0 &&
-                    !noResultsFound
-            "
+            v-show="page && page.length && hits.length == 0 && !noResultsFound"
         >
             <section-staff-article-list
                 :items="parsedNewsList"
@@ -159,7 +162,7 @@ export default {
                 )
                 //console.log("data for masthead:" + data)
                 this.summaryData["title"] = _get(data, "entry.title", "")
-                this.summaryData["text"] = _get(data, "entry.text", "")
+                this.summaryData["summary"] = _get(data, "entry.summary", "")
             }
             let query_text = this.$route.query.q || "*"
             //console.log("in router query in asyc data")
@@ -179,11 +182,14 @@ export default {
             if (results && results.hits && results.hits.total.value > 0) {
                 this.hits = results.hits.hits
                 this.page = []
+                this.summaryData = {}
                 this.noResultsFound = false
+                console.log("1" + this.summaryData)
             } else {
                 this.hits = []
                 this.page = []
                 this.noResultsFound = true
+                console.log("2" + this.summaryData)
             }
             this.searchGenericQuery = {
                 queryText: this.$route.query.q || "",
@@ -197,8 +203,12 @@ export default {
             this.noResultsFound = false
             // if route queries are empty fetch data from craft
             const data = await this.$graphql.default.request(ARTICLE_NEWS_LIST)
-            // //console.log("data:" + data)
             this.summaryData = _get(data, "entry", {})
+            console.log("3" + this.summaryData)
+            console.log(
+                "this is summary data" +
+                    JSON.stringify(this.summaryData.meapNewsListing)
+            )
             this.page = _get(data, "entries", [])
         }
     },
