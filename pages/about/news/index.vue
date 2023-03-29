@@ -18,13 +18,13 @@
         <h2 class="visually-hidden">
             Highlighted News
         </h2>
-        {{ summaryData }}
-        {{ parsedFeaturedNews }}
+
         <section-wrapper
             v-show="
                 summaryData &&
-                    summaryData.meapNewsListing &&
-                    summaryData.meapNewsListing.length &&
+                    parsedFeaturedNews &&
+                    parsedFeaturedNews.length &&
+                    parsedBannerHeader &&
                     hits.length == 0 &&
                     !noResultsFound
             "
@@ -33,9 +33,8 @@
             <banner-featured
                 :image="parsedBannerHeader.image"
                 :title="parsedBannerHeader.title"
-                breadcrumb="Featured"
                 :byline="parsedByline"
-                :locations="parsedBannerHeader.locations"
+                breadcrumb="Featured"
                 :description="parsedBannerHeader.text"
                 :date-created="parsedBannerHeader.dateCreated"
                 :to="parsedBannerHeader.to"
@@ -47,15 +46,21 @@
             <divider-general
                 v-show="
                     summaryData &&
-                        summaryData.meapNewsListing &&
-                        summaryData.meapNewsListing.length &&
+                        parsedSectionHighlight &&
+                        parsedSectionHighlight.length &&
                         hits.length == 0 &&
                         !noResultsFound
                 "
             />
 
             <section-teaser-highlight
-                v-show="parsedSectionHighlight.length"
+                v-show="
+                    summaryData &&
+                        parsedSectionHighlight &&
+                        parsedSectionHighlight.length &&
+                        hits.length == 0 &&
+                        !noResultsFound
+                "
                 class="section"
                 :items="parsedSectionHighlight"
             />
@@ -220,32 +225,41 @@ export default {
     },
     computed: {
         parsedFeaturedNews() {
-            return this.summaryData.meapNewsListing.map((obj) => {
-                return {
-                    ...obj,
-                    to: `/about/news/${obj.to}`,
-                    image: _get(obj, "heroImage[0].image[0]", {}),
-                    category: _get(obj, "category[0].title", ""),
-                    dateCreated: _get(obj, "dateCreated", ""),
-                    byline: _get(obj, "articleStaff", []),
-                    bylineOne: _get(obj, "articleStaff[0].title", ""),
-                    bylineTwo: _get(obj, "dateCreated", ""),
-                }
-            })
+            if (this.summaryData && this.summaryData.meapNewsListing) {
+                return this.summaryData.meapNewsListing.map((obj) => {
+                    return {
+                        ...obj,
+                        to: `/about/news/${obj.to}`,
+                        image: _get(obj, "heroImage[0].image[0]", null),
+                        category: _get(obj, "category[0].title", ""),
+                        dateCreated: _get(obj, "dateCreated", ""),
+                        byline: _get(obj, "articleStaff", []),
+                        bylineOne: _get(obj, "articleStaff[0].title", ""),
+                        bylineTwo: _get(obj, "dateCreated", ""),
+                    }
+                })
+            } else return []
         },
         parsedBannerHeader() {
-            return this.parsedFeaturedNews[0]
+            if (this.summaryData && this.summaryData.meapNewsListing) {
+                return this.parsedFeaturedNews[0]
+            } else return {}
         },
         parsedSectionHighlight() {
-            return this.parsedFeaturedNews.slice(1).map((obj) => {
-                return {
-                    ...obj,
-                    bylineTwo:
-                        obj.bylineTwo != null
-                            ? format(new Date(obj.bylineTwo), "MMMM d, yyyy")
-                            : "",
-                }
-            })
+            if (this.summaryData && this.summaryData.meapNewsListing) {
+                return this.parsedFeaturedNews.slice(1).map((obj) => {
+                    return {
+                        ...obj,
+                        bylineTwo:
+                            obj.bylineTwo != null
+                                ? format(
+                                    new Date(obj.bylineTwo),
+                                    "MMMM d, yyyy"
+                                )
+                                : "",
+                    }
+                })
+            } else return []
         },
         parsedNewsList() {
             return this.page.map((obj) => {
@@ -258,11 +272,14 @@ export default {
             })
         },
         parsedByline() {
-            let output = []
-            if (this.parsedBannerHeader.byline.length > 0) {
-                output.push(this.parsedBannerHeader.byline[0].title)
-            }
-            return output
+            let byline = (this.summaryData.articleStaff || []).map((entry) => {
+                return `${entry.byline} ${
+                    entry.title || entry.staffMember[0].title
+                }`
+            })
+            return byline.map((entry) => {
+                return entry
+            })
         },
         parseHitsResults() {
             return this.parseHits(this.hits)
