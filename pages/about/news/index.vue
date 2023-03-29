@@ -88,10 +88,43 @@
             <section-staff-article-list :items="parseHitsResults" />
         </section-wrapper>
 
+        <!-- NO RESULTS -->
+        <section-wrapper
+            v-show="noResultsFound"
+            class="section-no-top-margin"
+        >
+            <div class="error-text">
+                <rich-text>
+                    <h2>Search for “{{ $route.query.q }}” not found.</h2>
+                    <p>
+                        We can’t find the term you are looking for on this page.
+                        <br>
+                        <!-- Try searching the whole site from
+                        <a href="https://library.ucla.edu">UCLA Library Home</a>, or try one of the these regularly visited links:
+                    </p>
+                    <ul>
+                        <li>
+                            <a
+                                href="https://www.library.ucla.edu/research-teaching-support/research-help"
+                            >Research Help</a>
+                        </li>
+                        <li>
+                            <a href="/help/services-resources/ask-us">Ask Us</a>
+                        </li>
+                        <li>
+                            <a
+                                href="https://www.library.ucla.edu/use/access-privileges/disability-resources"
+                            >Accessibility Resources</a>
+                        </li>
+                    </ul> -->
+                    </p>
+                </rich-text>
+            </div>
+        </section-wrapper>
         <section-wrapper theme="divider">
             <divider-way-finder
+                color="search-margin"
                 class="divider"
-                color="visit"
             />
         </section-wrapper>
 

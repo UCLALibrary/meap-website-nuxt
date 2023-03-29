@@ -60,9 +60,9 @@
                 <rich-text>
                     <h2>Search for “{{ $route.query.q }}” not found.</h2>
                     <p>
-                        We can’t find the term you are looking for on this page,
-                        but we're here to help. <br>
-                        Try searching the whole site from
+                        We can’t find the term you are looking for on this page.
+                        <br>
+                        <!-- Try searching the whole site from
                         <a href="https://library.ucla.edu">UCLA Library Home</a>, or try one of the these regularly visited links:
                     </p>
                     <ul>
@@ -79,7 +79,8 @@
                                 href="https://www.library.ucla.edu/use/access-privileges/disability-resources"
                             >Accessibility Resources</a>
                         </li>
-                    </ul>
+                    </ul> -->
+                    </p>
                 </rich-text>
             </div>
         </section-wrapper>
