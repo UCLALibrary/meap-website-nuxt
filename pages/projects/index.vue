@@ -112,6 +112,7 @@ import _get from "lodash/get"
 import stripMeapFromURI from "~/utils/stripMeapFromURI"
 import getListingFilters from "~/utils/getListingFilters"
 import config from "~/utils/searchConfig"
+import queryFilterHasValues from "~/utils/queryFilterHasValues"
 
 export default {
     async asyncData({ $graphql, params, store }) {
@@ -144,7 +145,11 @@ export default {
         this.hits = []
         if (
             (this.$route.query.q && this.$route.query.q !== "") ||
-            this.$route.query.filters
+            (this.$route.query.filters &&
+                queryFilterHasValues(
+                    this.$route.query.filters,
+                    config.meapProject.filters
+                ))
         ) {
             if (!this.summaryData.title) {
                 const data = await this.$graphql.default.request(PROJECT_LIST)
