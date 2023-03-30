@@ -142,6 +142,7 @@ import format from "date-fns/format"
 // Search
 import getListingFilters from "~/utils/getListingFilters"
 import config from "~/utils/searchConfig"
+import queryFilterHasValues from "~/utils/queryFilterHasValues"
 
 // GQL
 import ARTICLE_NEWS_LIST from "~/gql/queries/ArticleNewsList"
@@ -172,12 +173,15 @@ export default {
         }
     },
     async fetch() {
-        this.summaryData = {}
         this.page = []
         this.hits = []
         if (
             (this.$route.query.q && this.$route.query.q !== "") ||
-            this.$route.query.filters
+            (this.$route.query.filters &&
+                queryFilterHasValues(
+                    this.$route.query.filters,
+                    config.meapArticle.filters
+                ))
         ) {
             if (!this.summaryData.title) {
                 const data = await this.$graphql.default.request(
