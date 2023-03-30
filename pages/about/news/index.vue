@@ -52,10 +52,7 @@
         </section-wrapper>
 
         <section-wrapper theme="divider">
-            <divider-way-finder
-                class="divider"
-                color="search-margin"
-            />
+            <divider-way-finder class="divider" />
         </section-wrapper>
 
         <section-wrapper
