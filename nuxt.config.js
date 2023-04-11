@@ -144,7 +144,7 @@ export default {
                 url: process.env.CRAFT_ENDPOINT,
                 method: 'post',
                 data: {
-                  query: `
+                    query: `
                     query RouteList {
                         entries(section: "meap*") {
                             uri
@@ -152,7 +152,7 @@ export default {
                     }
                     `
                 }
-              }).then(response => {
+            }).then(response => {
                 return response.data.data.entries.map(page => stripMeapFromURI(page.uri) )
             })
         },
