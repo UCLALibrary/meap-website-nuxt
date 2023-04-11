@@ -1,6 +1,9 @@
 /* eslint-env node */
 // const axios = require("axios")
 
+import axios from "axios"
+import stripMeapFromURI from "./utils/stripMeapFromURI"
+
 export default {
     server: {
         port: 3000,
@@ -134,32 +137,25 @@ export default {
      ** Nuxt generate configuration. Used when generating a static site.
      */
     generate: {
+        crawler: false,
         fallback: "404.html",
-        //       routes() {
-        //           axios({
-        //               url: process.env.CRAFT_ENDPOINT,
-        //               method: "post",
-        //               data: {
-        //                   query: `
-        //       query ProjectList {
-        //   entries(section: "meapProject", orderBy: "dateCreated asc") {
-        //     ... on meapProject_meapProject_Entry {
-        //       id
-        //       uri
-        //       title
-        //     }
-        //   }
-        // }
-        //   `,
-        //               },
-        //           }).then((result) => {
-        //               // console.log("in nuxt config" + result.data)
-        //               return result.data.entries.map((project) => {
-        //                   console.log(project)
-        //                   return "/" + project.uri
-        //               })
-        //           })
-        //       },
+        routes() {
+            return axios({
+                url: process.env.CRAFT_ENDPOINT,
+                method: 'post',
+                data: {
+                  query: `
+                    query RouteList {
+                        entries(section: "meap*") {
+                            uri
+                        }
+                    }
+                    `
+                }
+              }).then(response => {
+                return response.data.data.entries.map(page => stripMeapFromURI(page.uri) )
+            })
+        },
     },
 
     /*
