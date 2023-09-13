@@ -47,6 +47,7 @@ export const mutations = {
 // Define actions
 export const actions = {
     
+    // generatePayload is desructured from nuxt context, dispatch is vuex-store dispatch
     async nuxtGenerateInit({ dispatch }, { generatePayload }) {
         // console.log("In nuxtgenerateinit start")
         let data = generatePayload || {}
