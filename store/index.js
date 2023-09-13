@@ -48,13 +48,13 @@ export const mutations = {
 export const actions = {
     
     async nuxtGenerateInit({ dispatch }, { generatePayload }) {
-        console.log("In nuxtgenerateinit start")
+        // console.log("In nuxtgenerateinit start")
         let data = generatePayload || {}
 
         // Fetch data in parallel
         let headerQuery = dispatch("setHeaderData", data.header)
-        let footerPrimaryQuery = dispatch("setFooterPrimaryData", data.footer)
-        let footerSponsorQuery = dispatch("setFooterSponsoryData", data.footer)
+        let footerPrimaryQuery = dispatch("setFooterPrimaryData", data.footerPrimary)
+        let footerSponsorQuery = dispatch("setFooterSponsoryData", data.footerSponsor)
         let footerSockQuery = dispatch("setFooterSockData", data.footerSock)
         let globalsQuery = dispatch("getGlobals", data.globals)
         const [headerResult, footerPrimaryResult,footerSponsorResult, footerSockResult, globalsResult] = await Promise.all([
@@ -65,7 +65,7 @@ export const actions = {
             globalsQuery,
         ])
 
-        console.log("In nuxtgenerateinit end")
+        // console.log("In nuxtgenerateinit end")
 
         return {
             header: headerResult,
@@ -78,6 +78,7 @@ export const actions = {
     async setFooterSockData({ commit }, data) {
         try {
             if (!data) {
+                // console.log("footersock is being fetched start")
                 data = await this.$graphql.default.request(FOOTER_SOCK_ITEMS)
             }
             commit("SET_FOOTER_SOCK", data)
@@ -89,6 +90,7 @@ export const actions = {
     async setFooterPrimaryData({ commit }, data) {
         try {
             if (!data) {
+                // console.log("footerprimary is being fetched start")
                 data = await this.$graphql.default.request(FOOTER_PRIMARY_ITEMS)
 
             }
@@ -101,6 +103,7 @@ export const actions = {
     async setFooterSponsoryData({ commit }, data){
         try {
             if (!data) {
+                // console.log("footersponsor is being fetched start")
                 data = await this.$graphql.default.request(
                     FOOTER_SPONSOR_ITEMS
                 )
@@ -120,6 +123,7 @@ export const actions = {
     async setHeaderData({ commit }, data) {
         try {
             if (!data) {
+                // console.log("header is being fetched start")
                 data = await this.$graphql.default.request(HEADER_MAIN_MENU_ITEMS)
             }
             commit("SET_HEADER", data)
@@ -131,6 +135,7 @@ export const actions = {
     async getGlobals({ commit }, data) {
         try {
             if (!data) {
+                // console.log("global is being fetched start")
                 data = await this.$graphql.default.request(GLOBALS)
                 data = removeEmpties(data.globalSets || [])
 
