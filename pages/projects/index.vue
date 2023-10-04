@@ -299,4 +299,12 @@ export default {
 .generic-search {
     z-index: 30;
 }
+
+::v-deep .section-teaser-card {
+    z-index: 0;
+}
+
+::v-deep .block-highlight .meta {
+    z-index: 0;
+}
 </style>
