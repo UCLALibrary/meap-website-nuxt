@@ -2,10 +2,12 @@ name: Run CI Suite
 
 on:
     push:
-        branches: [main]
+        branches: [nuxt3.x]
     pull_request:
-        branches: [main]
-
+        branches: [nuxt3.x]
+concurrency:
+    group: ci-${{ github.ref_name=='nuxt3.x' && github.sha || github.ref_name }} # Cancel runs for previous version of PR, but not main (after merge). For hacked ternary, see https://github.com/actions/runner/issues/409#issuecomment-727565588
+    cancel-in-progress: true
 jobs:
     eslint:
         runs-on: ubuntu-latest
@@ -54,10 +56,12 @@ jobs:
             - name: Sets env vars for PR preview
               run: |
                   echo "ES_INDEX=${{secrets.ES_INDEX_TEST}}-deploy-preview-${{github.event.pull_request.number}}" >> $GITHUB_ENV
-              if: github.ref_name!='main'
+                  echo "ES_ALIAS=${{secrets.ES_ALIAS_TEST}}-deploy-preview-${{github.event.pull_request.number}}" >> $GITHUB_ENV
+              if: github.ref_name!='nuxt3.x'
             - name: Sets env vars for main merge
               run: |
                   echo "ES_INDEX=${{secrets.ES_INDEX_TEST}}" >> $GITHUB_ENV
+                  echo "ES_ALIAS=${{secrets.ES_ALIAS_TEST}}" >> $GITHUB_ENV
             - run: npm run generate
               env:
                   CRAFT_ENDPOINT: ${{ secrets.CRAFT_ENDPOINT_TEST }}
@@ -68,6 +72,7 @@ jobs:
                   ES_READ_KEY: ${{ secrets.ES_READ_KEY_TEST }}
                   ES_WRITE_KEY: ${{ secrets.ES_WRITE_KEY_TEST }}
                   ES_INDEX: ${{ env.ES_INDEX }}
+                  ES_ALIAS: ${{ env.ES_ALIAS }}
                   ES_INDEX_PREFIX: ${{secrets.ES_INDEX_PREFIX_TEST}}
             - uses: cypress-io/github-action@v3
               with:
@@ -83,22 +88,22 @@ jobs:
                   ES_READ_KEY: ${{ secrets.ES_READ_KEY_TEST }}
                   ES_WRITE_KEY: ${{ secrets.ES_WRITE_KEY_TEST }}
                   ES_INDEX: ${{ env.ES_INDEX }}
-                  ES_INDEX_PREFIX: ${{secrets.ES_INDEX_PREFIX_TEST}}
+                  ES_INDEX_PREFIX: ${{secrets.ES_INDEX_PREFIX_TEST_NUXT3X}}
             - name: Deploy to Netlify (test)
-              if: github.ref_name=='main'
+              if: github.ref_name=='nuxt3.x'
               uses: nwtgck/actions-netlify@v2 #
               with:
                   production-deploy: true
                   deploy-message: https://github.com/UCLALibrary/meap-website-nuxt/commit/${{ github.sha }}
                   github-token: ${{ secrets.GITHUB_TOKEN }}
-                  publish-dir: "./dist"
+                  publish-dir: .output/public
                   fails-without-credentials: true
                   github-deployment-environment: production
               env:
                   NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
                   NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_MEAP_TEST }}
             - name: Deploy to Netlify (preview)
-              if: github.ref_name!='main'
+              if: github.ref_name!='nuxt3.x'
               uses: nwtgck/actions-netlify@v2 #
               with:
                   production-deploy: false
@@ -106,9 +111,9 @@ jobs:
                   alias: deploy-preview-${{ github.event.pull_request.number }}
                   github-token: ${{ secrets.GITHUB_TOKEN }}
                   overwrites-pull-request-comment: true
-                  publish-dir: "./dist"
+                  publish-dir: .output/public
                   fails-without-credentials: true
                   github-deployment-environment: ${{ github.event_name }}-${{ github.event.number }}
               env:
                   NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-                  NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_MEAP_TEST }}
+                  NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_MEAP_TEST_NUXT3X }}

@@ -1,10 +1,16 @@
-/* eslint-env node */
 module.exports = {
-    extends: ["eslint:recommended", "plugin:vue/recommended", "plugin:cypress/recommended"],
-    rules: {
-        // override/add rules settings here, such as:
-        indent: ["error", 4, { SwitchCase: 1 }],
-        "vue/html-indent": ["error", 4],
-        semi: [2, "never"],
-    },
-}
+    root: true,
+    extends: ["@nuxtjs/eslint-config-typescript"],
+    "rules": {
+        "@typescript-eslint/comma-dangle": "off",
+        "n/prefer-global/process": "off",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "space-before-function-paren": "off",
+        "comma-dangle": "off",
+        "operator-linebreak": "off",
+        "curly": "off",
+        "brace-style": "off",
+    }
+};
+
