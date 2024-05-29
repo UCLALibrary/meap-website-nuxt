@@ -4,10 +4,8 @@
  * @returns {String}
  */
 
-
-function stripMeapFromURI(uri="") {
-    
-    return uri.replace("meap/","")
+function stripMeapFromURI(uri = '') {
+  return uri.replace('meap/', '')
 }
 
 export default stripMeapFromURI

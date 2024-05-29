@@ -4,10 +4,8 @@
  * @returns {String}
  */
 
-function getS3Bucket($config = {},image_filename = "") {
-    
-
-    return $config.s3Bucket + image_filename
+function getS3Bucket($config = {}, imageFilename = '') {
+  return $config.s3Bucket + imageFilename
 }
 
 export default getS3Bucket

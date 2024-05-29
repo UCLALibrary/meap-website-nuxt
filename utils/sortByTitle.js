@@ -13,7 +13,7 @@ let entries = [
         "title": "Augmented Reality"
     },
     {
-        "id": "22989", 
+        "id": "22989",
         "title": "Danelectro Guitars"
     }
   ]
@@ -22,13 +22,13 @@ entries.sort( sortByTitle );
  */
 
 function sortByTitle(a, b) {
-    if ( a.title < b.title ){
-        return -1
-    }
-    if ( a.title > b.title ){
-        return 1
-    }
-    return 0
+  if (a.title < b.title) {
+    return -1
+  }
+  if (a.title > b.title) {
+    return 1
+  }
+  return 0
 }
 
 export default sortByTitle

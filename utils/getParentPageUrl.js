@@ -4,11 +4,11 @@
  * @returns {String}
  */
 
-function getParentPageUrl(uri = "") {
-    let output = uri.split('/')
-    output.pop()
+function getParentPageUrl(uri = '') {
+  const output = uri.split('/')
+  output.pop()
 
-    return output.join("/")
+  return output.join('/')
 }
 
 export default getParentPageUrl

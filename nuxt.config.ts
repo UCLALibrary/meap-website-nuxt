@@ -81,11 +81,11 @@ export default defineNuxtConfig({
     // Public keys that are exposed to the client
     public: {
       craftGraphqlURL: process.env.CRAFT_ENDPOINT || '',
-      esReadKey: process.env.ES_READ_KEY || "",
+      esReadKey: process.env.ES_READ_KEY || '',
       esAlias: process.env.ES_ALIAS || '',
-      esIndexPrefix: process.env.ES_INDEX_PREFIX || "",
+      esIndexPrefix: process.env.ES_INDEX_PREFIX || '',
       esTempIndex: process.env.ES_INDEX_PREFIX + '-' + new Date().toISOString().toLowerCase().replaceAll(':', '-'),
-      esURL: process.env.ES_URL || "",
+      esURL: process.env.ES_URL || '',
     },
   },
 
@@ -98,7 +98,7 @@ export default defineNuxtConfig({
         // If undefined or blank then we don't need the pipe and space
         return titleChunk
           ? `${titleChunk} | Modern Endangered Archives Program`
-          : "Modern Endangered Archives Program"
+          : 'Modern Endangered Archives Program'
       },
       htmlAttrs: {
         lang: 'en',
@@ -130,16 +130,16 @@ export default defineNuxtConfig({
   ** Page transition
   */
   pageTransition: {
-    name: "fade",
-    mode: "out-in",
+    name: 'fade',
+    mode: 'out-in',
   },
   /*
    ** Customize the progress-bar color
    ** See: https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-loading
    */
   loading: {
-    color: "#ffe800",
-    height: "3px",
+    color: '#ffe800',
+    height: '3px',
   },
 
   typescript: {
@@ -157,7 +157,7 @@ export default defineNuxtConfig({
     transpile: ['nuxt-graphql-request'],
   },
   gtm: {
-    id: "GTM-T2SXV2",
+    id: 'GTM-T2SXV2',
   },
   site: {
     url: process.env.SITEMAP_HOST || 'https://www.library.ucla.edu',
