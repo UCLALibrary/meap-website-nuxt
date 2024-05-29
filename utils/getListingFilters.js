@@ -5,28 +5,28 @@
  */
 
 function getListingFilters(searchAggsResponse, filterFields) {
-    //console.log()
-    const filters = []
-    for (const field of filterFields) {
-        let obj = {
-            label: field.label,
-            esFieldName: field.esFieldName,
-            inputType: field.inputType,
-            items:
+  // console.log()
+  const filters = []
+  for (const field of filterFields) {
+    const obj = {
+      label: field.label,
+      esFieldName: field.esFieldName,
+      inputType: field.inputType,
+      items:
                 (searchAggsResponse &&
                     searchAggsResponse[field.label] &&
                     searchAggsResponse[field.label].buckets.reduce(
-                        (accumulator, value) => {
-                            return [...accumulator, { name: value.key }]
-                        },
-                        []
+                      (accumulator, value) => {
+                        return [...accumulator, { name: value.key }]
+                      },
+                      []
                     )) ||
                 [],
-        }
-        filters.push(obj)
     }
+    filters.push(obj)
+  }
 
-    return filters
+  return filters
 }
 
 export default getListingFilters

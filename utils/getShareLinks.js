@@ -5,42 +5,42 @@
  */
 
 function getShareLinks(opts = {}) {
-    const url = opts.url || ""
-    const text = opts.text.replace(/<[^>]*>?/gm, "") || ""
+  const url = opts.url || ''
+  const text = opts.text.replace(/<[^>]*>?/gm, '') || ''
 
-    const title = opts.title || ""
+  const title = opts.title || ''
 
-    return {
-        facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+  return {
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
             url
         )}`,
-        twitter: `http://twitter.com/share?text=${encodeURIComponent(
+    twitter: `http://twitter.com/share?text=${encodeURIComponent(
             text.substring(0, 280)
         )}&url=${encodeURIComponent(url)}`,
-        tumblr: `http://www.tumblr.com/share/link?url=${encodeURIComponent(
+    tumblr: `http://www.tumblr.com/share/link?url=${encodeURIComponent(
             url
         )}`,
-        reddit: `http://www.reddit.com/submit?url=${url}&title=${encodeURIComponent(
+    reddit: `http://www.reddit.com/submit?url=${url}&title=${encodeURIComponent(
             title
         )}`,
-        email: `mailto:?subject=${encodeURIComponent(
+    email: `mailto:?subject=${encodeURIComponent(
             title
         )}&body=${encodeURIComponent(text)}%0D%0A %0D%0A${encodeURIComponent(
             url
         )}`,
-        linkedin: `http://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
+    linkedin: `http://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
             url
         )}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(
             text
         )}`,
-        pinterest: `http://pinterest.com/pin/create/button/?url=${encodeURIComponent(
+    pinterest: `http://pinterest.com/pin/create/button/?url=${encodeURIComponent(
             url
         )}&description=${encodeURIComponent(text)}`,
-        printer: `javascript:window.print()`,
-        whatsapp:`https://wa.me/?text=${encodeURIComponent(
+    printer: 'javascript:window.print()',
+    whatsapp: `https://wa.me/?text=${encodeURIComponent(
             url
         )}${encodeURIComponent(text)}`,
-    }
+  }
 }
 
 export default getShareLinks

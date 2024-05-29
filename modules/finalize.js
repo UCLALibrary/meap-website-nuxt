@@ -43,7 +43,7 @@ export default defineNuxtModule({
 
     nuxt.hooks.hook('nitro:build:public-assets', async () => {
       logger.warn('Ready for generating alias...')
-      try {  
+      try {
         await updateAliases()
       } catch (err) {
         logger.error('An error occurred:', err)

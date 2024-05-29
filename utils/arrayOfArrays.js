@@ -9,13 +9,13 @@
  */
 
 function arrayOfArrays(arr, chunkSize) {
-    const group = []
-    for (let i = 0; i < arr.length; i += chunkSize) {
-        const chunk = arr.slice(i, i + chunkSize)
-        console.log("Chunk" + i + chunk)
-        group.push(chunk)
-    }
-    return group
+  const group = []
+  for (let i = 0; i < arr.length; i += chunkSize) {
+    const chunk = arr.slice(i, i + chunkSize)
+    console.log('Chunk' + i + chunk)
+    group.push(chunk)
+  }
+  return group
 }
 
 export default arrayOfArrays

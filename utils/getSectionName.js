@@ -4,30 +4,30 @@
  * @returns {String}
  */
 
-function getSectionName(uri = "") {
-    let output = "default"
+function getSectionName(uri = '') {
+  let output = 'default'
 
-    if (uri == null) {
-        return output // don't try string method .includes
-    }
+  if (uri == null) {
+    return output // don't try string method .includes
+  }
 
-    switch (true) {
-        case uri.includes("/help"):
-            output = "help"
-            break
+  switch (true) {
+    case uri.includes('/help'):
+      output = 'help'
+      break
 
-        case uri.includes("/about"):
-        case uri.includes("/impact"):
-            output = "about"
-            break
+    case uri.includes('/about'):
+    case uri.includes('/impact'):
+      output = 'about'
+      break
 
-        case uri.includes("/visit"):
-        case uri.includes("/events-exhibits"):
-            output = "visit"
-            break
-    }
+    case uri.includes('/visit'):
+    case uri.includes('/events-exhibits'):
+      output = 'visit'
+      break
+  }
 
-    return output
+  return output
 }
 
 export default getSectionName

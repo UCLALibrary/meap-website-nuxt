@@ -41,9 +41,9 @@ export const useGlobalStore = defineStore('GlobalStore', {
           // Shape data from Craft
           const craftData = {
             askALibrarian: globalData && globalData.length > 0 ? globalData[0] : {},
-            meapCallToAction: globalData && globalData.length > 1? globalData[1] : {},
+            meapCallToAction: globalData && globalData.length > 1 ? globalData[1] : {},
           }
-          
+
           this.globals = craftData
         }
         // console.log("Pinia store fetchGlobals end:" + JSON.stringify(this.globals))
@@ -95,8 +95,6 @@ export const useGlobalStore = defineStore('GlobalStore', {
         throw new Error(`Craft API error, trying to set globals FooterSockData. ${e}`)
       }
     },
-    
-
 
     /* Examples of action methods:
     setToken(token) {

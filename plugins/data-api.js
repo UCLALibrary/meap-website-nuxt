@@ -23,7 +23,6 @@ async function getMapping() {
   return data
 }
 
-
 async function getAggregations(fields, sectionHandle) {
   // console.log("search text: "+fields)
   const config = useRuntimeConfig()

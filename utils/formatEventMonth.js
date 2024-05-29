@@ -6,11 +6,10 @@
  * @returns {String}
  */
 
-import format from "date-fns/format"
+import format from 'date-fns/format'
 
-function formatMonth(startDate = "") {
-    return format(new Date(startDate), "MMM")
+function formatMonth(startDate = '') {
+  return format(new Date(startDate), 'MMM')
 }
- 
+
 export default formatMonth
- 
