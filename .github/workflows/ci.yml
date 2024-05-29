@@ -50,6 +50,7 @@ jobs:
             - uses: ./.github/workflows/setup-workspace
             - name: Cache built static site
               uses: actions/cache@v3
+              id: cache-nuxt3
               with:
                   path: .output/public
                   key: nuxt3-site-${{ github.sha }}
@@ -64,7 +65,7 @@ jobs:
                   echo "ES_ALIAS=${{secrets.ES_ALIAS_TEST}}" >> $GITHUB_ENV
               if: github.ref_name=='nuxt3.x'
             - run: pnpm run generate
-              if: steps.cache-nuxt.outputs.cache-hit != 'true'
+              if: steps.cache-nuxt3.outputs.cache-hit != 'true'
               env:
                   CRAFT_ENDPOINT: ${{ secrets.CRAFT_ENDPOINT_TEST }}
                   S3_BUCKET: "https://static.library.ucla.edu/"
