@@ -1,3 +1,5 @@
+// https://nuxt.com/docs/api/configuration/nuxt-config
+
 export default defineNuxtConfig({
   // when using local pnpm link with component library uncomment this line
   vite: {
@@ -20,9 +22,9 @@ export default defineNuxtConfig({
       preprocessorOptions: {
         scss: {
           additionalData: `
-                          @import "ucla-library-design-tokens/scss/fonts.scss";
-                          @import "ucla-library-design-tokens/scss/app.scss";
-                      `,
+                        @import "ucla-library-design-tokens/scss/fonts.scss";
+                        @import "ucla-library-design-tokens/scss/app.scss";
+                    `,
         },
       },
     }
@@ -43,7 +45,7 @@ export default defineNuxtConfig({
         /* if (route.route?.includes('&amp;')) {
           route.skip = true
         } */
-        // console.log('prerender:generate', route)
+        console.log('prerender:generate', route)
       },
       async 'prerender:routes'(routes) {
         const allRoutes = []
@@ -59,7 +61,8 @@ export default defineNuxtConfig({
         const postPages = await response.json()
         // console.log('All pages', JSON.stringify(postPages.data.entries))
         if (postPages && postPages.data && postPages.data.entries) {
-          const postWithoutPayloadRoutes = postPages.data.entries.filter(item => item.sectionHandle.includes('meap')).map(entry => '/' + entry.uri)
+          const postWithoutPayloadRoutes = postPages.data.entries.filter(item => item.sectionHandle.includes('meap') && item.uri !== 'meap').map(entry => '/' + entry.uri.replace(/^meap\//, ''))
+
           allRoutes.push(...postWithoutPayloadRoutes)
         }
 
@@ -86,6 +89,9 @@ export default defineNuxtConfig({
       esIndexPrefix: process.env.ES_INDEX_PREFIX || '',
       esTempIndex: process.env.ES_INDEX_PREFIX + '-' + new Date().toISOString().toLowerCase().replaceAll(':', '-'),
       esURL: process.env.ES_URL || '',
+      gtm: {
+        id: 'GTM-T2SXV2'
+      }
     },
   },
 
@@ -94,12 +100,6 @@ export default defineNuxtConfig({
      */
   app: {
     head: {
-      titleTemplate: (titleChunk: string) => {
-        // If undefined or blank then we don't need the pipe and space
-        return titleChunk
-          ? `${titleChunk} | Modern Endangered Archives Program`
-          : 'Modern Endangered Archives Program'
-      },
       htmlAttrs: {
         lang: 'en',
       },
@@ -112,6 +112,11 @@ export default defineNuxtConfig({
         },
       ],
       link: [{ rel: 'icon', type: 'image/svg', href: '/icon-ucla-favicon.svg' }],
+    },
+
+    pageTransition: {
+      name: 'fade',
+      mode: 'out-in',
     },
   },
 
@@ -126,21 +131,6 @@ export default defineNuxtConfig({
     // use the following line when using pnpm link --global ucla-library-website-components-vue
     'ucla-library-website-components/dist/style.css',
   ],
-  /*
-  ** Page transition
-  */
-  pageTransition: {
-    name: 'fade',
-    mode: 'out-in',
-  },
-  /*
-   ** Customize the progress-bar color
-   ** See: https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-loading
-   */
-  loading: {
-    color: '#ffe800',
-    height: '3px',
-  },
 
   typescript: {
     strict: false
@@ -151,14 +141,12 @@ export default defineNuxtConfig({
     {
       autoImports: ['defineStore', 'acceptHMRUpdate'],
     },
-  ], 'nuxt-graphql-request', '@nuxtjs/sitemap'],
+  ], 'nuxt-graphql-request', '@nuxtjs/sitemap', '@zadigetvoltaire/nuxt-gtm'],
 
   build: {
     transpile: ['nuxt-graphql-request'],
   },
-  gtm: {
-    id: 'GTM-T2SXV2',
-  },
+
   site: {
     url: process.env.SITEMAP_HOST || 'https://www.library.ucla.edu',
   },

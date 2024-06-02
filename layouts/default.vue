@@ -1,122 +1,94 @@
-<template lang="html">
+<script setup>
+
+useHead({
+  titleTemplate: title =>
+    title === 'Homepage' ? 'UCLA Library' : `${title}` + ' | UCLA Library',
+  script: [
+    {
+      hid: 'libanswers',
+      src: 'https://ucla.libanswers.com/load_chat.php?hash=5a44dfe7cc29aaee5bba635ab13fa753',
+      defer: true
+    }
+  ]
+})
+
+const globalStore = useGlobalStore()
+
+const classes = computed(() => [
+  'layout',
+  'layout-default',
+  { 'has-scrolled': globalStore.sTop },
+  { 'has-scrolled-past-header': globalStore.sTop >= 150 }
+])
+
+</script>
+
+<template>
   <div :class="classes">
-    <VueSkipTo
-      to="#main"
-      label="Skip to main content"
-    />
-    <header
-      v-if="!isMobile"
-      class="header-main"
-    >
-      <site-brand-bar class="brand-bar" />
-      <nav-secondary
-        :items="secondaryMenuItems"
-        :is-microsite="true"
-      />
-      <nav-primary
-        class="primary"
-        :items="primaryMenuItems"
-        title="Modern Endangered Archives Program"
-        acronym="MEAP"
-      />
-    </header>
-    <header v-else>
-      <site-brand-bar class="brand-bar" />
-      <header-main-responsive
-        :primary-nav="primaryMenuItems"
-        :secondary-nav="secondaryMenuItems"
-        current-path="/about/foo/bar"
-        title="Modern Endangered Archives Program"
-        acronym="MEAP"
-      />
-    </header>
+    <header-smart v-if="globalStore.header" />
 
-    <nuxt class="page" />
 
-    <footer-main />
+    <slot />
+
+    <footer>
+      <footer-primary
+        v-if="globalStore.footerPrimary"
+        :form="true"
+      />
+      <footer-sock v-if="globalStore.footerSock" />
+    </footer>
+
   </div>
 </template>
 
-<script>
-// Helpers
-import kebabCase from '~/utils/kebabCase'
-
-export default {
-  data() {
-    return {
-      pageMeta: {
-        title: 'Modern Endangered Archives Program',
-      },
-    }
-  },
-  computed: {
-    primaryMenuItems() {
-      return this.$store.state.header.primary
-    },
-    secondaryMenuItems() {
-      return this.$store.state.header.secondary
-    },
-    isMobile() {
-      return this.$store.state.winWidth <= 1024
-    },
-    whichHeader() {
-      return this.isMobile ? 'header-main-responsive' : 'header-main'
-    },
-    bodyClasses() {
-      const classes = ['body', 'theme-default']
-      classes.push(`route-${kebabCase(this.$route.name || 'error')}`)
-      return classes.join(' ')
-    },
-    classes() {
-      return [
-        'layout',
-        'layout-default',
-        { 'has-scrolled': this.$store.state.sTop },
-        { 'has-scrolled-past-header': this.$store.state.sTop >= 150 },
-      ]
-    },
-  },
-}
-</script>
-
 <style lang="scss" scoped>
 .layout-default {
-    min-height: 100vh;
+  min-height: 100vh;
 
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
 
-    > * {
-        width: 100%;
-    }
+  :deep(>*) {
+    width: 100%;
+  }
 
-    .page {
-        flex: 1 1 auto;
-    }
-}
-.vue-skip-to {
-    z-index: 300;
-}
-
-.header-main {
-    z-index: 200;
-
+  .section-alert {
+    height: 0;
     position: relative;
-    height: 168px;
 
-    .primary {
-        position: absolute;
+    .library-alert {
+      position: absolute;
+      z-index: 100;
+      top: 32px;
+      right: var(--unit-gutter);
     }
-    // TODO nav on smaller viewports
+  }
+
+  flex: 1 1 auto;
 }
-@media #{$medium} {
-    .brand-bar {
-        position: absolute;
-        width: 100%;
-    }
+
+.vue-skip-to {
+  z-index: 300;
+}
+
+.skip-link {
+  position: absolute;
+  transform: translateY(-100%);
+  display: inline-block;
+  background: var(--color-primary-yellow-01);
+  color: var(--color-black);
+  @include step-0;
+  padding: 4px 16px;
+  transition: transform 0.3s;
+  width: auto;
+  left: 0;
+}
+
+.skip-link:focus {
+  transform: translateY(0%);
 }
 </style>

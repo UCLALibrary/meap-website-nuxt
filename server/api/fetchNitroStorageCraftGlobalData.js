@@ -1,25 +1,22 @@
 const globalsQuery = `
         query Globals {
             globalSets {
-              ... on askALibrarian_GlobalSet {
-                id
-                askALibrarianTitle: titleGeneral
-                askALibrarianText: summary
-                buttonUrl {
-                    buttonText
-                    buttonUrl
+                dataId: id
+                handle
+
+                ... on askALibrarian_GlobalSet {
+                    askALibrarianTitle: titleGeneral
+                    askALibrarianText: summary
+                    buttonUrl {
+                        buttonText
+                        buttonUrl
+                    }
                 }
-              }
-              ... on meapCallToAction_GlobalSet {
-                  id
-                  name
-                  titleGeneral
-                  summary
-                  button: buttonUrl {
-                      buttonText
-                      buttonUrl
-                  }
-              }
+
+                ... on libraryAlert_GlobalSet {
+                    title: entryTitle
+                    text: richTextAlertBox
+                }
             }
         }
     `

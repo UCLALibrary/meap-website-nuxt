@@ -216,11 +216,9 @@ export default defineNuxtPlugin((nuxtApp) => {
   return {
     provide: {
       dataApi: {
-        getMapping,
-        siteSearch,
+        getMapping,  
         keywordSearchWithFilters,
         getAggregations,
-        getAggregationsForSiteSearch
       }
     }
   }

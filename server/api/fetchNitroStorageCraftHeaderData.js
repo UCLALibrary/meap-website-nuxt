@@ -7,10 +7,10 @@ const MenuItem = `
     `
 const headerQuery = `
     query HeaderMainMenuItems {
-        secondary: nodes(navHandle: "micrositeSecondaryMenu", level: 1) {
+        secondary: nodes(navHandle: "secondaryMenu", level: 1) {
             ${MenuItem}
         }
-        primary: nodes(navHandle: "meapPrimaryMenu", level: 1) {
+        primary: nodes(navHandle: "primaryMenu", level: 1) {
             ${MenuItem}
             children {
                 ${MenuItem}
