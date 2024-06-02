@@ -1,10 +1,34 @@
+<script setup>
+// Helpers
+import kebabCase from '~/utils/kebabCase'
+
+const globalStore = useGlobalStore()
+
+
+const primaryMenuItems = computed(() => {
+  return globalStore.header.primary
+})
+const secondaryMenuItems = computed(() => {
+  return globalStore.header.secondary
+})
+const isMobile = computed(() => {
+  return globalStore.winWidth <= 1024
+})
+
+const classes = computed(() => {
+  return [
+    'layout',
+    'layout-default',
+    { 'has-scrolled': globalStore.sTop },
+    { 'has-scrolled-past-header': globalStore.sTop >= 150 },
+  ]
+})
+
+</script>
 <template lang="html">
   <div :class="classes">
-    <VueSkipTo
-      to="#main"
-      label="Skip to main content"
-    />
-    <header
+
+    <!--header
       v-if="!isMobile"
       class="header-main"
     >
@@ -29,94 +53,58 @@
         title="Modern Endangered Archives Program"
         acronym="MEAP"
       />
-    </header>
+    </header-->
+    <header-smart> </header-smart>
 
-    <nuxt class="page" />
+    <slot />
 
-    <footer-main />
+    <!--footer-main /-->
   </div>
 </template>
 
-<script>
-// Helpers
-import kebabCase from '~/utils/kebabCase'
 
-export default {
-  data() {
-    return {
-      pageMeta: {
-        title: 'Modern Endangered Archives Program',
-      },
-    }
-  },
-  computed: {
-    primaryMenuItems() {
-      return this.$store.state.header.primary
-    },
-    secondaryMenuItems() {
-      return this.$store.state.header.secondary
-    },
-    isMobile() {
-      return this.$store.state.winWidth <= 1024
-    },
-    whichHeader() {
-      return this.isMobile ? 'header-main-responsive' : 'header-main'
-    },
-    bodyClasses() {
-      const classes = ['body', 'theme-default']
-      classes.push(`route-${kebabCase(this.$route.name || 'error')}`)
-      return classes.join(' ')
-    },
-    classes() {
-      return [
-        'layout',
-        'layout-default',
-        { 'has-scrolled': this.$store.state.sTop },
-        { 'has-scrolled-past-header': this.$store.state.sTop >= 150 },
-      ]
-    },
-  },
-}
-</script>
 
 <style lang="scss" scoped>
 .layout-default {
-    min-height: 100vh;
+  min-height: 100vh;
 
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
 
-    > * {
-        width: 100%;
-    }
+  :deep(>*) {
+    width: 100%;
+  }
 
-    .page {
-        flex: 1 1 auto;
-    }
+
+  flex: 1 1 auto;
+
 }
+
 .vue-skip-to {
-    z-index: 300;
+  z-index: 300;
 }
 
 .header-main {
-    z-index: 200;
+  z-index: 200;
 
-    position: relative;
-    height: 168px;
+  position: relative;
+  height: 168px;
 
-    .primary {
-        position: absolute;
-    }
-    // TODO nav on smaller viewports
+  .primary {
+    position: absolute;
+  }
+
+  // TODO nav on smaller viewports
 }
+
 @media #{$medium} {
-    .brand-bar {
-        position: absolute;
-        width: 100%;
-    }
+  .brand-bar {
+    position: absolute;
+    width: 100%;
+  }
 }
 </style>
