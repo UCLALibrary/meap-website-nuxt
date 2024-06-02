@@ -16,7 +16,7 @@
   .meap-masthead-secondary {
     margin-bottom: var(--space-3xl);
 
-    ::v-deep .container .meta .rich-text a {
+    :deep(.container .meta .rich-text a) {
       color: var(--color-white);
 
       &:hover {
@@ -34,7 +34,7 @@
     justify-content: center;
     max-width: fit-content;
 
-    ::v-deep .button-more {
+    :deep(.button-more) {
       display: inline-flex;
       max-width: unset;
     }
