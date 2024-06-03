@@ -7,7 +7,7 @@ const { enabled, state } = usePreviewMode()
       color="#ffe800"
       height="3"
     />
-    <vue-skip-to
+    <VueSkipTo
       to="#main"
       label="Skip to main content"
     />

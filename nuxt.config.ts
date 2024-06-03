@@ -62,7 +62,6 @@ export default defineNuxtConfig({
         // console.log('All pages', JSON.stringify(postPages.data.entries))
         if (postPages && postPages.data && postPages.data.entries) {
           const postWithoutPayloadRoutes = postPages.data.entries.filter(item => item.sectionHandle.includes('meap') && item.uri !== 'meap').map(entry => '/' + entry.uri.replace(/^meap\//, ''))
-
           allRoutes.push(...postWithoutPayloadRoutes)
         }
 
@@ -99,6 +98,13 @@ export default defineNuxtConfig({
      ** Required charset and viewport meta tags
      */
   app: {
+    /*
+    ** Page transition
+    */
+    pageTransition: {
+      name: 'fade',
+      mode: 'out-in',
+    },
     head: {
       htmlAttrs: {
         lang: 'en',
