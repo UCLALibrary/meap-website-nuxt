@@ -1,43 +1,61 @@
 <script setup>
-
-useHead({
-  titleTemplate: title =>
-    title === 'Homepage' ? 'UCLA Library' : `${title}` + ' | UCLA Library',
-  script: [
-    {
-      hid: 'libanswers',
-      src: 'https://ucla.libanswers.com/load_chat.php?hash=5a44dfe7cc29aaee5bba635ab13fa753',
-      defer: true
-    }
-  ]
-})
+// Helpers
+import kebabCase from '~/utils/kebabCase'
 
 const globalStore = useGlobalStore()
 
-const classes = computed(() => [
-  'layout',
-  'layout-default',
-  { 'has-scrolled': globalStore.sTop },
-  { 'has-scrolled-past-header': globalStore.sTop >= 150 }
-])
+const primaryMenuItems = computed(() => {
+  return globalStore.header.primary
+})
+const secondaryMenuItems = computed(() => {
+  return globalStore.header.secondary
+})
+const isMobile = computed(() => {
+  return globalStore.winWidth <= 1024
+})
+
+const classes = computed(() => {
+  return [
+    'layout',
+    'layout-default',
+    { 'has-scrolled': globalStore.sTop },
+    { 'has-scrolled-past-header': globalStore.sTop >= 150 },
+  ]
+})
 
 </script>
-
-<template>
+<template lang="html">
   <div :class="classes">
-    <header-smart v-if="globalStore.header" />
-
+    <header
+      v-if="!isMobile"
+      class="header-main"
+    >
+      <site-brand-bar class="brand-bar" />
+      <nav-secondary
+        :items="secondaryMenuItems"
+        :is-microsite="true"
+      />
+      <nav-primary
+        class="primary"
+        :items="primaryMenuItems"
+        title="Modern Endangered Archives Program"
+        acronym="MEAP"
+      />
+    </header>
+    <header v-else>
+      <site-brand-bar class="brand-bar" />
+      <header-main-responsive
+        :primary-nav="primaryMenuItems"
+        :secondary-nav="secondaryMenuItems"
+        current-path="/about/foo/bar"
+        title="Modern Endangered Archives Program"
+        acronym="MEAP"
+      />
+    </header>
 
     <slot />
 
-    <footer>
-      <footer-primary
-        v-if="globalStore.footerPrimary"
-        :form="true"
-      />
-      <footer-sock v-if="globalStore.footerSock" />
-    </footer>
-
+    <footer-main />
   </div>
 </template>
 
@@ -56,39 +74,31 @@ const classes = computed(() => [
     width: 100%;
   }
 
-  .section-alert {
-    height: 0;
-    position: relative;
-
-    .library-alert {
-      position: absolute;
-      z-index: 100;
-      top: 32px;
-      right: var(--unit-gutter);
-    }
-  }
-
   flex: 1 1 auto;
+
 }
 
 .vue-skip-to {
   z-index: 300;
 }
 
-.skip-link {
-  position: absolute;
-  transform: translateY(-100%);
-  display: inline-block;
-  background: var(--color-primary-yellow-01);
-  color: var(--color-black);
-  @include step-0;
-  padding: 4px 16px;
-  transition: transform 0.3s;
-  width: auto;
-  left: 0;
+.header-main {
+  z-index: 200;
+
+  position: relative;
+  height: 168px;
+
+  .primary {
+    position: absolute;
+  }
+
+  // TODO nav on smaller viewports
 }
 
-.skip-link:focus {
-  transform: translateY(0%);
+@media #{$medium} {
+  .brand-bar {
+    position: absolute;
+    width: 100%;
+  }
 }
 </style>

@@ -7,10 +7,10 @@ const MenuItem = `
     `
 const headerQuery = `
     query HeaderMainMenuItems {
-        secondary: nodes(navHandle: "secondaryMenu", level: 1) {
+        secondary: nodes(navHandle: "micrositeSecondaryMenu", level: 1) {
             ${MenuItem}
         }
-        primary: nodes(navHandle: "primaryMenu", level: 1) {
+        primary: nodes(navHandle: "meapPrimaryMenu", level: 1) {
             ${MenuItem}
             children {
                 ${MenuItem}
@@ -20,7 +20,7 @@ const headerQuery = `
 `
 export default cachedEventHandler(async () => {
   const endpoint = useRuntimeConfig().public.craftGraphqlURL
-  let headerData = await useStorage().getItem('craftData:header')
+  let headerData = await useStorage().getItem('meapCraftData:header')
   // console.log('Server api Craft Header Data object:' + JSON.stringify(headerData))
   if (!headerData) {
     const { data } = await $fetch(endpoint, {
@@ -30,7 +30,7 @@ export default cachedEventHandler(async () => {
       },
       body: JSON.stringify({ query: headerQuery })
     })
-    await useStorage().setItem('craftData:header', data)
+    await useStorage().setItem('meapCraftData:header', data)
     headerData = data
     // console.log('Server api Header Data object first set and then get:' + JSON.stringify(headerData))
   }
