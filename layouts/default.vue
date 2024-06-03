@@ -25,7 +25,7 @@ const classes = computed(() => {
 <template lang="html">
   <div :class="classes">
     <header
-      v-if="!isMobile"
+      v-show="!isMobile"
       class="header-main"
     >
       <site-brand-bar class="brand-bar" />
@@ -40,7 +40,7 @@ const classes = computed(() => {
         acronym="MEAP"
       />
     </header>
-    <header v-else>
+    <header v-show="isMobile">
       <site-brand-bar class="brand-bar" />
       <header-main-responsive
         :primary-nav="primaryMenuItems"
