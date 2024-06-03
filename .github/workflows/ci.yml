@@ -95,6 +95,7 @@ jobs:
             - uses: cypress-io/github-action@v3
               with:
                   start: pnpm dlx serve .output/public
+                  install: false
                   wait-on: http://127.0.0.1:3000
                   wait-on-timeout: 110
               env:
