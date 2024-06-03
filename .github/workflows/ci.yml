@@ -79,7 +79,7 @@ jobs:
                   ES_INDEX_PREFIX: ${{secrets.ES_INDEX_PREFIX_TEST}}
             - name: Deploy to Netlify (preview)
               if: github.ref_name!='nuxt3.x'
-              uses: nwtgck/actions-netlify@v2 #
+              uses: nwtgck/actions-netlify@v3.0 #
               with:
                   production-deploy: false
                   deploy-message: https://github.com/UCLALibrary/meap-website-nuxt/pull/${{ github.event.pull_request.number }}
@@ -94,9 +94,9 @@ jobs:
                   NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_MEAP_TEST_NUXT3X }}
             - uses: cypress-io/github-action@v3
               with:
-                  start: npx http-server ./dist -p 3000
-                  command-prefix: "npx"
-                  wait-on: http://localhost:3000
+                  start: pnpm dlx serve .output/public
+                  wait-on: http://127.0.0.1:3000
+                  wait-on-timeout: 110
               env:
                   CRAFT_ENDPOINT: ${{ secrets.CRAFT_ENDPOINT_TEST }}
                   S3_BUCKET: "https://static.library.ucla.edu/"
