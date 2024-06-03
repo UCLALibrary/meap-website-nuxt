@@ -1,3 +1,5 @@
+// https://nuxt.com/docs/api/configuration/nuxt-config
+
 export default defineNuxtConfig({
   // when using local pnpm link with component library uncomment this line
   vite: {
@@ -20,9 +22,9 @@ export default defineNuxtConfig({
       preprocessorOptions: {
         scss: {
           additionalData: `
-                          @import "ucla-library-design-tokens/scss/fonts.scss";
-                          @import "ucla-library-design-tokens/scss/app.scss";
-                      `,
+                        @import "ucla-library-design-tokens/scss/fonts.scss";
+                        @import "ucla-library-design-tokens/scss/app.scss";
+                    `,
         },
       },
     }
@@ -87,8 +89,8 @@ export default defineNuxtConfig({
       esTempIndex: process.env.ES_INDEX_PREFIX + '-' + new Date().toISOString().toLowerCase().replaceAll(':', '-'),
       esURL: process.env.ES_URL || '',
       gtm: {
-        id: 'GTM-T2SXV2',
-      },
+        id: 'GTM-T2SXV2'
+      }
     },
   },
 
@@ -123,6 +125,11 @@ export default defineNuxtConfig({
       ],
       link: [{ rel: 'icon', type: 'image/svg', href: '/icon-ucla-favicon.svg' }],
     },
+
+    pageTransition: {
+      name: 'fade',
+      mode: 'out-in',
+    },
   },
 
   /*
@@ -146,7 +153,7 @@ export default defineNuxtConfig({
     {
       autoImports: ['defineStore', 'acceptHMRUpdate'],
     },
-  ], 'nuxt-graphql-request', '@nuxtjs/sitemap'],
+  ], 'nuxt-graphql-request', '@nuxtjs/sitemap', '@zadigetvoltaire/nuxt-gtm'],
 
   build: {
     transpile: ['nuxt-graphql-request'],

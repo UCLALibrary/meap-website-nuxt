@@ -1,9 +1,6 @@
 <script setup>
-// Helpers
-import kebabCase from '~/utils/kebabCase'
 
 const globalStore = useGlobalStore()
-
 
 const primaryMenuItems = computed(() => {
   return globalStore.header.primary
@@ -27,9 +24,8 @@ const classes = computed(() => {
 </script>
 <template lang="html">
   <div :class="classes">
-
-    <!--header
-      v-if="!isMobile"
+    <header
+      v-show="!isMobile"
       class="header-main"
     >
       <site-brand-bar class="brand-bar" />
@@ -44,7 +40,7 @@ const classes = computed(() => {
         acronym="MEAP"
       />
     </header>
-    <header v-else>
+    <header v-show="isMobile">
       <site-brand-bar class="brand-bar" />
       <header-main-responsive
         :primary-nav="primaryMenuItems"
@@ -53,17 +49,13 @@ const classes = computed(() => {
         title="Modern Endangered Archives Program"
         acronym="MEAP"
       />
-    </header-->
-    <header-smart> </header-smart>
+    </header>
 
     <slot />
 
-    <!--footer-main /-->
+    <footer-main />
   </div>
 </template>
-
-
-
 <style lang="scss" scoped>
 .layout-default {
   min-height: 100vh;
@@ -78,7 +70,6 @@ const classes = computed(() => {
   :deep(>*) {
     width: 100%;
   }
-
 
   flex: 1 1 auto;
 

@@ -13,4 +13,3 @@ module.exports = {
         "brace-style": "off",
     }
 };
-

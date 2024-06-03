@@ -35,8 +35,8 @@ const footerSponsorQuery = `
 
 export default cachedEventHandler(async () => {
   const endpoint = useRuntimeConfig().public.craftGraphqlURL
-  let footerSponsorData = await useStorage().getItem('craftData:footerSponsor')
-  // console.log('Server api Craft Footer sponsor Data object:' + JSON.stringify(footerSponsorData))
+  let footerSponsorData = await useStorage().getItem('meapCraftData:footerSponsor')
+  console.log('Server api Craft Footer sponsor Data object:' + JSON.stringify(footerSponsorData))
   if (!footerSponsorData) {
     const { data } = await $fetch(endpoint, {
       method: 'POST',
@@ -45,9 +45,9 @@ export default cachedEventHandler(async () => {
       },
       body: JSON.stringify({ query: footerSponsorQuery })
     })
-    await useStorage().setItem('craftData:footerSponsor', data)
+    await useStorage().setItem('meapCraftData:footerSponsor', data)
     footerSponsorData = data
-    // console.log('Server api Craft Footer Sponsor Data object first set and then get:' + JSON.stringify(footerSponsorData))
+    console.log('Server api Craft Footer Sponsor Data object first set and then get:' + JSON.stringify(footerSponsorData))
   }
   return footerSponsorData
 })
