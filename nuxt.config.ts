@@ -106,6 +106,12 @@ export default defineNuxtConfig({
       mode: 'out-in',
     },
     head: {
+      titleTemplate: (titleChunk: string) => {
+        // If undefined or blank then we don't need the pipe and space
+        return titleChunk
+          ? `${titleChunk} | Modern Endangered Archives Program`
+          : 'Modern Endangered Archives Program'
+      },
       htmlAttrs: {
         lang: 'en',
       },

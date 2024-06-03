@@ -1,6 +1,4 @@
 <script setup>
-// Helpers
-import kebabCase from '~/utils/kebabCase'
 
 const globalStore = useGlobalStore()
 
