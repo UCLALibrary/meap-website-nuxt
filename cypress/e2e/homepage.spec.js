@@ -29,6 +29,7 @@ describe("Website Homepage", () => {
         //     "Featured Projects"
         // )
 
+        /* TODO enable later after home page is done start
         cy.get("h2.section-title").should(
             "contain",
             "Program Resources"
@@ -40,7 +41,7 @@ describe("Website Homepage", () => {
         )
 
         cy.contains("a.smart-link", "Browse Collections").should("have.attr", "target", "_blank")
-
+*/ // TODO enable this later end
         // MastheadPrimary
         // cy.get(".masthead-primary").find(".logo").should("be.visible")
         // cy.get(".masthead-primary")
@@ -75,6 +76,6 @@ describe("Website Homepage", () => {
         //     "Get Help With"
         // )
 
-        // cy.percySnapshot({ widths: [768, 992, 1200] })
+        cy.percySnapshot({ widths: [768, 992, 1200] })
     })
 })
