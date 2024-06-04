@@ -3,11 +3,16 @@
 const globalStore = useGlobalStore()
 
 const primaryMenuItems = computed(() => {
+  // return globalStore
+  // return globalStore.header
   return globalStore.header.primary
 })
+console.log('primary menu: ', primaryMenuItems.value)
+
 const secondaryMenuItems = computed(() => {
   return globalStore.header.secondary
 })
+
 const isMobile = computed(() => {
   return globalStore.winWidth <= 1024
 })
@@ -33,9 +38,19 @@ const classes = computed(() => {
         :items="secondaryMenuItems"
         :is-microsite="true"
       />
+      <!-- :items="secondaryMenuItems" -->
       <nav-primary
-        class="primary"
         :items="primaryMenuItems"
+        class="primary"
+        title="Modern Endangered Archives Program"
+        acronym="MEAP"
+      />
+      <!-- :items="primaryMenuItems" -->
+    </header>
+    <header v-show="isMobile">
+      <site-brand-bar class="brand-bar" />
+      <header-main-responsive
+        current-path="/about/foo/bar"
         title="Modern Endangered Archives Program"
         acronym="MEAP"
       />
@@ -49,9 +64,11 @@ const classes = computed(() => {
         title="Modern Endangered Archives Program"
         acronym="MEAP"
       />
+      <!-- :primary-nav="primaryMenuItems"
+      :secondary-nav="secondaryMenuItems" -->
     </header>
 
-    <slot />
+    <!-- <slot /> -->
 
     <footer-main />
   </div>
