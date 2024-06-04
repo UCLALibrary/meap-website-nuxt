@@ -1,3 +1,81 @@
+<script setup>
+// GQL
+import PROJECT_DETAIL from "../gql/queries/ProjectDetail.gql"
+
+// Helpers
+import _get from "lodash/get"
+
+// ROUTE
+const route = useRoute()
+// to do added these from another file, do I need them?
+// const path = route.path.replace(/^\/|\/$/g, '') // trim initial and/or final slashes
+// const variables = { path }
+
+// HEAD
+useHead({
+    title: page.value ? page.value.title : '... loading',
+    // TODO stay or go?
+    // meta: [
+    //     {
+    //         hid: 'description',
+    //         name: 'description',
+    //         content: removeTags(page.value.text),
+    //     },
+    // ],
+})
+
+// ASYNCDATA
+const { data, error } = await useAsyncData(`general-content-${path}`, async () => {
+    // TODO PROJECT_DETAIL or GENERAL_CONTENT_DETAIL like in ticket?
+    const data = await $graphql.default.request(PROJECT_DETAIL, {
+        slug: params.slug, // TO DO find example with params, is this correct?
+    })
+    // index data
+    if (data) await $elasticsearchplugin.index(data.entry, params.slug)
+
+    return { data }
+})
+
+if (error.value) {
+    throw createError({
+        statusCode: 404,
+        statusMessage: 'Page not found.',
+        fatal: true
+    })
+}
+
+if (!data.value.entry) {
+    throw createError({
+        statusCode: 404,
+        statusMessage: 'Page Not Found',
+        fatal: true
+    })
+}
+
+// DATA
+const page = ref(_get(data.value, 'entry', {}))
+
+// COMPUTED
+const parsedButtonText = computed(() => {
+    return _get(page.value, "meapProjectCallToAction[0].buttonText", "")
+})
+const parsedButtonTo = computed(() => {
+    // try to get externalUrl
+    let buttonTo = _get(
+        page.value,
+        "meapProjectCallToAction[0].externalUrl",
+        ""
+    )
+    // return externalURl, if not available, get uploadAsset url
+    return buttonTo
+        ? buttonTo
+        : _get(
+            page.value,
+            "meapProjectCallToAction[0].uploadAsset[0].url",
+            ""
+        )
+})
+</script>
 <template lang="html">
     <main
         id="main"
@@ -123,54 +201,9 @@
         </section-wrapper>
     </main>
 </template>
-
-<script>
-// GQL
-import PROJECT_DETAIL from "~/gql/queries/ProjectDetail"
-
-// Helpers
-import _get from "lodash/get"
-
-export default {
-    async asyncData({ $graphql, params, store, $elasticsearchplugin }) {
-        const data = await $graphql.default.request(PROJECT_DETAIL, {
-            slug: params.slug,
-        })
-        if (data) await $elasticsearchplugin.index(data.entry, params.slug)
-        return {
-            page: _get(data, "entry", {}),
-        }
-    },
-    head() {
-        let title = this.page ? this.page.title : "... loading"
-        return {
-            title: title,
-        }
-    },
-    computed: {
-        parsedButtonText() {
-            return _get(this.page, "meapProjectCallToAction[0].buttonText", "")
-        },
-        parsedButtonTo() {
-            let buttonTo = _get(
-                this.page,
-                "meapProjectCallToAction[0].externalUrl",
-                ""
-            )
-            return buttonTo
-                ? buttonTo
-                : _get(
-                    this.page,
-                    "meapProjectCallToAction[0].uploadAsset[0].url",
-                    ""
-                )
-        },
-    },
-}
-</script>
-
 <style lang="scss" scoped>
 .page-project-detail {
+
     .banner-text,
     .banner-header {
         --color-theme: var(--color-help-green-03);
@@ -198,6 +231,7 @@ export default {
 
     .citation {
         margin-top: var(--space-m);
+
         :deep p {
             color: var(--color-secondary-grey-04);
         }
