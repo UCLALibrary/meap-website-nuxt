@@ -1,4 +1,4 @@
-<!--script setup>
+<script setup>
 // HELPERS
 import _get from 'lodash/get'
 
@@ -50,6 +50,7 @@ const parsedGetHelpWith = computed(() => {
     }
   })
 })
+
 const bannerFeaturedEvent = computed(() => {
   const bannerFeaturedEvent = page.value.featuredEvents[0]
   return {
@@ -85,6 +86,7 @@ const bannerFeaturedEvent = computed(() => {
         : bannerFeaturedEvent.eventLocation,
   }
 })
+
 // TO DO need to update dates on component
 const parsedDualMasonryEvents = computed(() => {
   const masonaryEvents = page.value.featuredEvents.slice(1, 3)
@@ -113,6 +115,7 @@ const parsedDualMasonryEvents = computed(() => {
     }
   })
 })
+
 const bannerFeaturedCollection = computed(() => {
   const bannerFeaturedCollection = page.value.featuredCollections[0]
   return {
@@ -130,6 +133,7 @@ const bannerFeaturedCollection = computed(() => {
     prompt: `View ${bannerFeaturedCollection.sectionHandle}`,
   }
 })
+
 const parsedSectionHighlightCollection = computed(() => {
   const highlightCollections = page.value.featuredCollections.slice(1)
   return highlightCollections.map((obj) => {
@@ -170,6 +174,7 @@ const bannerFeaturedNews = computed(() => {
     prompt: `View ${bannerFeaturedNews.sectionHandle}`,
   }
 })
+
 const parsedNewsList = computed(() => {
   const newsList = page.value.featuredNews.slice(1)
   return newsList.map((obj) => {
@@ -197,7 +202,7 @@ useHead({
     },
   ],
 })
-</script-->
+</script>
 
 <template>
   <main
