@@ -15,7 +15,7 @@
             :category="parsedCategory"
             :title="page.title"
             :text="page.text"
-            :byline="page.byline"
+            :byline="parsedByline"
         />
 
         <section-wrapper class="section-banner">
