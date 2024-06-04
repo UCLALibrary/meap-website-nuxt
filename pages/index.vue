@@ -4,18 +4,17 @@ import _get from 'lodash/get'
 import stripMeapFromURI from "../utils/stripMeapFromURI"
 
 // GQL
-import MEAP_HOMEPAGE from '../gql/queries/Homepage.gql'
+import MEAP_HOMEPAGE from '../gql/queries/HomePage.gql'
 
 const { $graphql } = useNuxtApp()
 
-const route = useRoute()
-
-const { data, error } = await useAsyncData(`meap-home-page-${route.params.slug}`, async () => {
-  const data = await $graphql.default.request(MEAP_HOMEPAGE, {
-    slug: route.params.slug
-  })
+const { data, error } = await useAsyncData(`meap-home-page`, async () => {
+  const data = await $graphql.default.request(MEAP_HOMEPAGE)
+  console.log(data)
   return data
 })
+
+console.log(data.value)
 
 if (error.value) {
   throw createError({
@@ -31,58 +30,60 @@ if (!data.value.entry) {
   })
 }
 
-const page = ref(_get(data.value, 'entries', {}))
+// const page = ref(_get(data.value, 'entries', {}))
 
-watch(data, (newVal, oldVal) => {
-  console.log('In watch preview enabled, newVal, oldVal', newVal, oldVal)
-  page.value = _get(newVal, 'entry', {})
-})
+// watch(data, (newVal, oldVal) => {
+//   console.log('In watch preview enabled, newVal, oldVal', newVal, oldVal)
+//   page.value = _get(newVal, 'entry', {})
+// })
 
-const homepage = computed(() => {
-  return page.value.map((obj) => {
-    return {
-      ...obj,
-      to: `/${stripMeapFromURI(obj.to)}`,
-    }
-  })[0]
-})
+// const homePage = computed(() => {
+//   return page.value.map((obj) => {
+//     return {
+//       ...obj,
+//       to: `/${stripMeapFromURI(obj.to)}`,
+//     }
+//   })[0]
+// })
 
-const parsedMastheadHeroImage = computed(() => {
-  return homePage.value.heroImage[0].image[0]
-})
+// const parsedMastheadHeroImage = computed(() => {
+//   return homePage.value.heroImage[0].image[0]
+// })
 
-const featuredMeapResources = computed(() => {
-  return homePage.value.featuredMeapResources.map((obj) => {
-    return {
-      ...obj,
-      to: obj.externalResourceUrl
-        ? obj.externalResourceUrl
-        : `/${stripMeapFromURI(obj.uri)}`,
-    }
-  })
-})
+// const featuredMeapResources = computed(() => {
+//   return homePage.value.featuredMeapResources.map((obj) => {
+//     return {
+//       ...obj,
+//       to: obj.externalResourceUrl
+//         ? obj.externalResourceUrl
+//         : `/${stripMeapFromURI(obj.uri)}`,
+//     }
+//   })
+// })
 
-const featuredProjects = computed(() => {
-  return homePage.value.featuredProjects.map((obj) => {
-    return {
-      ...obj,
-      image: obj.heroImage[0].image[0],
-    }
-  })
-})
+// const featuredProjects = computed(() => {
+//   return homePage.value.featuredProjects.map((obj) => {
+//     return {
+//       ...obj,
+//       image: obj.heroImage[0].image[0],
+//     }
+//   })
+// })
 
-const featuredHighlightedProjects = computed(() => {
-  return featuredProjects.value.slice(1)
-})
+// const featuredHighlightedProjects = computed(() => {
+//   return featuredProjects.value.slice(1)
+// })
 
-const meapNews = computed(() => {
-  return homePage.value.meapNews.map((obj) => {
-    return {
-      ...obj,
-      image: obj.heroImage[0].image[0],
-    }
-  })
-})
+// const meapNews = computed(() => {
+//   return homePage.value.meapNews.map((obj) => {
+//     return {
+//       ...obj,
+//       image: obj.heroImage[0].image[0],
+//     }
+//   })
+// })
+
+// NUXT3.x WEBSITE COPY
 
 // const parsedAdvancedSearchLink = computed(() => {
 //   // Last item in searchLinks
