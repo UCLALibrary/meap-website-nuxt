@@ -93,9 +93,6 @@ export default {
                 return contributor
             })
         },
-        parsedDate() {
-            return format(new Date(this.page.postDate), "MMMM d, Y")
-        },
     },
 }
 </script>

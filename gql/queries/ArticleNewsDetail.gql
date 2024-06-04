@@ -14,7 +14,6 @@ query ArticleNewsDetail($slug: [String!]) {
             dateCreated
             category: articleCategories {
                 title
-                uri
             }
             contributors {
                 ... on contributors_staffMember_BlockType {
