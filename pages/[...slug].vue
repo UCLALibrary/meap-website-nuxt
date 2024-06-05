@@ -1,9 +1,9 @@
 <script setup>
 // GQL
-import PROJECT_DETAIL from "../gql/queries/ProjectDetail.gql"
+import _get from 'lodash/get'
+import PROJECT_DETAIL from '../gql/queries/ProjectDetail.gql'
 
 // Helpers
-import _get from "lodash/get"
 
 // ROUTE
 const route = useRoute()
@@ -11,244 +11,242 @@ const route = useRoute()
 // const path = route.path.replace(/^\/|\/$/g, '') // trim initial and/or final slashes
 // const variables = { path }
 
-// HEAD
-useHead({
-    title: page.value ? page.value.title : '... loading',
-    // TODO stay or go?
-    // meta: [
-    //     {
-    //         hid: 'description',
-    //         name: 'description',
-    //         content: removeTags(page.value.text),
-    //     },
-    // ],
-})
-
 // ASYNCDATA
 const { data, error } = await useAsyncData(`general-content-${path}`, async () => {
-    // TODO PROJECT_DETAIL or GENERAL_CONTENT_DETAIL like in ticket?
-    const data = await $graphql.default.request(PROJECT_DETAIL, {
-        slug: params.slug, // TO DO find example with params, is this correct?
-    })
-    // index data
-    if (data) await $elasticsearchplugin.index(data.entry, params.slug)
+  // TODO PROJECT_DETAIL or GENERAL_CONTENT_DETAIL like in ticket?
+  const data = await $graphql.default.request(PROJECT_DETAIL, {
+    slug: params.slug, // TO DO find example with params, is this correct?
+  })
+  // index data
+  if (data) await $elasticsearchplugin.index(data.entry, params.slug)
 
-    return { data }
+  return { data }
 })
 
 if (error.value) {
-    throw createError({
-        statusCode: 404,
-        statusMessage: 'Page not found.',
-        fatal: true
-    })
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Page not found.',
+    fatal: true
+  })
 }
 
 if (!data.value.entry) {
-    throw createError({
-        statusCode: 404,
-        statusMessage: 'Page Not Found',
-        fatal: true
-    })
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Page Not Found',
+    fatal: true
+  })
 }
 
 // DATA
 const page = ref(_get(data.value, 'entry', {}))
 
+// HEAD
+useHead({
+  title: page.value ? page.value.title : '... loading',
+  // TODO stay or go?
+  // meta: [
+  //     {
+  //         hid: 'description',
+  //         name: 'description',
+  //         content: removeTags(page.value.text),
+  //     },
+  // ],
+})
+
 // COMPUTED
 const parsedButtonText = computed(() => {
-    return _get(page.value, "meapProjectCallToAction[0].buttonText", "")
+  return _get(page.value, 'meapProjectCallToAction[0].buttonText', '')
 })
 const parsedButtonTo = computed(() => {
-    // try to get externalUrl
-    let buttonTo = _get(
-        page.value,
-        "meapProjectCallToAction[0].externalUrl",
-        ""
-    )
-    // return externalURl, if not available, get uploadAsset url
-    return buttonTo
-        ? buttonTo
-        : _get(
-            page.value,
-            "meapProjectCallToAction[0].uploadAsset[0].url",
-            ""
-        )
+  // try to get externalUrl
+  const buttonTo = _get(
+    page.value,
+    'meapProjectCallToAction[0].externalUrl',
+    ''
+  )
+  // return externalURl, if not available, get uploadAsset url
+  return buttonTo || _get(
+    page.value,
+    'meapProjectCallToAction[0].uploadAsset[0].url',
+    ''
+  )
 })
 </script>
 <template lang="html">
-    <main
-        id="main"
-        class="page page-project-detail"
-    >
-        <nav-breadcrumb
-            :title="page.title"
-            to="/projects"
-            parent-title="Funded Projects"
-            class="nav-breadcrumb"
-        />
+  <main
+    id="main"
+    class="page page-project-detail"
+  >
+    <nav-breadcrumb
+      :title="page.title"
+      to="/projects"
+      parent-title="Funded Projects"
+      class="nav-breadcrumb"
+    />
 
-        <banner-text
-            v-if="!page.heroImage || page.heroImage.length == 0"
-            class="banner-text"
-            :category="page.format"
-            :title="page.title"
-            :text="page.summary"
-            :button-text="parsedButtonText"
-            :to="parsedButtonTo"
-        />
+    <banner-text
+      v-if="!page.heroImage || page.heroImage.length == 0"
+      class="banner-text"
+      :category="page.format"
+      :title="page.title"
+      :text="page.summary"
+      :button-text="parsedButtonText"
+      :to="parsedButtonTo"
+    />
 
-        <section-wrapper class="section-banner">
-            <banner-header
-                v-if="page.heroImage && page.heroImage.length == 1"
-                :image="page.heroImage[0].image[0]"
-                :category="page.format"
-                :title="page.title"
-                :text="page.summary"
-                :to="parsedButtonTo"
-                :prompt="parsedButtonText"
-            />
-        </section-wrapper>
+    <section-wrapper class="section-banner">
+      <banner-header
+        v-if="page.heroImage && page.heroImage.length == 1"
+        :image="page.heroImage[0].image[0]"
+        :category="page.format"
+        :title="page.title"
+        :text="page.summary"
+        :to="parsedButtonTo"
+        :prompt="parsedButtonText"
+      />
+    </section-wrapper>
 
-        <section-wrapper theme="divider">
-            <divider-way-finder
-                class="divider-way-finder"
-                color="help"
-            />
-        </section-wrapper>
+    <section-wrapper theme="divider">
+      <divider-way-finder
+        class="divider-way-finder"
+        color="help"
+      />
+    </section-wrapper>
 
-        <section-wrapper section-title="About the Project">
-            <div
-                class="title-general"
-                v-html="page.titleGeneral"
-            />
+    <section-wrapper section-title="About the Project">
+      <div
+        class="title-general"
+        v-html="page.titleGeneral"
+      />
 
-            <div
-                v-if="page.projectType"
-                class="project-type"
-                v-html="page.projectType"
-            />
+      <div
+        v-if="page.projectType"
+        class="project-type"
+        v-html="page.projectType"
+      />
 
-            <rich-text
-                v-if="page.projectDescription"
-                :rich-text-content="page.projectDescription"
-                class="project-description"
-            />
+      <rich-text
+        v-if="page.projectDescription"
+        :rich-text-content="page.projectDescription"
+        class="project-description"
+      />
 
-            <rich-text
-                v-if="page.citation"
-                :rich-text-content="page.citation"
-                class="citation"
-            />
+      <rich-text
+        v-if="page.citation"
+        :rich-text-content="page.citation"
+        class="citation"
+      />
 
-            <divider-general
-                v-if="page.projectContributors && page.projectDescription"
-                class="divider-general"
-            />
+      <divider-general
+        v-if="page.projectContributors && page.projectDescription"
+        class="divider-general"
+      />
 
-            <h3
-                v-if="page.projectContributorsSubheading"
-                class="contributors-subheading"
-                v-html="page.projectContributorsSubheading"
-            />
+      <h3
+        v-if="page.projectContributorsSubheading"
+        class="contributors-subheading"
+        v-html="page.projectContributorsSubheading"
+      />
 
-            <rich-text
-                v-if="page.projectContributors"
-                class="contributors-content"
-                :rich-text-content="page.projectContributors"
-            />
+      <rich-text
+        v-if="page.projectContributors"
+        class="contributors-content"
+        :rich-text-content="page.projectContributors"
+      />
 
-            <h3
-                v-if="page.institution"
-                class="institution-subheading"
-            >
-                Host Institution
-            </h3>
+      <h3
+        v-if="page.institution"
+        class="institution-subheading"
+      >
+        Host Institution
+      </h3>
 
-            <rich-text
-                v-if="page.institution"
-                class="institution-content"
-                :rich-text-content="page.institution"
-            />
-        </section-wrapper>
+      <rich-text
+        v-if="page.institution"
+        class="institution-content"
+        :rich-text-content="page.institution"
+      />
+    </section-wrapper>
 
-        <section-wrapper theme="divider">
-            <divider-way-finder
-                class="divider-way-finder"
-                color="help"
-            />
-        </section-wrapper>
+    <section-wrapper theme="divider">
+      <divider-way-finder
+        class="divider-way-finder"
+        color="help"
+      />
+    </section-wrapper>
 
-        <flexible-blocks
-            v-if="page.blocks && page.blocks.length"
-            class="content"
-            :blocks="page.blocks"
-        />
+    <flexible-blocks
+      v-if="page.blocks && page.blocks.length"
+      class="content"
+      :blocks="page.blocks"
+    />
 
-        <section-wrapper theme="divider">
-            <divider-way-finder
-                v-if="page.blocks && page.blocks.length"
-                class="divider-way-finder"
-                color="help"
-            />
-        </section-wrapper>
+    <section-wrapper theme="divider">
+      <divider-way-finder
+        v-if="page.blocks && page.blocks.length"
+        class="divider-way-finder"
+        color="help"
+      />
+    </section-wrapper>
 
-        <section-wrapper>
-            <block-call-to-action
-                class="block-call-to-action"
-                :is-meap-global="true"
-            />
-        </section-wrapper>
-    </main>
+    <section-wrapper>
+      <block-call-to-action
+        class="block-call-to-action"
+        :is-meap-global="true"
+      />
+    </section-wrapper>
+  </main>
 </template>
 <style lang="scss" scoped>
 .page-project-detail {
 
-    .banner-text,
-    .banner-header {
-        --color-theme: var(--color-help-green-03);
-    }
+  .banner-text,
+  .banner-header {
+    --color-theme: var(--color-help-green-03);
+  }
 
-    .section-banner.section-wrapper.theme-white {
-        margin-top: 0;
-    }
+  .section-banner.section-wrapper.theme-white {
+    margin-top: 0;
+  }
 
-    .title-general {
-        @include step-1;
-        color: var(--color-secondary-grey-05);
-        max-width: $container-l-main + px;
-        margin: 0 auto 12px;
-    }
+  .title-general {
+    @include step-1;
+    color: var(--color-secondary-grey-05);
+    max-width: $container-l-main + px;
+    margin: 0 auto 12px;
+  }
 
-    .project-type {
-        @include step-0;
-        font-weight: $font-weight-medium;
-        color: var(--color-primary-blue-03);
-        text-transform: capitalize;
-        max-width: $container-l-main + px;
-        margin: 0 auto var(--space-m);
-    }
+  .project-type {
+    @include step-0;
+    font-weight: $font-weight-medium;
+    color: var(--color-primary-blue-03);
+    text-transform: capitalize;
+    max-width: $container-l-main + px;
+    margin: 0 auto var(--space-m);
+  }
 
-    .citation {
-        margin-top: var(--space-m);
+  .citation {
+    margin-top: var(--space-m);
 
-        :deep p {
-            color: var(--color-secondary-grey-04);
-        }
+    :deep p {
+      color: var(--color-secondary-grey-04);
     }
+  }
 
-    .contributors-subheading,
-    .institution-subheading {
-        @include step-1;
-        max-width: $container-l-main + px;
-        margin: 0 auto var(--space-m);
-        color: var(--color-secondary-grey-05);
-    }
+  .contributors-subheading,
+  .institution-subheading {
+    @include step-1;
+    max-width: $container-l-main + px;
+    margin: 0 auto var(--space-m);
+    color: var(--color-secondary-grey-05);
+  }
 
-    .contributors-content,
-    .institution-content {
-        @include step-0;
-        margin-bottom: var(--space-xl);
-    }
+  .contributors-content,
+  .institution-content {
+    @include step-0;
+    margin-bottom: var(--space-xl);
+  }
 }
 </style>
