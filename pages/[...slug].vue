@@ -4,11 +4,12 @@ import _get from 'lodash/get'
 import PROJECT_DETAIL from '../gql/queries/ProjectDetail.gql'
 
 // Helpers
+const { $graphql, $getHeaders } = useNuxtApp()
 
 // ROUTE
 const route = useRoute()
 // to do added these from another file, do I need them?
-// const path = route.path.replace(/^\/|\/$/g, '') // trim initial and/or final slashes
+const path = route.path.replace(/^\/|\/$/g, '') // trim initial and/or final slashes
 // const variables = { path }
 
 // ASYNCDATA
@@ -17,9 +18,6 @@ const { data, error } = await useAsyncData(`general-content-${path}`, async () =
   const data = await $graphql.default.request(PROJECT_DETAIL, {
     slug: params.slug, // TO DO find example with params, is this correct?
   })
-  // index data
-  if (data) await $elasticsearchplugin.index(data.entry, params.slug)
-
   return { data }
 })
 
@@ -37,6 +35,11 @@ if (!data.value.entry) {
     statusMessage: 'Page Not Found',
     fatal: true
   })
+}
+// INDEX
+if (data.value.entry.slug && process.server) {
+  const { $elasticsearchplugin } = useNuxtApp()
+  await $elasticsearchplugin.index(data.value.entry, path.replaceAll('/', '--'))
 }
 
 // DATA
