@@ -47,15 +47,6 @@ const classes = computed(() => {
     <header v-show="isMobile">
       <site-brand-bar class="brand-bar" />
       <header-main-responsive
-        current-path="/about/foo/bar"
-        title="Modern Endangered Archives Program"
-        acronym="MEAP"
-      />
-    </header>
-
-    <header v-show="isMobile">
-      <site-brand-bar class="brand-bar" />
-      <header-main-responsive
         :primary-nav="primaryMenuItems"
         :secondary-nav="secondaryMenuItems"
         current-path="/about/foo/bar"
