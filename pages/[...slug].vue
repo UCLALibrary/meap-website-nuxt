@@ -2,6 +2,7 @@
 // GQL
 import _get from 'lodash/get'
 import PROJECT_DETAIL from '../gql/queries/ProjectDetail.gql'
+// import GENERAL_CONTENT_DETAIL from '~/gql/queries/GeneralContentDetail'
 
 // Helpers
 const { $graphql, $getHeaders } = useNuxtApp()
@@ -18,6 +19,11 @@ const { data, error } = await useAsyncData(`general-content-${path}`, async () =
   const data = await $graphql.default.request(PROJECT_DETAIL, {
     slug: params.slug, // TO DO find example with params, is this correct?
   })
+  // const data = await $graphql.default.request(GENERAL_CONTENT_DETAIL, {
+  //   slug: params.pathMatch.substring(
+  //     params.pathMatch.lastIndexOf('/') + 1
+  //   ),
+  // })
   return { data }
 })
 
