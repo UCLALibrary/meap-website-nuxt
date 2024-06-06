@@ -4,9 +4,6 @@ import _get from 'lodash/get'
 import GENERAL_CONTENT_DETAIL from '../gql/queries/GeneralContentDetail.gql'
 
 // Helpers
-import stripMeapFromURI from '../utils/stripMeapFromURI'
-
-// Helpers
 const { $graphql, $getHeaders } = useNuxtApp()
 
 // ROUTE
