@@ -1,4 +1,4 @@
-#import "~/gql/fragments/Image"
+#import "../gql/fragments/Image.gql"
 
 query ResourceList {
     entries(section: "meapResource", orderBy: "title asc") {
