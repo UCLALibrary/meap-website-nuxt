@@ -13,18 +13,23 @@ const { $graphql, $getHeaders } = useNuxtApp()
 const route = useRoute()
 // to do added these from another file, do I need them?
 const path = route.path.replace(/^\/|\/$/g, '') // trim initial and/or final slashes
-// const variables = { path }
+const variables = { path }
 
 // ASYNCDATA
 // TODO if errors check params documentation
-const { data, error } = await useAsyncData(`general-content-${path}`, async ({ $graphql, params }) => {
-  const data = await $graphql.default.request(GENERAL_CONTENT_DETAIL, {
-    slug: params.pathMatch.substring(
-      params.pathMatch.lastIndexOf('/') + 1
-    ),
-  })
-  return { data }
+const { data, error } = await useAsyncData(`general-content-${path}`, async () => {
+  const data = await $graphql.default.request(GENERAL_CONTENT_DETAIL, variables)
+  console.log('data', data)
+  return data
 })
+// const { data, error } = await useAsyncData(`general-content-${path}`, async ({ $graphql, params }) => {
+//   const data = await $graphql.default.request(GENERAL_CONTENT_DETAIL, {
+//     slug: params.pathMatch.substring(
+//       params.pathMatch.lastIndexOf('/') + 1
+//     ),
+//   })
+//   return { data }
+// })
 
 if (error.value) {
   throw createError({
@@ -41,11 +46,6 @@ if (!data.value.entry) {
     fatal: true
   })
 }
-// INDEX - remove
-// if (data.value.entry.slug && process.server) {
-//   const { $elasticsearchplugin } = useNuxtApp()
-//   await $elasticsearchplugin.index(data.value.entry, path.replaceAll('/', '--'))
-// }
 
 // DATA
 const page = ref(_get(data.value, 'entry', {}))
@@ -53,14 +53,6 @@ const page = ref(_get(data.value, 'entry', {}))
 // HEAD
 useHead({
   title: page.value ? page.value.title : '... loading',
-  // TODO stay or go?
-  // meta: [
-  //     {
-  //         hid: 'description',
-  //         name: 'description',
-  //         content: removeTags(page.value.text),
-  //     },
-  // ],
 })
 
 // COMPUTED
@@ -129,6 +121,10 @@ const parseParentTitle = computed(() => {
   .banner-text,
   .banner-header {
     --color-theme: var(--color-visit-fushia-03);
+  }
+
+  :deep(.meta) {
+    margin-top: 0px;
   }
 
   :deep(.divider-way-finder) {
