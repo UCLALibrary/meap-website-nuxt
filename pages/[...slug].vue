@@ -4,32 +4,21 @@ import _get from 'lodash/get'
 import GENERAL_CONTENT_DETAIL from '../gql/queries/GeneralContentDetail.gql'
 
 // Helpers
-// import stripMeapFromURI from "../utils/stripMeapFromURI"
+import stripMeapFromURI from '../utils/stripMeapFromURI'
 
 // Helpers
 const { $graphql, $getHeaders } = useNuxtApp()
 
 // ROUTE
 const route = useRoute()
-// to do added these from another file, do I need them?
-const path = route.path.replace(/^\/|\/$/g, '') // trim initial and/or final slashes
+const path = route.path.replace(/^\/|\/$/g, '')
 const variables = { path }
 
-// ASYNCDATA
-// TODO if errors check params documentation
+// ASYNC DATA
 const { data, error } = await useAsyncData(`general-content-${path}`, async () => {
   const data = await $graphql.default.request(GENERAL_CONTENT_DETAIL, variables)
-  console.log('data', data)
   return data
 })
-// const { data, error } = await useAsyncData(`general-content-${path}`, async ({ $graphql, params }) => {
-//   const data = await $graphql.default.request(GENERAL_CONTENT_DETAIL, {
-//     slug: params.pathMatch.substring(
-//       params.pathMatch.lastIndexOf('/') + 1
-//     ),
-//   })
-//   return { data }
-// })
 
 if (error.value) {
   throw createError({
