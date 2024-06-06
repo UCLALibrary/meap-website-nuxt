@@ -79,7 +79,7 @@ const parseParentTitle = computed(() => {
     <section-wrapper class="section-banner">
       <banner-header
         v-if="page && page.heroImage && page.heroImage.length == 1"
-        :image="page.heroImage[0].image[0]"
+        :media="page.heroImage[0].image[0]"
         :category="page.format"
         :title="page.title"
         :text="page.summary"
