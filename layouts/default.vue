@@ -5,9 +5,11 @@ const globalStore = useGlobalStore()
 const primaryMenuItems = computed(() => {
   return globalStore.header.primary
 })
+
 const secondaryMenuItems = computed(() => {
   return globalStore.header.secondary
 })
+
 const isMobile = computed(() => {
   return globalStore.winWidth <= 1024
 })
@@ -33,13 +35,15 @@ const classes = computed(() => {
         :items="secondaryMenuItems"
         :is-microsite="true"
       />
+
       <nav-primary
-        class="primary"
         :items="primaryMenuItems"
+        class="primary"
         title="Modern Endangered Archives Program"
         acronym="MEAP"
       />
     </header>
+
     <header v-show="isMobile">
       <site-brand-bar class="brand-bar" />
       <header-main-responsive
