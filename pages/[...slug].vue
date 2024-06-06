@@ -44,7 +44,6 @@ useHead({
 // COMPUTED
 const parseParentPageURL = computed(() => {
   if (page.value.parent && page.value.parent.uri) {
-    console.log('page.value.parent.uri', page.value.parent.uri)
     return `/${stripMeapFromURI(page.value.parent.uri)}`
   }
 
