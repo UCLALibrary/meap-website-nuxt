@@ -24,22 +24,22 @@ describe('Website Homepage', () => {
       }
     })
 
-    cy.contains("a.smart-link", "Browse Collections").should("have.attr", "target", "_blank")
+    cy.contains('a.smart-link', 'Browse Collections').should('have.attr', 'target', '_blank')
 
-        cy.get(".masthead-secondary").should(
-      "contain",
-      "Modern Endangered Archives Program"
+    cy.get('.masthead-secondary').should(
+      'contain',
+      'Modern Endangered Archives Program'
     )
 
-        cy.get("h2.section-title").should(
-            "contain",
-            "Program Resources"
-        )
+    cy.get('h2.section-title').should(
+      'contain',
+      'Program Resources'
+    )
 
-        cy.get("h2.section-title").should(
-            "contain",
-            "News"
-        )
+    cy.get('h2.section-title').should(
+      'contain',
+      'News'
+    )
 
     cy.percySnapshot({ widths: [768, 992, 1200] })
   })

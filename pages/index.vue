@@ -2,12 +2,12 @@
 
 import _get from 'lodash/get'
 
-//GQL
+// GQL
 import MEAP_HOMEPAGE from '../gql/queries/HomePage.gql'
 
 const { $graphql } = useNuxtApp()
 
-const { data, error } = await useAsyncData(`meap-home-page`, async () => {
+const { data, error } = await useAsyncData('meap-home-page', async () => {
   const data = await $graphql.default.request(MEAP_HOMEPAGE)
   console.log(data)
   return data
@@ -130,9 +130,9 @@ const meapNews = computed(() => {
     <section-wrapper
       v-if="
         featuredProjects &&
-        featuredProjects.length &&
-        featuredMeapResources &&
-        featuredMeapResources.length
+          featuredProjects.length &&
+          featuredMeapResources &&
+          featuredMeapResources.length
       "
       theme="divider"
     >
@@ -165,8 +165,8 @@ const meapNews = computed(() => {
       v-if="
         ((featuredProjects && featuredProjects.length) ||
           (featuredMeapResources && featuredMeapResources.length)) &&
-        meapNews &&
-        meapNews.length
+          meapNews &&
+          meapNews.length
       "
       theme="divider"
     >
