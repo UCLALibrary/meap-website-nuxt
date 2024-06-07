@@ -1,17 +1,18 @@
 <script setup>
-// Helpers
+// HELPERS
 import _get from "lodash/get"
 import format from "date-fns/format"
 
 // GQL
 import ARTICLE_NEWS_LIST from "../gql/queries/ArticleNewsList.gql"
 
-// Search
+// SEARCH HELPERS
 import getListingFilters from "../utils/getListingFilters"
 import config from "../utils/searchConfig"
 import queryFilterHasValues from "../utils/queryFilterHasValues"
+import parseFilters from '../utils/parseFilters'
 
-const { $graphql } = useNuxtApp()
+const { $graphql, $dataApi } = useNuxtApp()
 
 const { data, error } = await useAsyncData('article-news-list', async () => {
   const data = await $graphql.default.request(ARTICLE_NEWS_LIST)
@@ -30,13 +31,213 @@ if (!data.value.entry && !data.value.entries) {
 }
 
 // DATA
-const page = ref(_get(data.value, 'entry', {}))
-const summaryData = ref(_get(data.value, 'entries', []))
+const page = ref(_get(data.value, 'entries', {}))
+const summaryData = ref(_get(data.value, 'entry', []))
 
 console.log('expected page data: ', page.value)
 console.log('expected summary data: ', summaryData.value)
 
+// PREVIEW MODE
+watch(data, (newVal, oldVal) => {
+  console.log('In watch preview enabled, newVal, oldVal', newVal, oldVal)
+  page.value = _get(newVal, 'entries', {})
+  summaryData.value = _get(newVal, 'entry', [])
+})
 
+// HEAD METADATA
+useHead({
+  title: page.value ? page.value.title : '... loading',
+})
+
+// COMPUTED
+const parsedFeaturedNews = computed(() => {
+  if (summaryData.value && summaryData.value.meapNewsListing) {
+    return summaryData.value.meapNewsListing.map((obj) => {
+      return {
+        ...obj,
+        to: `/about/news/${obj.to}`,
+        image: _get(obj, "heroImage[0].image[0]", null),
+        category: _get(obj, "category[0].title", ""),
+        dateCreated: _get(obj, "dateCreated", ""),
+        byline: _get(obj, "articleStaff", []),
+        bylineOne: _get(obj, "articleStaff[0].title", ""),
+        bylineTwo: _get(obj, "dateCreated", ""),
+      }
+    })
+  } else return []
+})
+// console.log('featured news: ', parsedFeaturedNews.value)
+
+const parsedBannerHeader = computed(() => {
+  if (summaryData.value && summaryData.value.meapNewsListing) {
+    return parsedFeaturedNews.value[0]
+  } else return {}
+})
+// console.log('banner: ', parsedBannerHeader.value)
+
+const parsedSectionHighlight = computed(() => {
+  if (summaryData.value && summaryData.value.meapNewsListing) {
+    return parsedFeaturedNews.value.slice(1).map((obj) => {
+      return {
+        ...obj,
+        bylineTwo:
+          obj.bylineTwo != null
+            ? format(
+              new Date(obj.bylineTwo),
+              "MMMM d, yyyy"
+            )
+            : "",
+      }
+    })
+  } else return []
+})
+// console.log('highlight: ', parsedSectionHighlight.value)
+
+const parsedNewsList = computed(() => {
+  return page.value.map((obj) => {
+    return {
+      ...obj,
+      to: `/about/news/${obj.to}`,
+      image: _get(obj, "heroImage[0].image[0]", {}),
+      category: _get(obj, "category[0].title", ""),
+    }
+  })
+})
+// console.log('news list: ', parsedNewsList.value)
+
+const parsedByline = computed(() => {
+  let byline = (summaryData.value.meapNewsListing.articleStaff || []).map((entry) => {
+    return `${entry.byline} ${entry.title || entry.staffMember[0].title
+      }`
+  })
+  return byline.map((entry) => {
+    return entry
+  })
+})
+// console.log('byline: ', parsedByline.value)
+
+
+const route = useRoute()
+
+// SEARCH
+const hits = ref([])
+const title = ref('')
+const noResultsFound = ref(false)
+const searchFilters = ref([])
+const searchGenericQuery = ref({
+  queryText: route.query.q || '',
+  queryFilters: parseFilters(route.query.filters || ''),
+})
+
+const parseHitsResults = computed(() => {
+  return parseHits(hits.value)
+})
+
+// This watcher is called when router pushes updates the query params
+watch(
+  () => route.query,
+  (newVal, oldVal) => {
+    console.log('ES newVal, oldVal', newVal, oldVal)
+    searchGenericQuery.value.queryText = route.query.q || ''
+    searchGenericQuery.value.queryFilters = parseFilters(route.query.filters || '')
+    searchES()
+  }, { deep: true, immediate: true }
+)
+
+// ELASTIC SEARCH
+async function searchES() {
+  if (
+    (route.query.q && route.query.q !== '') ||
+    (route.query.filters &&
+      queryFilterHasValues(
+        parseFilters(route.query.filters || ''),
+        config.meapArticle.filters
+      ))
+  ) {
+    console.log('Search ES HITS query,', route.query.q)
+    const queryText = route.query.q || '*'
+    const results = await $dataApi.keywordSearchWithFilters(
+      queryText,
+      config.meapArticle.searchFields,
+      'sectionHandle:meapArticle',
+      parseFilters(route.query.filters || ''),
+      config.meapArticle.sortField,
+      config.meapArticle.orderBy,
+      config.meapArticle.resultFields,
+      config.meapArticle.filters
+    )
+
+    if (results && results.hits && results.hits.total.value > 0) {
+      console.log('Search ES HITS,', results.hits.hits)
+      hits.value = results.hits.hits
+      noResultsFound.value = false
+    } else {
+      noResultsFound.value = true
+      hits.value = []
+    }
+  } else {
+    hits.value = []
+    noResultsFound.value = false
+  }
+}
+
+async function setFilters() {
+  const searchAggsResponse = await $dataApi.getAggregations(
+    config.meapArticle.filters,
+    'meapArticle'
+  )
+
+  console.log(
+    "Search Aggs Response: " + JSON.stringify(searchAggsResponse)
+  )
+
+  searchFilters.value = getListingFilters(
+    searchAggsResponse,
+    config.meapArticle.filters
+  )
+}
+
+function parseHits(hits = []) {
+  return hits?.map((obj) => {
+    // //console.log(obj["_source"]["image"])
+    return {
+      ...obj["_source"],
+      to: `/about/news/${obj["_source"].to}`,
+      image: _get(obj["_source"], "heroImage[0].image[0]", {}),
+      category: _get(obj["_source"], "category[0].title", ""),
+      description: _get(obj["_source"], "text", ""),
+    }
+  })
+}
+
+// This is event handler which is invoked by search-generic component selections
+function getSearchData(data) {
+  // Construct the filters parameter dynamically
+  const filters = []
+  if (data.filters) {
+    for (const key in data.filters) {
+      if (data.filters[key].length > 0) {
+        filters.push(`${key}:(${data.filters[key].join(' OR ')})`)
+      }
+    }
+  }
+
+  // Use the router to navigate with the new query parameters
+  useRouter().push({
+    path: '/about/news',
+    query: {
+      q: data.text,
+      filters: filters.join(' AND ')
+    }
+  })
+}
+
+onMounted(async () => {
+  console.log('onMounted called')
+  // console.log("ESREADkey:" + config.esReadKey)
+  // console.log("ESURLkey:" + config.esURL)
+  await setFilters()
+})
 
 </script>
 
@@ -45,7 +246,120 @@ console.log('expected summary data: ', summaryData.value)
     id="main"
     class="page page-news"
   >
-    <h1>Hello</h1>
+    <masthead-secondary
+      :title="summaryData.title"
+      :text="summaryData.summary"
+    />
+
+    <!-- Search Generic -->
+    <search-generic
+      search-type="about"
+      :filters="searchFilters"
+      class="generic-search"
+      :search-generic-query="searchGenericQuery"
+      placeholder="Search News"
+      @search-ready="getSearchData"
+    />
+
+    <h2 class="visually-hidden">
+      Highlighted News
+    </h2>
+
+    <section-wrapper
+      v-show="summaryData &&
+        parsedFeaturedNews &&
+        parsedFeaturedNews.length &&
+        hits.length == 0 &&
+        !noResultsFound
+        "
+      class="section-no-top-margin"
+    >
+      <banner-featured
+        :media="parsedBannerHeader.image"
+        :title="parsedBannerHeader.title"
+        :byline="parsedByline"
+        breadcrumb="Featured"
+        :description="parsedBannerHeader.text"
+        :date-created="parsedBannerHeader.dateCreated"
+        :to="parsedBannerHeader.to"
+        :align-right="true"
+        prompt="Read More"
+        class="banner section-featured-banner"
+      />
+
+      <divider-general v-if="parsedSectionHighlight.length" />
+
+      <section-teaser-highlight
+        v-if="parsedSectionHighlight.length"
+        class="section"
+        :items="parsedSectionHighlight"
+      />
+    </section-wrapper>
+
+    <section-wrapper theme="divider">
+      <divider-way-finder
+        class="divider"
+        color="search-margin"
+      />
+    </section-wrapper>
+
+    <section-wrapper v-show="page && page.length && hits.length == 0 && !noResultsFound">
+      <section-staff-article-list
+        :items="parsedNewsList"
+        section-title="All News"
+      />
+    </section-wrapper>
+
+    <section-wrapper
+      v-show="hits && hits.length > 0"
+      class="section-no-top-margin"
+    >
+      <h2
+        v-if="route.query.q"
+        class="about-results"
+      >
+        Displaying {{ hits.length }} results for
+        <strong><em>“{{ route.query.q }}</em></strong>”
+      </h2>
+      <h2
+        v-else
+        class="about-results"
+      >
+        Displaying {{ hits.length }} results
+      </h2>
+
+      <section-staff-article-list :items="parseHitsResults" />
+    </section-wrapper>
+
+    <!-- NO RESULTS -->
+    <section-wrapper
+      v-show="noResultsFound"
+      class="section-no-top-margin"
+    >
+      <div class="error-text">
+        <rich-text>
+          <h2>Search for “{{ route.query.q }}” not found.</h2>
+          <p>
+            We can’t find the term you are looking for on this page.
+            <br>
+          </p>
+        </rich-text>
+      </div>
+    </section-wrapper>
+
+    <section-wrapper theme="divider">
+      <divider-way-finder
+        color="search-margin"
+        class="divider"
+      />
+    </section-wrapper>
+
+    <!-- <section-wrapper>
+      <block-call-to-action
+        class="block-call-to-action"
+        :is-meap-global="true"
+      />
+    </section-wrapper> -->
   </main>
 </template>
 
