@@ -194,7 +194,7 @@ async function setFilters() {
   searchFilters.value = getListingFilters(
     searchAggsResponse,
     config.meapArticle.filters
-  )
+  ),
 }
 
 function parseHits(hits = []) {
@@ -251,7 +251,6 @@ onMounted(async () => {
       :text="summaryData.summary"
     />
 
-    <!-- Search Generic -->
     <search-generic
       search-type="about"
       :filters="searchFilters"
