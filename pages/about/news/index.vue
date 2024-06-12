@@ -1,22 +1,22 @@
 <script setup>
 // HELPERS
-import _get from "lodash/get"
-import format from "date-fns/format"
+import _get from 'lodash/get'
+import format from 'date-fns/format'
 
 // GQL
-import ARTICLE_NEWS_LIST from "../gql/queries/ArticleNewsList.gql"
+import ARTICLE_NEWS_LIST from '../gql/queries/ArticleNewsList.gql'
 
 // SEARCH HELPERS
-import getListingFilters from "../utils/getListingFilters"
-import config from "../utils/searchConfig"
-import queryFilterHasValues from "../utils/queryFilterHasValues"
+import getListingFilters from '../utils/getListingFilters'
+import config from '../utils/searchConfig'
+import queryFilterHasValues from '../utils/queryFilterHasValues'
 import parseFilters from '../utils/parseFilters'
 
 const { $graphql, $dataApi } = useNuxtApp()
 
 const { data, error } = await useAsyncData('article-news-list', async () => {
   const data = await $graphql.default.request(ARTICLE_NEWS_LIST)
-  console.log(data)
+
   return data
 })
 
@@ -33,9 +33,6 @@ if (!data.value.entry && !data.value.entries) {
 // DATA
 const page = ref(_get(data.value, 'entries', {}))
 const summaryData = ref(_get(data.value, 'entry', []))
-
-console.log('expected page data: ', page.value)
-console.log('expected summary data: ', summaryData.value)
 
 // PREVIEW MODE
 watch(data, (newVal, oldVal) => {
@@ -56,24 +53,22 @@ const parsedFeaturedNews = computed(() => {
       return {
         ...obj,
         to: `/about/news/${obj.to}`,
-        image: _get(obj, "heroImage[0].image[0]", null),
-        category: _get(obj, "category[0].title", ""),
-        dateCreated: _get(obj, "dateCreated", ""),
-        byline: _get(obj, "articleStaff", []),
-        bylineOne: _get(obj, "articleStaff[0].title", ""),
-        bylineTwo: _get(obj, "dateCreated", ""),
+        image: _get(obj, 'heroImage[0].image[0]', null),
+        category: _get(obj, 'category[0].title', ''),
+        dateCreated: _get(obj, 'dateCreated', ''),
+        byline: _get(obj, 'articleStaff', []),
+        bylineOne: _get(obj, 'articleStaff[0].title', ''),
+        bylineTwo: _get(obj, 'dateCreated', ''),
       }
     })
   } else return []
 })
-// console.log('featured news: ', parsedFeaturedNews.value)
 
 const parsedBannerHeader = computed(() => {
   if (summaryData.value && summaryData.value.meapNewsListing) {
     return parsedFeaturedNews.value[0]
   } else return {}
 })
-// console.log('banner: ', parsedBannerHeader.value)
 
 const parsedSectionHighlight = computed(() => {
   if (summaryData.value && summaryData.value.meapNewsListing) {
@@ -84,29 +79,27 @@ const parsedSectionHighlight = computed(() => {
           obj.bylineTwo != null
             ? format(
               new Date(obj.bylineTwo),
-              "MMMM d, yyyy"
+              'MMMM d, yyyy'
             )
-            : "",
+            : '',
       }
     })
   } else return []
 })
-// console.log('highlight: ', parsedSectionHighlight.value)
 
 const parsedNewsList = computed(() => {
   return page.value.map((obj) => {
     return {
       ...obj,
       to: `/about/news/${obj.to}`,
-      image: _get(obj, "heroImage[0].image[0]", {}),
-      category: _get(obj, "category[0].title", ""),
+      image: _get(obj, 'heroImage[0].image[0]', {}),
+      category: _get(obj, 'category[0].title', ''),
     }
   })
 })
-// console.log('news list: ', parsedNewsList.value)
 
 const parsedByline = computed(() => {
-  let byline = (summaryData.value.meapNewsListing.articleStaff || []).map((entry) => {
+  const byline = (summaryData.value.meapNewsListing.articleStaff || []).map((entry) => {
     return `${entry.byline} ${entry.title || entry.staffMember[0].title
       }`
   })
@@ -114,8 +107,6 @@ const parsedByline = computed(() => {
     return entry
   })
 })
-// console.log('byline: ', parsedByline.value)
-
 
 const route = useRoute()
 
@@ -188,25 +179,23 @@ async function setFilters() {
   )
 
   console.log(
-    "Search Aggs Response: " + JSON.stringify(searchAggsResponse)
+    'Search Aggs Response: ' + JSON.stringify(searchAggsResponse)
   )
 
   searchFilters.value = getListingFilters(
     searchAggsResponse,
     config.meapArticle.filters
   )
-  console.log(searchFilters.value)
 }
 
 function parseHits(hits = []) {
   return hits?.map((obj) => {
-    // //console.log(obj["_source"]["image"])
     return {
-      ...obj["_source"],
-      to: `/about/news/${obj["_source"].to}`,
-      image: _get(obj["_source"], "heroImage[0].image[0]", {}),
-      category: _get(obj["_source"], "category[0].title", ""),
-      description: _get(obj["_source"], "text", ""),
+      ...obj._source,
+      to: `/about/news/${obj._source.to}`,
+      image: _get(obj._source, 'heroImage[0].image[0]', {}),
+      category: _get(obj._source, 'category[0].title', ''),
+      description: _get(obj._source, 'text', ''),
     }
   })
 }
@@ -239,7 +228,6 @@ onMounted(async () => {
   // console.log("ESURLkey:" + config.esURL)
   await setFilters()
 })
-
 </script>
 
 <template>
@@ -271,7 +259,7 @@ onMounted(async () => {
         parsedFeaturedNews.length &&
         hits.length == 0 &&
         !noResultsFound
-        "
+      "
       class="section-no-top-margin"
     >
       <banner-featured

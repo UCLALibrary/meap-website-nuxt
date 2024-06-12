@@ -1,10 +1,10 @@
 <script setup>
 // HELPERS
-import _get from "lodash/get"
-import format from "date-fns/format"
+import _get from 'lodash/get'
+import format from 'date-fns/format'
 
 // GQL
-import ARTICLE_NEWS_DETAIL from "../gql/queries/ArticleNewsDetail.gql"
+import ARTICLE_NEWS_DETAIL from '../gql/queries/ArticleNewsDetail.gql'
 
 const { $graphql, $elasticsearchplugin } = useNuxtApp()
 
@@ -34,19 +34,23 @@ const page = ref(_get(data.value, 'entry', {}))
 
 // COMPUTED
 const parsedCategory = computed(() => {
-  return _get(page.value, "category[0].title", "")
+  return _get(page.value, 'category[0].title', '')
 })
 
 const parsedByline = computed(() => {
-  let byline = (page.value.contributors || []).map((contributor) => {
+  const byline = (page.value.contributors || []).map((contributor) => {
     if (
       (contributor.staffMember &&
         contributor.staffMember.length > 0) ||
       contributor.title
-    )
-      return `${contributor.byline || ""} ${contributor.title || contributor.staffMember[0].title
+    ) {
+      return `${contributor.byline || ''} ${contributor.title || contributor.staffMember[0].title
         }`
+    } else {
+      return ''
+    }
   })
+
   return byline.map((contributor) => {
     return contributor
   })
