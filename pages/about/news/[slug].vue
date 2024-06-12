@@ -56,6 +56,12 @@ const parsedByline = computed(() => {
   })
 })
 
+// PREVIEW
+watch(data, (newVal, oldVal) => {
+  console.log('In watch preview enabled, newVal, oldVal', newVal, oldVal)
+  page.value = _get(newVal, 'entry', {})
+})
+
 // HEAD METADATA
 useHead({
   title: page.value ? page.value.title : '... loading',
