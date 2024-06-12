@@ -194,7 +194,8 @@ async function setFilters() {
   searchFilters.value = getListingFilters(
     searchAggsResponse,
     config.meapArticle.filters
-  ),
+  )
+  console.log(searchFilters.value)
 }
 
 function parseHits(hits = []) {
