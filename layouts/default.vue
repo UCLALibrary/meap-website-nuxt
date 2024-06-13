@@ -20,6 +20,7 @@ const classes = computed(() => {
     'layout-default',
     { 'has-scrolled': globalStore.sTop },
     { 'has-scrolled-past-header': globalStore.sTop >= 150 },
+    'meap' // add a theme class for all components inside MEAP
   ]
 })
 

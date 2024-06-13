@@ -139,6 +139,7 @@ export default defineNuxtConfig({
     // 'ucla-library-design-tokens/scss/fonts.scss',
     'ucla-library-design-tokens/scss/app-global.scss',
     '~/assets/styles/global.scss',
+    '~/assets/styles/meapcomponents.scss',
 
     // use the following line when using pnpm link --global ucla-library-website-components-vue
     'ucla-library-website-components/dist/style.css',
