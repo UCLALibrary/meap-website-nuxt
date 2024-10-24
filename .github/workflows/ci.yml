@@ -53,11 +53,11 @@ jobs:
                   key: nuxt-site-${{ github.sha }}
             - name: Sets env vars for PR preview
               run: |
-                  echo "ES_INDEX=${{secrets.ES_INDEX_TEST}}-deploy-preview-${{github.event.pull_request.number}}" >> $GITHUB_ENV
+                  echo "ES_ALIAS=${{secrets.ES_ALIAS_TEST}}-deploy-preview-${{github.event.pull_request.number}}" >> $GITHUB_ENV
               if: github.ref_name!='main'
             - name: Sets env vars for main merge
               run: |
-                  echo "ES_INDEX=${{secrets.ES_INDEX_TEST}}" >> $GITHUB_ENV
+                  echo "ES_ALIAS=${{secrets.ES_ALIAS_TEST}}" >> $GITHUB_ENV
             - run: npm run generate
               env:
                   CRAFT_ENDPOINT: ${{ secrets.CRAFT_ENDPOINT_TEST }}
@@ -67,7 +67,7 @@ jobs:
                   ESApiKey: ${{ secrets.ESApiKey }}
                   ES_READ_KEY: ${{ secrets.ES_READ_KEY_TEST }}
                   ES_WRITE_KEY: ${{ secrets.ES_WRITE_KEY_TEST }}
-                  ES_INDEX: ${{ env.ES_INDEX }}
+                  ES_ALIAS: ${{ env.ES_ALIAS }}
                   ES_INDEX_PREFIX: ${{secrets.ES_INDEX_PREFIX_TEST}}
             - uses: cypress-io/github-action@v3
               with:
@@ -82,7 +82,7 @@ jobs:
                   ESApiKey: ${{ secrets.ESApiKey }}
                   ES_READ_KEY: ${{ secrets.ES_READ_KEY_TEST }}
                   ES_WRITE_KEY: ${{ secrets.ES_WRITE_KEY_TEST }}
-                  ES_INDEX: ${{ env.ES_INDEX }}
+                  ES_ALIAS: ${{ env.ES_ALIAS }}
                   ES_INDEX_PREFIX: ${{secrets.ES_INDEX_PREFIX_TEST}}
             - name: Deploy to Netlify (test)
               if: github.ref_name=='main'

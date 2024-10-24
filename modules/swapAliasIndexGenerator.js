@@ -10,7 +10,7 @@ export default function () {
         const publicConfig = this.nuxt.options.publicRuntimeConfig
         const privateConfig = this.nuxt.options.privateRuntimeConfig
         const esUrl = publicConfig.esURL
-        const esAlias = publicConfig.esIndex
+        const esAlias = publicConfig.esAlias
         const tempIndex = publicConfig.esTempIndex
         const headers = {
             Authorization: `ApiKey ${privateConfig.esWriteKey}`,

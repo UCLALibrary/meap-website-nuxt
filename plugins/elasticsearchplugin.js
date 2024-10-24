@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
 export default function ({ $config }, inject) {
-    const esIndex = $config.esTempIndex
+    const esTempIndex = $config.esTempIndex
     async function index(data, slug) {
-        console.log("elastic search plugin index function :" + esIndex)
+        console.log("elastic search plugin index function :" + esTempIndex)
         try {
             // eslint-disable no-undef
             if (
@@ -10,14 +10,14 @@ export default function ({ $config }, inject) {
                 process.env.NODE_ENV !== "development" &&
                 data &&
                 slug &&
-                esIndex
+                esTempIndex
             ) {
                 console.log(
                     "this is the elasticsearch plugin: " + JSON.stringify(data)
                 )
                 console.warn("this is the elasticsearch plugin: " + slug)
                 const response = await fetch(
-                    `${$config.esURL}/${esIndex}/_doc/${slug}`,
+                    `${$config.esURL}/${esTempIndex}/_doc/${slug}`,
                     {
                         headers: {
                             Authorization: `ApiKey ${$config.esWriteKey}`,

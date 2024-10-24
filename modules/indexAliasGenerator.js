@@ -11,14 +11,14 @@ export default function () {
         const timeElapsed = Date.now()
         const now = new Date(timeElapsed)
 
-        let esIndex = `${
+        let esTempIndex = `${
             this.nuxt.options.publicRuntimeConfig.esIndexPrefix
         }-${now.toISOString().toLowerCase().replaceAll(":", "-")}`
-        consola.debug("Index named:" + esIndex)
-        //console.warn("Index path:"+`${this.nuxt.options.publicRuntimeConfig.esURL}/${esIndex}`)
+        consola.debug("Index named:" + esTempIndex)
+        //console.warn("Index path:"+`${this.nuxt.options.publicRuntimeConfig.esURL}/${esTempIndex}`)
         //console.warn("Index write key:"+this.nuxt.options.privateRuntimeConfig.esWriteKey)
         const response = await fetch(
-            `${this.nuxt.options.publicRuntimeConfig.esURL}/${esIndex}`,
+            `${this.nuxt.options.publicRuntimeConfig.esURL}/${esTempIndex}`,
             {
                 headers: {
                     Authorization: `ApiKey ${this.nuxt.options.privateRuntimeConfig.esWriteKey}`,
@@ -30,10 +30,10 @@ export default function () {
         const body = await response.text()
         try {
             let testJson = JSON.parse(body)
-            this.options.tempIndex = esIndex
-            this.nuxt.options.publicRuntimeConfig["esTempIndex"] = esIndex
+            this.options.tempIndex = esTempIndex
+            this.nuxt.options.publicRuntimeConfig["esTempIndex"] = esTempIndex
 
-            consola.debug("Index created:" + JSON.stringify(testJson))
+            consola.debug("Temp Index created:" + JSON.stringify(testJson))
         } catch (err) {
             consola.error("Error:", err)
             consola.error("Response body:", body)
