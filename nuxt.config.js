@@ -13,7 +13,7 @@ export default {
     },
     publicRuntimeConfig: {
         esReadKey: process.env.ES_READ_KEY || "",
-        esIndex: process.env.ES_INDEX || "",
+        esAlias: process.env.ES_ALIAS || "",
         esIndexPrefix: process.env.ES_INDEX_PREFIX || "",
         esTempIndex: "",
         esURL: process.env.ES_URL || "",

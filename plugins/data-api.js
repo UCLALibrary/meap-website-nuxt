@@ -9,7 +9,7 @@ export default function ({ $config }, inject) {
         if (
             $config.esReadKey === "" ||
             $config.esURL === "" ||
-            $config.esIndex === ""
+            $config.esAlias === ""
         )
             return
         //console.log("keyword:"+keyword)
@@ -39,7 +39,7 @@ export default function ({ $config }, inject) {
             })
         )
         const response = await fetch(
-            `${$config.esURL}/${$config.esIndex}/_search`,
+            `${$config.esURL}/${$config.esAlias}/_search`,
             {
                 headers: {
                     Authorization: `ApiKey ${$config.esReadKey}`,
@@ -91,7 +91,7 @@ export default function ({ $config }, inject) {
         if (
             $config.esReadKey === "" ||
             $config.esURL === "" ||
-            $config.esIndex === ""
+            $config.esAlias === ""
         )
             return
         console.log("keyword:" + keyword)
@@ -126,7 +126,7 @@ export default function ({ $config }, inject) {
         // need to know fields to boost on for listing pages when searching like title etc
 
         const response = await fetch(
-            `${$config.esURL}/${$config.esIndex}/_search`,
+            `${$config.esURL}/${$config.esAlias}/_search`,
             {
                 headers: {
                     Authorization: `ApiKey ${$config.esReadKey}`,
@@ -172,11 +172,11 @@ export default function ({ $config }, inject) {
         if (
             $config.esReadKey === "" ||
             $config.esURL === "" ||
-            $config.esIndex === ""
+            $config.esAlias === ""
         )
             return
         const response = await fetch(
-            `${$config.esURL}/${$config.esIndex}/_mapping`,
+            `${$config.esURL}/${$config.esAlias}/_mapping`,
             {
                 headers: {
                     Authorization: `ApiKey ${$config.esReadKey}`,
@@ -192,7 +192,7 @@ export default function ({ $config }, inject) {
         // console.log("search text: "+fields)
         if (!fields || fields.length == 0) return
         const response = await fetch(
-            `${$config.esURL}/${$config.esIndex}/_search`,
+            `${$config.esURL}/${$config.esAlias}/_search`,
             {
                 headers: {
                     Authorization: `ApiKey ${$config.esReadKey}`,
