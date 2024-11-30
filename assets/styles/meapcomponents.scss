@@ -1,0 +1,13 @@
+.meap {
+
+  // all rules inside an id selector will be more specific than rules with only class selectors
+  #main {
+    .category {
+      color: red; // make categories red on MEAP pages
+    }
+
+    .divider-way-finder>.dotted {
+      border-bottom: 2px solid red; //make solid red dividers instead of dotted on MEAP pages
+    }
+  }
+}
