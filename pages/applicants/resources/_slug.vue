@@ -20,7 +20,7 @@
             :to="parsedButtonTo"
         />
 
-        <section-wrapper class="section-banner">
+        <section-wrapper class="section-banner" id="section-banner">
             <banner-header
                 v-if="page.heroImage && page.heroImage.length >= 1"
                 :image="page.heroImage[0].image[0]"
@@ -120,7 +120,8 @@ export default {
         --color-theme: var(--color-about-purple-03);
     }
 
-    .section-banner {
+    .section-banner,
+    #section-banner {
         margin-top: 0;
     }
 }
