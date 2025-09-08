@@ -54,11 +54,14 @@ import stripMeapFromURI from "~/utils/stripMeapFromURI"
 export default {
     async asyncData({ $graphql, params }) {
         // Do not remove testing live preview
-
+        console.log("Testing live preview")
+        console.log("params", params)
         const data = await $graphql.default.request(GENERAL_CONTENT_DETAIL, {
-            slug: params.pathMatch.substring(
-                params.pathMatch.lastIndexOf("/") + 1
-            ),
+            slug: params.pathMatch
+                .replace(/\/$/, "")
+                .substring(
+                    params.pathMatch.replace(/\/$/, "").lastIndexOf("/") + 1
+                ),
         })
         return {
             page: _get(data, "entry", {}),
