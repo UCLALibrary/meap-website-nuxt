@@ -4,7 +4,7 @@ import _get from 'lodash/get'
 import GENERAL_CONTENT_DETAIL from '../gql/queries/GeneralContentDetail.gql'
 
 // Helpers
-const { $graphql, $getHeaders } = useNuxtApp()
+const { $graphql } = useNuxtApp()
 
 // ROUTE
 const route = useRoute()

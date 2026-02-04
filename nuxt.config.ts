@@ -1,8 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import svgLoader from 'vite-svg-loader'
 
 export default defineNuxtConfig({
   // when using local pnpm link with component library uncomment this line
   vite: {
+    define: {
+      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: true,
+    },
+    plugins: [svgLoader()],
     // ADDED FOLLOWING LINE TO RESOLVE CROSS-FETCH ERROR
     // Uncaught SyntaxError: The requested module '/_nuxt/node_modules/.pnpm/cross-fetch@3.1.8/node_modules/cross-fetch/dist/browser-ponyfill.js?v=4dc3293b'
     // does not provide an export named 'default' (at index.js?v=4dc3293b:6:8)
@@ -12,6 +17,9 @@ export default defineNuxtConfig({
         'cross-fetch': 'cross-fetch/dist/browser-ponyfill.js',
         '~ucla-library-design-tokens': 'ucla-library-design-tokens',
       },
+    },
+    ssr: {
+      noExternal: ['vuetify'], // Include Vuetify in the server-side bundle
     },
     server: {
       fs: {
@@ -23,6 +31,7 @@ export default defineNuxtConfig({
         scss: {
           additionalData: `
                         @import "ucla-library-design-tokens/scss/fonts.scss";
+                        @import "ucla-library-design-tokens/scss/_tokens-ftva";
                         @import "ucla-library-design-tokens/scss/app.scss";
                     `,
         },
@@ -36,7 +45,7 @@ export default defineNuxtConfig({
       failOnError: false,
       concurrency: 250,
       interval: 100,
-      // routes: ['/', '/404.html', '/200.html'],
+      routes: ['/', '/about/news/', '/applicants/', '/applicants/resources/', '/projects/'],
     },
     hooks: {
       'prerender:generate'(route) {
@@ -50,7 +59,7 @@ export default defineNuxtConfig({
       async 'prerender:routes'(routes) {
         const allRoutes = []
 
-        const response = await fetch(process.env.CRAFT_ENDPOINT, {
+        const response = await fetch(import.meta.env.CRAFT_ENDPOIN, {
           headers: {
             'Content-Type': 'application/json'
           },
@@ -78,16 +87,16 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     // Private keys are only available on the server
-    esWriteKey: process.env.ES_WRITE_KEY,
+    esWriteKey: import.meta.env.ES_WRITE_KEY,
 
     // Public keys that are exposed to the client
     public: {
-      craftGraphqlURL: process.env.CRAFT_ENDPOINT || '',
-      esReadKey: process.env.ES_READ_KEY || '',
-      esAlias: process.env.ES_ALIAS || '',
-      esIndexPrefix: process.env.ES_INDEX_PREFIX || '',
-      esTempIndex: process.env.ES_INDEX_PREFIX + '-' + new Date().toISOString().toLowerCase().replaceAll(':', '-'),
-      esURL: process.env.ES_URL || '',
+      craftGraphqlURL: import.meta.env.CRAFT_ENDPOINT || '',
+      esReadKey: import.meta.env.ES_READ_KEY || '',
+      esAlias: import.meta.env.ES_ALIAS || '',
+      esIndexPrefix: import.meta.env.ES_INDEX_PREFIX || '',
+      esTempIndex: import.meta.env.ES_INDEX_PREFIX + '-' + new Date().toISOString().toLowerCase().replaceAll(':', '-'),
+      esURL: import.meta.env.ES_URL || '',
       gtm: {
         id: 'GTM-T2SXV2'
       }
@@ -139,11 +148,11 @@ export default defineNuxtConfig({
     // 'ucla-library-design-tokens/scss/fonts.scss',
     'ucla-library-design-tokens/scss/app-global.scss',
     '~/assets/styles/global.scss',
-
-    // use the following line when using pnpm link --global ucla-library-website-components-vue
-    'ucla-library-website-components/dist/style.css',
+    // '@ucla-library-monorepo/ucla-library-website-components/style.css',
   ],
-
+  features: {
+    inlineStyles: false
+  },
   typescript: {
     strict: false
   },
@@ -153,14 +162,13 @@ export default defineNuxtConfig({
     {
       autoImports: ['defineStore', 'acceptHMRUpdate'],
     },
-  ], 'nuxt-graphql-request', '@nuxtjs/sitemap', '@zadigetvoltaire/nuxt-gtm'],
-
+  ], 'nuxt-graphql-request', '@nuxtjs/sitemap', '@zadigetvoltaire/nuxt-gtm', '@ucla-library/component-library-nuxt-module'],
   build: {
-    transpile: ['nuxt-graphql-request'],
+    transpile: ['nuxt-graphql-request', 'vuetify'],
   },
 
   site: {
-    url: process.env.SITEMAP_HOST || 'https://www.library.ucla.edu',
+    url: import.meta.env.SITEMAP_HOST || 'https://meap.library.ucla.edu',
   },
 
   imports: {
@@ -181,7 +189,7 @@ export default defineNuxtConfig({
         /**
          * The client endpoint url
          */
-        endpoint: process.env.CRAFT_ENDPOINT || '',
+        endpoint: import.meta.env.CRAFT_ENDPOINT || '',
         /**
          * Per-client options overrides
          * See: https://github.com/prisma-labs/graphql-request#passing-more-options-to-fetch
@@ -210,6 +218,10 @@ export default defineNuxtConfig({
      * default: false (this includes graphql-tag for node_modules folder)
      */
     // includeNodeModules: true,
+  },
+  experimental: {
+    sharedPrerenderData: true, // Improves nuxt build performance
+    buildCache: true, // Improves nuxt build performance
   },
 
   /* experimental: {
