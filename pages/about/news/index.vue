@@ -12,11 +12,10 @@ import config from '../utils/searchConfig'
 import queryFilterHasValues from '../utils/queryFilterHasValues'
 import parseFilters from '../utils/parseFilters'
 
-const { $graphql, $dataApi } = useNuxtApp()
+const { $graphql } = useNuxtApp()
 
 const { data, error } = await useAsyncData('article-news-list', async () => {
   const data = await $graphql.default.request(ARTICLE_NEWS_LIST)
-
   return data
 })
 
@@ -31,19 +30,17 @@ if (!data.value.entry && !data.value.entries) {
 }
 
 // DATA
-const page = ref(_get(data.value, 'entries', {}))
 const summaryData = ref(_get(data.value, 'entry', []))
 
 // PREVIEW MODE
 watch(data, (newVal, oldVal) => {
   console.log('In watch preview enabled, newVal, oldVal', newVal, oldVal)
-  page.value = _get(newVal, 'entries', {})
   summaryData.value = _get(newVal, 'entry', [])
 })
 
 // HEAD METADATA
 useHead({
-  title: page.value ? page.value.title : '... loading',
+  title: summaryData.value ? summaryData.value.title : '... loading',
 })
 
 // COMPUTED
@@ -87,17 +84,6 @@ const parsedSectionHighlight = computed(() => {
   } else return []
 })
 
-const parsedNewsList = computed(() => {
-  return page.value.map((obj) => {
-    return {
-      ...obj,
-      to: `/about/news/${obj.to}`,
-      image: _get(obj, 'heroImage[0].image[0]', {}),
-      category: _get(obj, 'category[0].title', ''),
-    }
-  })
-})
-
 const parsedByline = computed(() => {
   const byline = (summaryData.value.meapNewsListing.articleStaff || []).map((entry) => {
     return `${entry.byline} ${entry.title || entry.staffMember[0].title
@@ -134,9 +120,10 @@ watch(
     searchES()
   }, { deep: true, immediate: true }
 )
-
+const allNews = ref(true)
 // ELASTIC SEARCH
 async function searchES() {
+  const { keywordSearchWithFilters } = useDataAPI()
   if (
     (route.query.q && route.query.q !== '') ||
     (route.query.filters &&
@@ -145,7 +132,6 @@ async function searchES() {
         config.meapArticle.filters
       ))
   ) {
-    const { keywordSearchWithFilters } = useDataAPI()
     console.log('Search ES HITS query,', route.query.q)
     const queryText = route.query.q || '*'
     const results = await keywordSearchWithFilters(
@@ -167,9 +153,29 @@ async function searchES() {
       noResultsFound.value = true
       hits.value = []
     }
+    allNews.value = false
   } else {
-    hits.value = []
-    noResultsFound.value = false
+    // Fetch all Data for this content type
+    const queryText = route.query.q || '*'
+    const results = await keywordSearchWithFilters(
+      queryText,
+      config.meapArticle.searchFields,
+      'sectionHandle:meapArticle',
+      parseFilters(route.query.filters || ''),
+      config.meapArticle.sortField,
+      config.meapArticle.orderBy,
+      config.meapArticle.resultFields,
+      config.meapArticle.filters
+    )
+    if (results && results.hits && results.hits.total.value > 0) {
+      console.log('Search ES HITS,', results.hits.hits)
+      hits.value = results.hits.hits
+      noResultsFound.value = false
+    } else {
+      noResultsFound.value = true
+      hits.value = []
+    }
+    allNews.value = true
   }
 }
 
@@ -259,8 +265,7 @@ onMounted(async () => {
       v-show="summaryData &&
         parsedFeaturedNews &&
         parsedFeaturedNews.length &&
-        hits.length == 0 &&
-        !noResultsFound
+        allNews === true
       "
       class="section-no-top-margin"
     >
@@ -293,13 +298,6 @@ onMounted(async () => {
       />
     </section-wrapper>
 
-    <section-wrapper v-show="page && page.length && hits.length == 0 && !noResultsFound">
-      <section-staff-article-list
-        :items="parsedNewsList"
-        section-title="All News"
-      />
-    </section-wrapper>
-
     <section-wrapper
       v-show="hits && hits.length > 0"
       class="section-no-top-margin"
@@ -312,13 +310,16 @@ onMounted(async () => {
         <strong><em>“{{ route.query.q }}</em></strong>”
       </h2>
       <h2
-        v-else
+        v-else-if="!allNews"
         class="about-results"
       >
         Displaying {{ hits.length }} results
       </h2>
 
-      <section-staff-article-list :items="parseHitsResults" />
+      <section-staff-article-list
+        :items="parseHitsResults"
+        :section-title="allNews ? 'All News' : 'Search Results'"
+      />
     </section-wrapper>
 
     <!-- NO RESULTS -->
