@@ -145,9 +145,10 @@ async function searchES() {
         config.meapArticle.filters
       ))
   ) {
+    const { keywordSearchWithFilters } = useDataAPI()
     console.log('Search ES HITS query,', route.query.q)
     const queryText = route.query.q || '*'
-    const results = await $dataApi.keywordSearchWithFilters(
+    const results = await keywordSearchWithFilters(
       queryText,
       config.meapArticle.searchFields,
       'sectionHandle:meapArticle',
@@ -173,7 +174,8 @@ async function searchES() {
 }
 
 async function setFilters() {
-  const searchAggsResponse = await $dataApi.getAggregations(
+  const { getAggregations } = useDataAPI()
+  const searchAggsResponse = await getAggregations(
     config.meapArticle.filters,
     'meapArticle'
   )

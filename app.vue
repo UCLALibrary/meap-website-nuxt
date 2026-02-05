@@ -1,4 +1,5 @@
 <script setup>
+// No Theme like Main Library Website
 const { enabled, state } = usePreviewMode()
 </script>
 <template>
@@ -7,10 +8,10 @@ const { enabled, state } = usePreviewMode()
       color="#ffe800"
       height="3"
     />
-    <VueSkipTo
+    <!--VueSkipTo
       to="#main"
       label="Skip to main content"
-    />
+    /-->
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
