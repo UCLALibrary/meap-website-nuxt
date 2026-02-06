@@ -1,18 +1,15 @@
 <script setup>
 
 const globalStore = useGlobalStore()
+// ✅ Fetch + hydrate Pinia (SSR + client)
+useHydrateGlobalStore()
 
-const primaryMenuItems = computed(() => {
-  return globalStore.header.primary
-})
+// ✅ Safe defaults so layout doesn't crash while data is loading
+const primaryMenuItems = computed(() => (globalStore.header && globalStore.header.primary) ? globalStore.header.primary : [])
+const secondaryMenuItems = computed(() => (globalStore.header && globalStore.header.secondary) ? globalStore.header.secondary : [])
 
-const secondaryMenuItems = computed(() => {
-  return globalStore.header.secondary
-})
-
-const isMobile = computed(() => {
-  return globalStore.winWidth <= 1024
-})
+// Your existing mobile logic, guarded
+const isMobile = computed(() => (globalStore.winWidth || 0) <= 1024)
 
 const classes = computed(() => {
   return [
@@ -55,7 +52,9 @@ const classes = computed(() => {
       />
     </header>
 
-    <slot />
+    <div class="layout-content">
+      <slot />
+    </div>
 
     <footer-main />
   </div>
@@ -67,7 +66,7 @@ const classes = computed(() => {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-content: center;
   align-items: center;
 
@@ -75,8 +74,23 @@ const classes = computed(() => {
     width: 100%;
   }
 
+  :deep(.more-menu .search-button) {
+    display: none
+  }
+
   flex: 1 1 auto;
 
+  // TODO add prop to show or hide the search dropdown or button for mobile view instead of meap theme
+  :deep(.nav-secondary .search-dropdown) {
+    display: none;
+  }
+
+}
+
+.layout-content {
+  flex: 1 1 auto;
+  /* ✅ this pushes the footer down */
+  width: 100%;
 }
 
 .vue-skip-to {
@@ -96,10 +110,9 @@ const classes = computed(() => {
   // TODO nav on smaller viewports
 }
 
-@media #{$medium} {
-  .brand-bar {
-    position: absolute;
-    width: 100%;
+@media #{$small} {
+  :deep(.more-menu .search-button) {
+    display: none
   }
 }
 </style>

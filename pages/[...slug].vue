@@ -4,16 +4,19 @@ import _get from 'lodash/get'
 import GENERAL_CONTENT_DETAIL from '../gql/queries/GeneralContentDetail.gql'
 
 // Helpers
-const { $graphql, $getHeaders } = useNuxtApp()
+const { $graphql } = useNuxtApp()
 
 // ROUTE
 const route = useRoute()
 const path = route.path.replace(/^\/|\/$/g, '')
-const variables = { path }
 
 // ASYNC DATA
 const { data, error } = await useAsyncData(`general-content-${path}`, async () => {
-  const data = await $graphql.default.request(GENERAL_CONTENT_DETAIL, variables)
+  const data = await $graphql.default.request(GENERAL_CONTENT_DETAIL, {
+    slug: path.substring(
+      path.lastIndexOf('/') + 1
+    ),
+  })
   return data
 })
 

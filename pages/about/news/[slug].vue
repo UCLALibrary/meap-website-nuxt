@@ -6,13 +6,13 @@ import format from 'date-fns/format'
 // GQL
 import ARTICLE_NEWS_DETAIL from '../gql/queries/ArticleNewsDetail.gql'
 
-const { $graphql, $elasticsearchplugin } = useNuxtApp()
+const { $graphql } = useNuxtApp()
 
 const route = useRoute()
 
 const { data, error } = await useAsyncData(`article-news/${route.params.slug}`, async () => {
   const data = await $graphql.default.request(ARTICLE_NEWS_DETAIL, { slug: route.params.slug })
-
+  // console.log('GQL Article News Detail data:', data)
   return data
 })
 
@@ -26,8 +26,17 @@ if (!data.value.entry) {
   throw createError({ statusCode: 404, message: 'Page not found', fatal: true })
 }
 
-if (data.value.entry.slug && process.server) {
-  await $elasticsearchplugin.index(data.value.entry, route.params.slug)
+if (data.value.entry && import.meta.prerender) {
+  // console.log('Static build - indexing News:', route.params.slug, JSON.stringify(data.value.entry))
+  try {
+    // Call the composable to use the indexing function
+    const { indexContent } = useContentIndexer()
+    await indexContent(data.value.entry, route.params.slug)
+    console.log('News indexed successfully during static build', route.params.slug)
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('FAILED TO INDEX News during static build:', error)
+  }
 }
 
 const page = ref(_get(data.value, 'entry', {}))
