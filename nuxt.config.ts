@@ -169,7 +169,8 @@ export default defineNuxtConfig({
     ],
     '@nuxtjs/sitemap',
     '@ucla-library/component-library-nuxt-module',
-    '@nuxt/scripts'
+    '@nuxt/scripts',
+    'nuxt-graphql-request'
   ],
   graphql: {
     clients: {
@@ -178,7 +179,7 @@ export default defineNuxtConfig({
   },
 
   build: {
-    transpile: ['vuetify'],
+    transpile: ['nuxt-graphql-request', 'vuetify'],
   },
 
   eslint: {
