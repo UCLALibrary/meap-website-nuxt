@@ -4,7 +4,8 @@ export default withNuxt(
   // Per-file globs + rules (applies after Nuxt generated configs)
   {
     // only apply this config to TypeScript files
-    files: ['**/*.{ts,tsx,vue}'],
+    files: ['**/*.{ts,tsx,vue,js}'],
+    ignores: ['node_modules/**', '.output/**', 'dist/**','.nuxt/**'],
     rules: {
       // your original choices
       '@typescript-eslint/comma-dangle': 'off',
@@ -16,6 +17,27 @@ export default withNuxt(
       'operator-linebreak': 'off',
       'curly': 'off',
       'brace-style': 'off',
+    },
+  },
+
+  // --- 2) Cypress test files: define test globals (fixes no-undef) ---
+  {
+    files: ['cypress/**/*.cy.{js,ts,jsx,tsx}', 'cypress/**/*.spec.{js,ts,jsx,tsx}'],
+    languageOptions: {
+      globals: {
+        describe: 'readonly',
+        it: 'readonly',
+        before: 'readonly',
+        after: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly',
+        cy: 'readonly'
+      }
+    },
+    // if you later want to use plugin:cypress recommended rules, you can add an extends here
+    rules: {
+      // keep Cypress-specific rule tweaks here (if any)
     }
-  }
+  },
+
 )

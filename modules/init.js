@@ -11,6 +11,7 @@ export default defineNuxtModule({
 
         const esLibraryIndexTemp = nuxt.options.runtimeConfig.public.esTempIndex
         console.log('Index named:' + esLibraryIndexTemp)
+        let body
         // https://www.elastic.co/guide/en/elasticsearch/reference/current/flattened.html
         try {
           const response = await fetch(`${nuxt.options.runtimeConfig.public.esURL}/${esLibraryIndexTemp}`, {
@@ -46,7 +47,7 @@ export default defineNuxtModule({
               }
             }),
           })
-          const body = await response.text()
+           body = await response.text()
           const testJson = JSON.parse(body)
           console.log('Index created:' + JSON.stringify(testJson))
           console.log('Elastic Search index created succesfully!')
