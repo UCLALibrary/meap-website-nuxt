@@ -88,6 +88,19 @@ jobs:
               env:
                   NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
                   NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_MEAP_TEST_NUXT3X }}
+
+            - name: Cache Cypress
+              uses: actions/cache@v3
+              with:
+                path: ~/.cache/Cypress
+                key: ${{ runner.os }}-cypress-${{ hashFiles('**/pnpm-lock.yaml') }}
+                restore-keys: |
+                  ${{ runner.os }}-cypress-
+
+            # Install Cypress binary explicitly to ensure it's available
+            - name: Install Cypress
+              run: npx cypress install
+
             - uses: cypress-io/github-action@v3
               with:
                   start: pnpm dlx serve .output/public

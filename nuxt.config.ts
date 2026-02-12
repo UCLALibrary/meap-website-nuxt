@@ -70,7 +70,7 @@ export default defineNuxtConfig({
         const postPages = await response.json()
         // console.log('All pages', JSON.stringify(postPages.data.entries))
         if (postPages && postPages.data && postPages.data.entries) {
-          const postWithoutPayloadRoutes = postPages.data.entries.filter(item => item.sectionHandle === 'meapArticle' && item.uri !== 'meap').map(entry => '/' + entry.uri.replace(/^meap\//, ''))
+          const postWithoutPayloadRoutes = postPages.data.entries.filter(item => item.sectionHandle.includes('meap') && item.uri !== 'meap').map(entry => '/' + entry.uri.replace(/^meap\//, ''))
           allRoutes.push(...postWithoutPayloadRoutes)
         }
 
@@ -97,10 +97,15 @@ export default defineNuxtConfig({
       esIndexPrefix: import.meta.env.ES_INDEX_PREFIX || '',
       esTempIndex: import.meta.env.ES_INDEX_PREFIX + '-' + new Date().toISOString().toLowerCase().replaceAll(':', '-'),
       esURL: import.meta.env.ES_URL || '',
-      gtm: {
+    },
+  },
+
+  scripts: {
+    registry: {
+      googleTagManager: {
         id: 'GTM-T2SXV2'
       }
-    },
+    }
   },
 
   /*
@@ -134,11 +139,6 @@ export default defineNuxtConfig({
       ],
       link: [{ rel: 'icon', type: 'image/svg', href: '/icon-ucla-favicon.svg' }],
     },
-
-    pageTransition: {
-      name: 'fade',
-      mode: 'out-in',
-    },
   },
 
   /*
@@ -159,15 +159,31 @@ export default defineNuxtConfig({
     strict: false
   },
 
-  modules: [[
-    '@pinia/nuxt',
-    {
-      autoImports: ['defineStore', 'acceptHMRUpdate'],
-    },
-  ], 'nuxt-graphql-request', '@nuxtjs/sitemap', '@zadigetvoltaire/nuxt-gtm', '@ucla-library/component-library-nuxt-module'],
+  modules: [
+    '@nuxt/eslint',
+    [
+      '@pinia/nuxt',
+      {
+        autoImports: ['defineStore', 'acceptHMRUpdate'],
+      },
+    ],
+    '@nuxtjs/sitemap',
+    '@ucla-library/component-library-nuxt-module',
+    '@nuxt/scripts',
+    'nuxt-graphql-request'
+  ],
+  graphql: {
+    clients: {
+      default: { endpoint: import.meta.env.CRAFT_ENDPOINT || '' }
+    }
+  },
 
   build: {
     transpile: ['nuxt-graphql-request', 'vuetify'],
+  },
+
+  eslint: {
+    // options here
   },
 
   site: {
@@ -183,54 +199,10 @@ export default defineNuxtConfig({
     }
   },
 
-  graphql: {
-    /**
-     * An Object of your GraphQL clients
-     */
-    clients: {
-      default: {
-        /**
-         * The client endpoint url
-         */
-        endpoint: import.meta.env.CRAFT_ENDPOINT || '',
-        /**
-         * Per-client options overrides
-         * See: https://github.com/prisma-labs/graphql-request#passing-more-options-to-fetch
-         */
-        options: {},
-      },
-
-    },
-
-    /**
-     * Options
-     * See: https://github.com/prisma-labs/graphql-request#passing-more-options-to-fetch
-     */
-    options: {
-      method: 'get', // Default to `POST`
-    },
-
-    /**
-     * Optional
-     * default: false (this includes cross-fetch/polyfill before creating the graphql client)
-     */
-    // useFetchPolyfill: true,
-
-    /**
-     * Optional
-     * default: false (this includes graphql-tag for node_modules folder)
-     */
-    // includeNodeModules: true,
-  },
 
   experimental: {
     sharedPrerenderData: true, // Improves nuxt build performance
     buildCache: true, // Improves nuxt build performance
   },
-  /* experimental: {
-    payloadExtraction: true,
-    sharedPrerenderData: true
-  } */
 
-  compatibilityDate: '2026-02-04'
 })

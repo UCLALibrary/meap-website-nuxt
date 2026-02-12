@@ -1,7 +1,6 @@
 <script setup>
 // HELPERS
 import _get from 'lodash/get'
-import format from 'date-fns/format'
 
 // GQL
 import ARTICLE_NEWS_DETAIL from '../gql/queries/ArticleNewsDetail.gql'

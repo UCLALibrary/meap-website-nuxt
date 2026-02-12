@@ -1,10 +1,10 @@
 // composables/useHydrateGlobalStore.js
 // GQL
-import FooterPrimaryItems from '../gql/queries/FooterPrimaryItems.gql'
-import FooterSockItems from '../gql/queries/FooterSockItems.gql'
-import FooterSponsorItems from '../gql/queries/FooterSponsorItems.gql'
-import Globals from '../gql/queries/Globals.gql'
-import HeaderMainMenuItems from '../gql/queries/HeaderMainMenuItems.gql'
+import FooterPrimaryItems from '../../gql/queries/FooterPrimaryItems.gql'
+import FooterSockItems from '../../gql/queries/FooterSockItems.gql'
+import FooterSponsorItems from '../../gql/queries/FooterSponsorItems.gql'
+import Globals from '../../gql/queries/Globals.gql'
+import HeaderMainMenuItems from '../../gql/queries/HeaderMainMenuItems.gql'
 export function useHydrateGlobalStore() {
   const { $graphql } = useNuxtApp()
   const store = useGlobalStore()

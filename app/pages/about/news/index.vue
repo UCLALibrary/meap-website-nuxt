@@ -7,10 +7,10 @@ import format from 'date-fns/format'
 import ARTICLE_NEWS_LIST from '../gql/queries/ArticleNewsList.gql'
 
 // SEARCH HELPERS
-import getListingFilters from '../utils/getListingFilters'
-import config from '../utils/searchConfig'
-import queryFilterHasValues from '../utils/queryFilterHasValues'
-import parseFilters from '../utils/parseFilters'
+import getListingFilters from '@/utils/getListingFilters'
+import config from '@/utils/searchConfig'
+import queryFilterHasValues from '@/utils/queryFilterHasValues'
+import parseFilters from '@/utils/parseFilters'
 
 const { $graphql } = useNuxtApp()
 
@@ -266,7 +266,7 @@ onMounted(async () => {
         parsedFeaturedNews &&
         parsedFeaturedNews.length &&
         allNews === true
-      "
+        "
       class="section-no-top-margin"
     >
       <banner-featured
