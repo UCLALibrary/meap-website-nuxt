@@ -11,7 +11,7 @@ export function useContentIndexer() {
     try {
       // matches your original guard: only index when you have essentials
       if (!data || !slug || !esIndex) {
-        // eslint-disable-next-line no-console
+         
         console.warn('not indexing anything')
         return
       }
@@ -56,12 +56,12 @@ export function useContentIndexer() {
       })
       console.log('Create a new document in ES:', await response.text())
     } catch (e) {
-      // eslint-disable-next-line no-console
+       
       console.error(
         'skip indexing if connection times out during builds in the mean time: ' +
           (e && e.message ? e.message : e)
       )
-      // eslint-disable-next-line no-console
+       
       console.warn(
         'skip indexing if connection times out during builds in the mean time: ' +
           (e && e.message ? e.message : e)

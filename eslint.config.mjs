@@ -22,7 +22,7 @@ export default withNuxt(
 
   // --- 2) Cypress test files: define test globals (fixes no-undef) ---
   {
-    files: ['cypress/**/*.cy.{js,ts,jsx,tsx}', 'cypress/**/*.spec.{js,ts,jsx,tsx}'],
+    files: ['cypress/**/*.{js,ts,jsx,tsx}'],
     languageOptions: {
       globals: {
         describe: 'readonly',
@@ -31,7 +31,8 @@ export default withNuxt(
         after: 'readonly',
         beforeEach: 'readonly',
         afterEach: 'readonly',
-        cy: 'readonly'
+        cy: 'readonly',
+        Cypress: 'readonly'    // ADDED Cypress global
       }
     },
     // if you later want to use plugin:cypress recommended rules, you can add an extends here

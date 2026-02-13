@@ -20,6 +20,25 @@ jobs:
             - uses: ./.github/workflows/setup-workspace
             - run: pnpm run lint
 
+    chromatic-instructions:
+        if: github.event_name == 'pull_request'
+        runs-on: ubuntu-latest
+        timeout-minutes: 20
+        steps:
+          - name: Comment with Chromatic instructions
+            uses: bubkoo/auto-comment@v1
+            with:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              pullRequestOpened: >
+                # Chromatic Visual Tests (Cypress)
+
+                To conserve our visual snapshot budget, Chromatic is not configured to run automatically.
+                When the PR is ready and other checks are passing, run it manually:
+
+                1. Visit the workflow: https://github.com/UCLALibrary/library-website-nuxt/actions/workflows/chromatic.yml
+                2. Click **Run workflow**
+                3. Select the correct branch for this PR and click **Run workflow** again
+
     percy-instructions:
         if: github.event_name == 'pull_request'
         runs-on: ubuntu-latest
