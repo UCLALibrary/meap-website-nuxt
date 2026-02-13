@@ -38,6 +38,18 @@ jobs:
           ES_ALIAS: ${{ env.ES_ALIAS }}
           ES_INDEX_PREFIX: ${{secrets.ES_INDEX_PREFIX_TEST}}
 
+      - name: Cache Cypress
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/Cypress
+          key: ${{ runner.os }}-cypress-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-cypress-
+
+      # Install Cypress binary explicitly to ensure it's available
+      - name: Install Cypress
+        run: npx cypress install
+
       - uses: cypress-io/github-action@v3
         with:
           start: pnpm dlx serve .output/public
