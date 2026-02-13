@@ -21,11 +21,11 @@ jobs:
       - name: Sets env vars for PR preview
         run: |
           echo "ES_ALIAS=${{secrets.ES_ALIAS_TEST}}-chromatic-tests-${{ github.head_ref || github.ref_name }}" >> $GITHUB_ENV
-        if: github.ref_name!='main'
+        if: (github.ref_name != 'main' && github.ref_name != 'nuxt3.x')
       - name: Sets env vars for main merge
         run: |
           echo "ES_ALIAS=${{secrets.ES_ALIAS_TEST}}" >> $GITHUB_ENV
-        if: github.ref_name=='main'
+        if: (github.ref_name=='main' || github.ref_name=='nuxt3.x')
       - run: pnpm run generate
         if: steps.cache-nuxt.outputs.cache-hit != 'true'
         env:
