@@ -2,7 +2,7 @@ name: Submit screenshots to Chromatic for visual regression testing (Cypress)
 
 on:
   push:
-    branches: [main]
+    branches: [main, nuxt3.x]
   workflow_dispatch:
 
 jobs:
@@ -65,7 +65,7 @@ jobs:
 
       # Manual runs: fail if there are diffs (forces review in Chromatic UI)
       - name: Run Chromatic (manual / PR-style)
-        if: github.ref_name != 'main'
+        if: (github.ref_name != 'main' && github.ref_name != 'nuxt3.x')
         env:
           CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           ELECTRON_EXTRA_LAUNCH_ARGS: --remote-debugging-port=9222
@@ -74,7 +74,7 @@ jobs:
 
       # Main branch runs: auto-accept changes to update baseline (Percy-like behavior)
       - name: Run Chromatic (main baseline)
-        if: github.ref_name == 'main'
+        if: (github.ref_name == 'main' || github.ref_name == 'nuxt3.x')
         env:
           CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           ELECTRON_EXTRA_LAUNCH_ARGS: --remote-debugging-port=9222
