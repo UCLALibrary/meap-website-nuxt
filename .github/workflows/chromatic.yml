@@ -4,6 +4,7 @@ on:
   push:
     branches: [main, nuxt3.x]
   workflow_dispatch:
+    inputs: {}
 
 jobs:
   chromatic:
