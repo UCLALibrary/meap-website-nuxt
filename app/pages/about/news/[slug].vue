@@ -33,7 +33,7 @@ if (data.value.entry && import.meta.prerender) {
     await indexContent(data.value.entry, route.params.slug)
     console.log('News indexed successfully during static build', route.params.slug)
   } catch (error) {
-    // eslint-disable-next-line no-console
+     
     console.error('FAILED TO INDEX News during static build:', error)
   }
 }
