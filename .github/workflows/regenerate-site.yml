@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Environment(test/prod)'     
+        description: 'Environment(test/prod)'
         required: true
         type: choice
         options:
@@ -37,7 +37,7 @@ jobs:
           ES_URL: ${{ secrets.ES_URL }}
           ES_READ_KEY: "${{ github.event.inputs.environment == 'test' && secrets.ES_READ_KEY_TEST || secrets.ES_READ_KEY_PROD }}"
           ES_WRITE_KEY: "${{ github.event.inputs.environment == 'test' && secrets.ES_WRITE_KEY_TEST || secrets.ES_WRITE_KEY_PROD }}"
-          ES_INDEX: "${{ github.event.inputs.environment == 'test' && secrets.ES_INDEX_TEST || secrets.ES_INDEX_PROD }}"
+          ES_ALIAS: "${{ github.event.inputs.environment == 'test' && secrets.ES_ALIAS_TEST || secrets.ES_ALIAS_PROD }}"
           ES_INDEX_PREFIX: "${{ github.event.inputs.environment == 'test' && secrets.ES_INDEX_PREFIX_TEST || secrets.ES_INDEX_PREFIX_PROD }}"
       - name: Deploy to Netlify on release
         uses: nwtgck/actions-netlify@v2 #
