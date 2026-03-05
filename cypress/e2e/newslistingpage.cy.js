@@ -2,7 +2,7 @@ import { viewports } from '../support/viewports'
 
 const provider = Cypress.env('VISUAL_PROVIDER')
 const isChromatic = provider === 'chromatic'
-const isPercy = provider === 'percy'
+
 
 function runNewsListingTests({ withSnapshot = false } = {}) {
   it('Visit the News Listing Page', () => {
@@ -13,7 +13,7 @@ function runNewsListingTests({ withSnapshot = false } = {}) {
     cy.get('h1.title').should('contain', 'MEAP News')
     if (withSnapshot) cy.visualSnapshot('News Listing Page')
   })
-  if (!isChromatic && !isPercy) {
+  if (!isChromatic) {
     it('Search Found', () => {
       cy.visit('/about/news?q=kids&filters=')
       cy.get('.logo-ucla').should('be.visible')
@@ -30,10 +30,6 @@ if (isChromatic) {
     describe(`News Listing page - ${label}`, { viewportWidth, viewportHeight }, () => {
       runNewsListingTests({ withSnapshot: true })
     })
-  })
-} else if (isPercy) {
-  describe('News Listing page', () => {
-    runNewsListingTests({ withSnapshot: true })
   })
 } else {
   describe('News Listing page', () => {
