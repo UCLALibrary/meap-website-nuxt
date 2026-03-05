@@ -13,7 +13,7 @@ function runNewsListingTests({ withSnapshot = false } = {}) {
     cy.get('h1.title').should('contain', 'MEAP News')
     if (withSnapshot) cy.visualSnapshot('News Listing Page')
   })
-  if (!isChromatic && !isPercy) {
+  if (!isChromatic) {
     it('Search Found', () => {
       cy.visit('/about/news?q=kids&filters=')
       cy.get('.logo-ucla').should('be.visible')
