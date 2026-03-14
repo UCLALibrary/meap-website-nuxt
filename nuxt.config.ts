@@ -145,10 +145,9 @@ export default defineNuxtConfig({
      ** Global CSS
      */
   css: [
-    // 'ucla-library-design-tokens/scss/fonts.scss',
+
     'ucla-library-design-tokens/scss/app-global.scss',
     '~/assets/styles/global.scss',
-    // '@ucla-library-monorepo/ucla-library-website-components/style.css',
   ],
 
   features: {

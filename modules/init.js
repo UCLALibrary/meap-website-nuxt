@@ -3,7 +3,7 @@ import fetch from 'node-fetch'
 export default defineNuxtModule({
 
   setup(options, nuxt) {
-    console.log('Nuxt module start ')
+   console.log('Nuxt module start ')
     console.log('process.env.NODE_ENV:' + process.env.NODE_ENV)
     if (!nuxt.options._prepare && process.env.NODE_ENV !== 'development') {
       nuxt.hooks.hook('nitro:init', async (nitro) => {

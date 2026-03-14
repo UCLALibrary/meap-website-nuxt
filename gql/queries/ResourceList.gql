@@ -26,4 +26,11 @@ query ResourceList {
             text: summary
         }
     }
+    externalResources: entries(section: "externalResourceMeap") {
+        id
+        title
+        text: summary
+        externalResourceUrl
+        iconName: illustrationsResourcesAndServices
+    }
 }
