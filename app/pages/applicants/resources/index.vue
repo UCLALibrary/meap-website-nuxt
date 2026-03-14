@@ -18,13 +18,15 @@ const { data, error } = await useAsyncData('article-news-list', async () => {
   return data
 })
 
+const dataValue = data.value as Record<string, unknown> | undefined
+
 if (error.value) {
   throw createError({
     ...error.value, statusMessage: 'Page not found.' + error.value, fatal: true
   })
 }
 
-if (!(data.value as any)?.entry && !(data.value as any)?.entries) {
+if (!(dataValue?.entry) && !(dataValue?.entries)) {
   throw createError({ statusCode: 404, message: 'Page not found', fatal: true })
 }
 

@@ -16,13 +16,15 @@ const { data, error } = await useAsyncData(`resources/${route.params.slug}`, asy
   return data
 })
 
+const dataValue = data.value as Record<string, unknown> | undefined
+
 if (error.value) {
   throw createError({
     ...error.value, statusMessage: 'Page not found.' + error.value, fatal: true
   })
 }
 
-if ((!data.value as any)?.entry) {
+if (!dataValue?.entry) {
   throw createError({ statusCode: 404, message: 'Page not found', fatal: true })
 }
 
@@ -99,7 +101,8 @@ console.log('hasCTA', hasCTA.value)
       :blocks="page.blocks"
     />
 
-    <section-wrapper v-if="
+    <section-wrapper
+v-if="
       page.blocks &&
       page.blocks.length &&
       page.parsedAssociatedTopics &&
