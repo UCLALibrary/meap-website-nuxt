@@ -13,7 +13,7 @@ import { client } from "process"
 
 const { $graphql } = useNuxtApp()
 
-const { data, error } = await useAsyncData('article-news-list', async () => {
+const { data, error } = await useAsyncData('resource-list', async () => {
   const data = await $graphql.default.request(RESOURCE_LIST)
   return data
 })

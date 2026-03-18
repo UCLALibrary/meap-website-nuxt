@@ -101,8 +101,7 @@ console.log('hasCTA', hasCTA.value)
       :blocks="page.blocks"
     />
 
-    <section-wrapper
-v-if="
+    <section-wrapper v-if="
       page.blocks &&
       page.blocks.length &&
       page.parsedAssociatedTopics &&
@@ -119,13 +118,14 @@ v-if="
         to="/applicants/resources"
       />
     </section-wrapper>
-
-    <section-wrapper>
-      <block-call-to-action
-        :is-meap-global="true"
-        :v-if="hasCTA"
-      />
-    </section-wrapper>
+    <client-only>
+      <section-wrapper>
+        <block-call-to-action
+          :is-meap-global="true"
+          :v-if="hasCTA"
+        />
+      </section-wrapper>
+    </client-only>
   </main>
 </template>
 
