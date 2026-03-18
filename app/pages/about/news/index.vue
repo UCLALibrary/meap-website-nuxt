@@ -236,6 +236,10 @@ onMounted(async () => {
   // console.log("ESURLkey:" + config.esURL)
   await setFilters()
 })
+
+
+const { hasCTA } = useGlobalCallToAction()
+
 </script>
 
 <template>
@@ -344,13 +348,17 @@ onMounted(async () => {
         class="divider"
       />
     </section-wrapper>
+    <client-only>
+      <section-wrapper>
 
-    <!-- <section-wrapper>
-      <block-call-to-action
-        class="block-call-to-action"
-        :is-meap-global="true"
-      />
-    </section-wrapper> -->
+        <block-call-to-action
+          v-if="hasCTA"
+          class="block-call-to-action"
+          :is-meap-global="true"
+        />
+
+      </section-wrapper>
+    </client-only>
   </main>
 </template>
 

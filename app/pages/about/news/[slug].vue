@@ -24,7 +24,6 @@ if (error.value) {
 if (!data.value.entry) {
   throw createError({ statusCode: 404, message: 'Page not found', fatal: true })
 }
-
 if (data.value.entry && import.meta.prerender) {
   // console.log('Static build - indexing News:', route.params.slug, JSON.stringify(data.value.entry))
   try {
@@ -33,7 +32,7 @@ if (data.value.entry && import.meta.prerender) {
     await indexContent(data.value.entry, route.params.slug)
     console.log('News indexed successfully during static build', route.params.slug)
   } catch (error) {
-     
+
     console.error('FAILED TO INDEX News during static build:', error)
   }
 }
@@ -74,6 +73,7 @@ watch(data, (newVal, oldVal) => {
 useHead({
   title: page.value ? page.value.title : '... loading',
 })
+
 </script>
 
 <template lang="html">
