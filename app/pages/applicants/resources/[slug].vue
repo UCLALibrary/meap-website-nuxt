@@ -101,7 +101,8 @@ console.log('hasCTA', hasCTA.value)
       :blocks="page.blocks"
     />
 
-    <section-wrapper v-if="
+    <section-wrapper
+v-if="
       page.blocks &&
       page.blocks.length &&
       page.parsedAssociatedTopics &&
