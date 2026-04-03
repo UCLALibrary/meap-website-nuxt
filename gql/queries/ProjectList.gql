@@ -1,5 +1,3 @@
-#import "../gql/fragments/Image.gql"
-
 query ProjectList {
 
     entry(section: "meapListingProjects") {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // GQL
-import PROJECT_LIST from "~/gql/queries/ProjectList.gql"
+import PROJECT_LIST from "../gql/queries/ProjectList.gql"
 // Helpers
 import _get from "lodash/get"
 import stripMeapFromURI from "~/utils/stripMeapFromURI"
@@ -92,7 +92,7 @@ async function searchES() {
     const results = await keywordSearchWithFilters(
       queryText,
       config.meapProject.searchFields,
-      'sectionHandle:meapArticle',
+      'sectionHandle:meapProject',
       parseFilters(route.query.filters || ''),
       config.meapProject.sortField,
       config.meapProject.orderBy,
@@ -220,6 +220,7 @@ onMounted(async () => {
     <section-wrapper
       v-show="hits && hits.length > 0"
       class="section-no-top-margin"
+      :section-title="allProjects ? 'All Projects' : 'Search Results'"
     >
       <h2
         v-if="route.query.q"
@@ -235,10 +236,7 @@ onMounted(async () => {
         Displaying {{ hits.length }} results
       </h2>
 
-      <section-teaser-card
-        :items="parseHitsResults"
-        :section-title="allProjects ? 'All Projects' : 'Search Results'"
-      />
+      <section-teaser-card :items="parseHitsResults" />
     </section-wrapper>
 
     <!-- NO RESULTS -->
