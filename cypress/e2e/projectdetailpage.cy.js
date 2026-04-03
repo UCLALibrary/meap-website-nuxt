@@ -1,4 +1,9 @@
-describe("Project Detail page", () => {
+import { viewports } from '../support/viewports'
+
+const provider = Cypress.env('VISUAL_PROVIDER')
+const isChromatic = provider === 'chromatic'
+
+function runProjectDetailTests({ withSnapshot = false } = {}) {
     it("Visit a Project Detail Page", () => {
         cy.visit("/projects/kids-play-project")
 
@@ -11,7 +16,7 @@ describe("Project Detail page", () => {
         cy.contains("a.smart-link", "Metadata Planning Worksheet").should("have.attr", "target", "_blank")
         cy.contains("a.smart-link", "Kids Play").should("not.have.attr", "target", "_blank")
 
-        cy.percySnapshot({ widths: [768, 992, 1200] })
+        if (withSnapshot) cy.visualSnapshot('Project Detail Page')
     })
     it("Call to action Upload assests works on Project Page", () => {
         cy.visit("/projects/vintage-whoopie-cushions")
@@ -23,6 +28,18 @@ describe("Project Detail page", () => {
         // "Target" attribute for links
         cy.contains("a.button-link", "Explore Inventory").should("have.attr", "target", "_blank")
 
-        cy.percySnapshot({ widths: [768, 992, 1200] })
+       if (withSnapshot) cy.visualSnapshot('Upload assests works on Project Page')
     })
-})
+}
+
+if (isChromatic) {
+  viewports.forEach(({ label, viewportWidth, viewportHeight }) => {
+    describe(`Project Detail page - ${label}`, { viewportWidth, viewportHeight }, () => {
+      runProjectDetailTests({ withSnapshot: true })
+    })
+  })
+}  else {
+  describe('Project Detail page', () => {
+    runProjectDetailTests({ withSnapshot: false })
+  })
+}
