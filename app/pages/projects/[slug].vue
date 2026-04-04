@@ -57,7 +57,7 @@ const parsedButtonText = computed(() => {
 
 
 const parsedButtonTo = computed(() => {
-  let buttonTo = _get(
+  const buttonTo = _get(
     page.value,
     "meapProjectCallToAction[0].externalUrl",
     ""

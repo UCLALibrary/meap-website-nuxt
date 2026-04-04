@@ -249,7 +249,7 @@ onMounted(async () => {
           <h2>Search for “{{ $route.query.q }}” not found.</h2>
           <p>
             We can’t find the term you are looking for on this page.
-            <br />
+            <br >
             <!-- Try searching the whole site from
                         <a href="https://library.ucla.edu">UCLA Library Home</a>, or try one of the these regularly visited links:
                     </p>
