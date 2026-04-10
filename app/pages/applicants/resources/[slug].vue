@@ -83,11 +83,11 @@ console.log('hasCTA', hasCTA.value)
       :button-text="parsedButtonText"
       :to="parsedButtonTo"
     />
-
     <section-wrapper class="section-banner">
+      <!-- media prop replaces image prop going forward for this component -->
       <banner-header
         v-if="page.heroImage && page.heroImage.length >= 1"
-        :image="page.heroImage[0].image[0]"
+        :media="page.heroImage[0].image[0]"
         :to="parsedButtonTo"
         :prompt="parsedButtonText"
         :title="page.title"
