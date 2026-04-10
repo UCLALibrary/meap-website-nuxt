@@ -83,7 +83,6 @@ console.log('hasCTA', hasCTA.value)
       :button-text="parsedButtonText"
       :to="parsedButtonTo"
     />
-    {{ page.heroImage[0].image[0] }}
     <section-wrapper class="section-banner">
       <!-- media prop replaces image prop going forward for this component -->
       <banner-header
@@ -102,7 +101,8 @@ console.log('hasCTA', hasCTA.value)
       :blocks="page.blocks"
     />
 
-    <section-wrapper v-if="
+    <section-wrapper
+v-if="
       page.blocks &&
       page.blocks.length &&
       page.parsedAssociatedTopics &&
