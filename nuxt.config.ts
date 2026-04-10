@@ -2,6 +2,7 @@
 import svgLoader from 'vite-svg-loader'
 
 export default defineNuxtConfig({
+  devtools: { enabled: true },
   // when using local pnpm link with component library uncomment this line
   vite: {
     define: {
