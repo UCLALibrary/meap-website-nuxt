@@ -9,4 +9,8 @@ Cypress.Commands.add('visualSnapshot', (name) => {
     return
   }
 
+  if (provider === 'percy') {
+    cy.percySnapshot(name)
+  }
+
 })
