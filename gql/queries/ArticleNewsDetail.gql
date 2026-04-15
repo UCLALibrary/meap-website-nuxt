@@ -15,7 +15,7 @@ query ArticleNewsDetail($slug: [String!]) {
             category: articleCategories {
                 title
             }
-              contributors {
+            contributors {
                 ... on contributors_staffMember_BlockType {
                     byline
                     staffMember {
