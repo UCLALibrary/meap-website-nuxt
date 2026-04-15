@@ -89,7 +89,7 @@ jobs:
           github-deployment-environment: ${{ github.event_name }}-${{ github.event.number }}
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_MEAP_TEST_NUXT3X }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_MEAP_TEST }}
 
       - name: Cache Cypress
         uses: actions/cache@v3
@@ -118,7 +118,7 @@ jobs:
           ES_READ_KEY: ${{ secrets.ES_READ_KEY_TEST }}
           ES_WRITE_KEY: ${{ secrets.ES_WRITE_KEY_TEST }}
           ES_INDEX: ${{ env.ES_INDEX }}
-          ES_INDEX_PREFIX: ${{secrets.ES_INDEX_PREFIX_TEST_NUXT3X}}
+          ES_INDEX_PREFIX: ${{secrets.ES_INDEX_PREFIX_TEST}}
       - name: Deploy to Netlify (test)
         if: github.ref_name=='main'
         uses: nwtgck/actions-netlify@v2 #
@@ -131,4 +131,4 @@ jobs:
           github-deployment-environment: production
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_MEAP_TEST_NUXT3X }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_MEAP_TEST }}
