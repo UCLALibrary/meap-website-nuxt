@@ -2,11 +2,11 @@ name: Run CI Suite
 
 on:
   push:
-    branches: [nuxt3.x]
+    branches: [main]
   pull_request:
-    branches: [nuxt3.x]
+    branches: [main]
 concurrency:
-  group: ci-${{ github.ref_name=='nuxt3.x' && github.sha || github.ref_name }} # Cancel runs for previous version of PR, but not main (after merge). For hacked ternary, see https://github.com/actions/runner/issues/409#issuecomment-727565588
+  group: ci-${{ github.ref_name=='main' && github.sha || github.ref_name }} # Cancel runs for previous version of PR, but not main (after merge). For hacked ternary, see https://github.com/actions/runner/issues/409#issuecomment-727565588
   cancel-in-progress: true
 jobs:
   eslint:
@@ -56,12 +56,12 @@ jobs:
         run: |
           echo "ES_INDEX=${{secrets.ES_INDEX_TEST}}-deploy-preview-${{github.event.pull_request.number}}" >> $GITHUB_ENV
           echo "ES_ALIAS=${{secrets.ES_ALIAS_TEST}}-deploy-preview-${{github.event.pull_request.number}}" >> $GITHUB_ENV
-        if: github.ref_name!='nuxt3.x'
-      - name: Sets env vars for nuxt3.x merge
+        if: github.ref_name!='main'
+      - name: Sets env vars for main merge
         run: |
           echo "ES_INDEX=${{secrets.ES_INDEX_TEST}}" >> $GITHUB_ENV
           echo "ES_ALIAS=${{secrets.ES_ALIAS_TEST}}" >> $GITHUB_ENV
-        if: github.ref_name=='nuxt3.x'
+        if: github.ref_name=='main'
       - run: pnpm run generate
         if: steps.cache-nuxt3.outputs.cache-hit != 'true'
         env:
@@ -76,7 +76,7 @@ jobs:
           ES_ALIAS: ${{ env.ES_ALIAS }}
           ES_INDEX_PREFIX: ${{secrets.ES_INDEX_PREFIX_TEST}}
       - name: Deploy to Netlify (preview)
-        if: github.ref_name!='nuxt3.x'
+        if: github.ref_name!='main'
         uses: nwtgck/actions-netlify@v3.0 #
         with:
           production-deploy: false
@@ -120,7 +120,7 @@ jobs:
           ES_INDEX: ${{ env.ES_INDEX }}
           ES_INDEX_PREFIX: ${{secrets.ES_INDEX_PREFIX_TEST_NUXT3X}}
       - name: Deploy to Netlify (test)
-        if: github.ref_name=='nuxt3.x'
+        if: github.ref_name=='main'
         uses: nwtgck/actions-netlify@v2 #
         with:
           production-deploy: true
