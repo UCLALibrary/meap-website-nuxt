@@ -236,7 +236,10 @@ onMounted(async () => {
         Displaying {{ hits.length }} results
       </h2>
 
-      <section-teaser-card :items="parseHitsResults" />
+      <section-teaser-card
+        data-test="project-results-es"
+        :items="parseHitsResults"
+      />
     </section-wrapper>
 
     <!-- NO RESULTS -->
@@ -249,7 +252,7 @@ onMounted(async () => {
           <h2>Search for “{{ $route.query.q }}” not found.</h2>
           <p>
             We can’t find the term you are looking for on this page.
-            <br >
+            <br>
             <!-- Try searching the whole site from
                         <a href="https://library.ucla.edu">UCLA Library Home</a>, or try one of the these regularly visited links:
                     </p>
