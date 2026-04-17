@@ -2,7 +2,7 @@ import { viewports } from '../support/viewports'
 
 const provider = Cypress.env('VISUAL_PROVIDER')
 const isChromatic = provider === 'chromatic'
-
+const isPercy = provider === 'percy'
 
 function runNewsListingTests({ withSnapshot = false } = {}) {
   it('Visit the News Listing Page', () => {
@@ -31,7 +31,12 @@ if (isChromatic) {
       runNewsListingTests({ withSnapshot: true })
     })
   })
-} else {
+ } else if(isPercy){
+  describe('News Listing page', () => {
+    runNewsListingTests({ withSnapshot: true })
+  })
+}
+ else {
   describe('News Listing page', () => {
     runNewsListingTests({ withSnapshot: false })
   })

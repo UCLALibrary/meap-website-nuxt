@@ -2,6 +2,7 @@ import { viewports } from '../support/viewports'
 
 const provider = Cypress.env('VISUAL_PROVIDER')
 const isChromatic = provider === 'chromatic'
+const isPercy = provider === 'percy'
 
 function runHelpTopicTests({ withSnapshot = false } = {}) {
     it("Visit a Help Topic Page", () => {
@@ -19,7 +20,12 @@ if (isChromatic) {
       runHelpTopicTests({ withSnapshot: true })
     })
   })
-}  else {
+ } else if(isPercy){
+  describe('Help Topic page', () => {
+    runHelpTopicTests({ withSnapshot: true })
+  })
+}
+ else {
   describe('Help Topic page', () => {
     runHelpTopicTests({ withSnapshot: false })
   })

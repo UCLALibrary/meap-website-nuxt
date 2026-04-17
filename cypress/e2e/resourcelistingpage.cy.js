@@ -2,6 +2,7 @@ import { viewports } from '../support/viewports'
 
 const provider = Cypress.env('VISUAL_PROVIDER')
 const isChromatic = provider === 'chromatic'
+const isPercy = provider === 'percy'
 
 function runResourceListingTests({ withSnapshot = false } = {}) {
     it("Visit Resource Listing Page", () => {
@@ -19,7 +20,12 @@ if (isChromatic) {
       runResourceListingTests({ withSnapshot: true })
     })
   })
-} else {
+} else if(isPercy){
+  describe('Resource Listing page', () => {
+    runResourceListingTests({ withSnapshot: true })
+  })
+}
+else {
   describe('Resource Listing page', () => {
     runResourceListingTests({ withSnapshot: false })
   })

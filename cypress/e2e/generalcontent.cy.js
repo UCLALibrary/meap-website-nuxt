@@ -2,7 +2,7 @@ import { viewports } from '../support/viewports'
 
 const provider = Cypress.env('VISUAL_PROVIDER')
 const isChromatic = provider === 'chromatic'
-
+const isPercy = provider === 'percy'
 
 function runGeneralContentTests({ withSnapshot = false } = {}) {
   it('Visit a General Content Page', () => {
@@ -20,7 +20,12 @@ if (isChromatic) {
       runGeneralContentTests({ withSnapshot: true })
     })
   })
-} else {
+} else if(isPercy){
+  describe('General Content page', () => {
+    runGeneralContentTests({ withSnapshot: true })
+  })
+}
+else {
   describe('General Content page', () => {
     runGeneralContentTests({ withSnapshot: false })
   })
