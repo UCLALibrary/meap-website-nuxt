@@ -10,7 +10,8 @@ Cypress.Commands.add('visualSnapshot', (name) => {
   }
 
   if (provider === 'percy') {
-    cy.percySnapshot(name)
+    cy.percySnapshot(name, { widths: [768, 992, 1200] })
+    cy.percySnapshot({ widths: [768, 992, 1200] })
   }
 
 })
