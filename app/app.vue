@@ -9,10 +9,12 @@ const { enabled, state } = usePreviewMode()
       height="3"
     />
 
-    <vue-skip-to
-      to="#main"
-      label="Skip to main content"
-    />
+    <ClientOnly>
+      <vue-skip-to
+        to="#main"
+        label="Skip to main content"
+      />
+    <ClientOnly>
 
     <NuxtLayout>
       <NuxtPage />
