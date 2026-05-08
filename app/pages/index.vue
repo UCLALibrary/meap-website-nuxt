@@ -83,9 +83,9 @@ const meapNews = computed(() => {
 </script>
 <template>
     <main
-      id="main"
+
       class="page page-home"
-    />
+    >
     <masthead-secondary
       :title="homePage.titleGeneral"
       :text="homePage.summary"
@@ -196,7 +196,7 @@ const meapNews = computed(() => {
         <button-more text="See all news" />
       </nuxt-link>
     </section-wrapper>
-  <!-- </main> -->
+  </main>
 </template>
 <style lang="scss" scoped>
 .page-home {
