@@ -14,7 +14,7 @@ const { enabled, state } = usePreviewMode()
         to="#main"
         label="Skip to main content"
       />
-    <ClientOnly>
+    </ClientOnly>
 
     <NuxtLayout>
       <NuxtPage />
