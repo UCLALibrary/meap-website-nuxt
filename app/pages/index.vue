@@ -83,7 +83,7 @@ const meapNews = computed(() => {
 </script>
 <template>
     <main
-
+      id="main"
       class="page page-home"
     >
     <masthead-secondary
