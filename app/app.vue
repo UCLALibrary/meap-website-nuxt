@@ -25,6 +25,7 @@ useHead({
   ],
 })
 </script>
+
 <template>
   <div>
     <NuxtLoadingIndicator
@@ -32,12 +33,10 @@ useHead({
       height=3
     />
 
-
     <vue-skip-to
       to="#main"
       label="Skip to main content"
     />
-
 
     <NuxtLayout>
       <NuxtPage />
