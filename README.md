@@ -7,6 +7,17 @@ Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introdu
 
 :exclamation: Verify that your development environment runs the Node and PNPM versions referenced in the project's [`actions.yml` file](https://github.com/UCLALibrary/meap-website-nuxt/blob/main/.github/workflows/setup-workspace/action.yml)
 
+```bash
+# node
+node -v
+```
+
+```bash
+# pnpm
+pnpm -v
+```
+
+
 - If your global Node or PNPM version is different, use the respective version setup steps:
   - [Node version setup](#node-version-setup)
   - [PNPM version setup](#pnpm-version-setup)
