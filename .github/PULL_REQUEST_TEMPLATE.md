@@ -15,10 +15,7 @@
 ---
 
 **Checklist**
-- [ ] I checked this PR in Chrome
-- [ ] I checked this PR in Firefox
-- [ ] I checked this PR in Safari
-- [ ] I checked this PR in Edge
+- [ ] I checked this n Chrome, Firefox, Safari, Edge
     - [ ] I checked this PR in desktop view
     - [ ] I checked this PR in tablet view
     - [ ] I checked this PR in mobile view
@@ -28,6 +25,5 @@
 - [ ] I included a working / updated spec file
 - [ ] I reviewed the Chromatic
 - [ ] UX has reviewed
-- [ ] Another Dev has reviewed the Chromatic
 - [ ] Another Dev has reviewed the deploy preview
 - [ ] Another Dev has reviewed the code
