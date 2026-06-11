@@ -7,7 +7,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   // Fallback to ensure SkipToLink functionality works in browsers--particularly Firefox (LADI-5193)
 
-  if (process.client) { // Run only on client-side
+  if (import.meta.client) { // Run only on client-side
     document.addEventListener('click', (e) => {
       // Identify the skip-to-link element
       const link = e.target.closest('.vue-skip-to__link')
