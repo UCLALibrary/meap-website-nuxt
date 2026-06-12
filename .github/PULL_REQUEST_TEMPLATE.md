@@ -26,7 +26,7 @@
 - [ ] Design & Code
     - [ ] Check that it looks like the design(s) _(if applicable)_
     - [ ] Include a working / updated spec file _(if applicable)_
-    - [ ] Review the Chromatic _(if the PR is big and requires it)_
+    - [ ] Review the Chromatic _(if the PR is large and requires it)_
 
 ### UX Review
 - [ ] UX has reviewed and approved
