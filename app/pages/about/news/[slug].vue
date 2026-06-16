@@ -73,12 +73,12 @@ watch(data, (newVal, oldVal) => {
 useHead({
   title: page.value ? page.value.title : '... loading',
 })
-
 </script>
 
 <template lang="html">
   <main
     id="main"
+    tabindex="-1"
     class="page page-news-detail"
   >
     <nav-breadcrumb
