@@ -130,11 +130,12 @@ When you switch repositories:
 
 ```bash
 cd <repository>
-"Run pnpm commands as usual"
+nvm use
 ```
 
 - `nvm use` reads the Node version from `.nvmrc` when present.
 - pnpm is selected automatically through Corepack and the repo’s `packageManager` field.
+- "Run pnpm commands as usual"
 
 ## Troubleshooting
 
