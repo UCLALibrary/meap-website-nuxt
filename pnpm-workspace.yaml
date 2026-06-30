@@ -3,6 +3,7 @@ allowBuilds:
   '@percy/core': true
   cypress: true
   esbuild: true
+  protobufjs: true
   unrs-resolver: true
   vue-demi: true
 engineStrict: true

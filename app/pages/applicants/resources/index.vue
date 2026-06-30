@@ -9,7 +9,7 @@ import RESOURCE_LIST from "../gql/queries/ResourceList.gql"
 import _get from "lodash/get"
 import stripMeapFromURI from "~/utils/stripMeapFromURI"
 import { useGlobalCallToAction } from "~/composables/useGlobalCallToAction"
-import { client } from "process"
+
 
 const { $graphql } = useNuxtApp()
 
