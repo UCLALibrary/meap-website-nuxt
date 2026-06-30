@@ -1,4 +1,7 @@
+import { a11yIt } from '../support/a11y'
 const provider = Cypress.env('VISUAL_PROVIDER')
+const isChromatic = provider === 'chromatic'
+
 
 function runMobileHomepageTests({ withSnapshot = false } = {}) {
    it("Visit the Mobile Homepage", () => {
@@ -15,6 +18,10 @@ function runMobileHomepageTests({ withSnapshot = false } = {}) {
 
   describe("Mobile Homepage", () => {
     runMobileHomepageTests({ withSnapshot: false })
+    if (!isChromatic) {
+      // pass null selector so that header and footer are checked on the mobile homepage
+      a11yIt('/', { selector: null })
+    }
   })
 
 

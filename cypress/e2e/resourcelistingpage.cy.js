@@ -1,4 +1,5 @@
 import { viewports } from '../support/viewports'
+import { a11yIt } from '../support/a11y'
 
 const provider = Cypress.env('VISUAL_PROVIDER')
 const isChromatic = provider === 'chromatic'
@@ -28,5 +29,6 @@ if (isChromatic) {
 else {
   describe('Resource Listing page', () => {
     runResourceListingTests({ withSnapshot: false })
+    a11yIt('/applicants/resources')
   })
 }
