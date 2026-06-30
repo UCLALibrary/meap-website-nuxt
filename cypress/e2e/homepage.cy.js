@@ -1,4 +1,5 @@
 import { viewports } from '../support/viewports'
+import { a11yIt } from '../support/a11y'
 
 const provider = Cypress.env('VISUAL_PROVIDER')
 const isChromatic = provider === 'chromatic'
@@ -67,5 +68,7 @@ if (isChromatic) {
 } else {
   describe('Website Homepage', { viewportWidth: 1200, viewportHeight: 1200 }, () => {
     runHomepageTests({ withSnapshot: false })
+    // pass null selector so that header and footer are checked on the homepage
+    a11yIt('/', { selector: null })
   })
 }

@@ -28,5 +28,6 @@ if (isChromatic) {
 else {
   describe('Resource Listing page', () => {
     runResourceListingTests({ withSnapshot: false })
+    a11yIt('/applicants/resources')
   })
 }
