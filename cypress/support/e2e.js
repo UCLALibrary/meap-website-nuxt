@@ -13,7 +13,8 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
-import '@percy/cypress'
+// import '@percy/cypress'
+import 'cypress-axe'
 
 // cypress/support/e2e.js
 import '@chromatic-com/cypress/support'
@@ -21,5 +22,7 @@ import '@chromatic-com/cypress/support'
 // Import commands.js using ES2015 syntax:
 import './commands'
 
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
+// Overwrite the log command to log to the console and the task queue
+Cypress.Commands.overwrite('log', (subject, message) => {
+  cy.task('log', message)
+})

@@ -20,6 +20,11 @@ export default defineConfig({
             // If you don't need it, no-op is fine
             return null
           },
+          // Overwrite the log command to log to the console and the task queue
+          log(message) {
+            console.log(message)
+            return null
+          }
         })
       }
 
