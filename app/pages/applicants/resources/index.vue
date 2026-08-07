@@ -88,9 +88,11 @@ const { hasCTA } = useGlobalCallToAction()
       :text="summaryData.text"
     />
 
+    <!-- level prop ensures headers start at h2s, masthead-secondary has an h1 -->
     <section-wrapper
       v-if="resourceList"
       class="section"
+      :level="2"
     >
       <section-cards-with-illustrations
         class="section"

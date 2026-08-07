@@ -7,3 +7,6 @@ allowBuilds:
   unrs-resolver: true
   vue-demi: true
 engineStrict: true
+minimumReleaseAgeExclude:
+  - '@ucla-library-monorepo/ucla-library-website-components@1.82.0'
+  - '@ucla-library/component-library-nuxt-module@1.4.5'
