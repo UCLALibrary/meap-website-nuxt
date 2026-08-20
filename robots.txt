@@ -35,3 +35,7 @@ Disallow: /
 
 User-agent: cohere-ai
 Disallow: /
+
+User-agent: SiteimproveBot
+User-agent: SiteimproveBot-Crawler
+Allow: /
