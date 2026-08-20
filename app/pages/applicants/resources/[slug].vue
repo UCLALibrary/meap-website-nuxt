@@ -103,9 +103,8 @@ console.log('hasCTA', hasCTA.value)
       :blocks="page.blocks"
     />
 
-    <section-wrapper
-v-if="
-      page.blocks &&
+    <section-wrapper 
+      v-if="page.blocks &&
       page.blocks.length &&
       page.parsedAssociatedTopics &&
       page.parsedAssociatedTopics.length
@@ -113,7 +112,11 @@ v-if="
       <divider-way-finder color="about" />
     </section-wrapper>
 
-    <section-wrapper v-if="parsedAssociatedTopics && parsedAssociatedTopics.length">
+    <!-- level prop ensures headers start at h2s, banner header has an h1 -->
+    <section-wrapper
+      v-if="parsedAssociatedTopics && parsedAssociatedTopics.length"
+      :level="2"
+    >
       <section-cards-with-illustrations
         :items="parsedAssociatedTopics"
         title="Associated Topics"
