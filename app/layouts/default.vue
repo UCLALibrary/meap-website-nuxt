@@ -9,7 +9,7 @@ const primaryMenuItems = computed(() => (globalStore.header && globalStore.heade
 const secondaryMenuItems = computed(() => (globalStore.header && globalStore.header.secondary) ? globalStore.header.secondary : [])
 
 // Your existing mobile logic, guarded
-const isMobile = computed(() => (globalStore.winWidth || 0) <= 1024)
+const isMobile = computed(() => (globalStore.winWidth || 0) <= 1199)
 
 const classes = computed(() => {
   return [
@@ -21,6 +21,7 @@ const classes = computed(() => {
 })
 
 </script>
+
 <template lang="html">
   <div :class="classes">
     <header
@@ -59,6 +60,7 @@ const classes = computed(() => {
     <footer-main />
   </div>
 </template>
+
 <style lang="scss" scoped>
 .layout-default {
   min-height: 100vh;
@@ -114,7 +116,35 @@ const classes = computed(() => {
   // TODO nav on smaller viewports
 }
 
+// Override to fix header menu items overflow
 
+:deep(.nav-menu-item) {
+  max-width: 150px;
+}
+
+@media (max-width: 1420px) {
+  :deep(.nav-primary) {
+    &.has-acronym {
+      .full-title {
+        display: none;
+      }
+
+      .acronym {
+        display: block;
+      }
+    }
+  }
+}
+
+@media (max-width: 1199px) {
+  :deep(.header-main-responsive:not(.dlc).has-title .title .full-title) {
+    display: none;
+  }
+
+  :deep(.header-main-responsive:not(.dlc).has-acronym .acronym) {
+    display: block;
+  }
+}
 
 @media #{$small} {
   :deep(.more-menu .search-button) {

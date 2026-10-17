@@ -25,15 +25,15 @@ function runHomepageTests({ withSnapshot = false, label = 'Desktop' } = {}) {
          // NavPrimary
         cy.get('.nav-primary').then((elem) => {
           if (elem[0].textContent.startsWith('Modern Endangered Archives Program Get help with')) {
-            cy.get('.nav-primary').should('contain', 'Who we are')
-              .and('contain', 'For applicants')
+            cy.get('.nav-primary').should('contain', 'About')
+              .and('contain', 'Resources')
               .and('contain', 'Projects')
           }
         })
        }
 
 
-    cy.contains('a.smart-link', 'Browse Collections').should('have.attr', 'target', '_blank')
+    cy.contains('a.smart-link', 'Collections').should('have.attr', 'target', '_blank')
 
     cy.get('.masthead-secondary').should(
       'contain',
