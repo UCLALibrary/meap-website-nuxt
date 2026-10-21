@@ -122,7 +122,7 @@ const classes = computed(() => {
   max-width: 150px;
 }
 
-@media (max-width: 1420px) {
+@media (max-width: 1375px) {
   :deep(.nav-primary) {
     &.has-acronym {
       .full-title {
