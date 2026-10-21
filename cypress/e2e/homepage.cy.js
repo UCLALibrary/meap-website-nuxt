@@ -21,7 +21,8 @@ function runHomepageTests({ withSnapshot = false, label = 'Desktop' } = {}) {
 
     cy.get('a.logo-ucla')
       .should('have.attr', 'href', 'https://www.library.ucla.edu')
-       if (label === 'Desktop') {
+
+      if (label === 'Desktop') {
          // NavPrimary
         cy.get('.nav-primary').then((elem) => {
           if (elem[0].textContent.startsWith('Modern Endangered Archives Program Get help with')) {
@@ -30,10 +31,10 @@ function runHomepageTests({ withSnapshot = false, label = 'Desktop' } = {}) {
               .and('contain', 'Projects')
           }
         })
-       }
+      }
 
 
-    cy.contains('a.smart-link', 'Collections').should('have.attr', 'target', '_blank')
+    cy.contains('a.smart-link.is-link.nochildren-link', 'Collections').should('have.attr', 'target', '_blank')
 
     cy.get('.masthead-secondary').should(
       'contain',
