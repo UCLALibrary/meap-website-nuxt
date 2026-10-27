@@ -50,7 +50,7 @@ jobs:
       - name: Install Cypress
         run: npx cypress install
 
-      - uses: cypress-io/github-action@v3
+      - uses: cypress-io/github-action@v7.4.6
         with:
           start: pnpm dlx serve .output/public
           install: false
