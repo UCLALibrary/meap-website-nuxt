@@ -9,7 +9,7 @@ const primaryMenuItems = computed(() => (globalStore.header && globalStore.heade
 const secondaryMenuItems = computed(() => (globalStore.header && globalStore.header.secondary) ? globalStore.header.secondary : [])
 
 // Your existing mobile logic, guarded
-const isMobile = computed(() => (globalStore.winWidth || 0) <= 1199)
+const isMobile = computed(() => (globalStore.winWidth || 0) <= 1085)
 
 const classes = computed(() => {
   return [
@@ -119,6 +119,7 @@ const classes = computed(() => {
 // Override to fix header menu items overflow
 
 :deep(.nav-menu-item) {
+  min-width: 0;
   max-width: 150px;
 }
 
