@@ -137,7 +137,17 @@ const classes = computed(() => {
   }
 }
 
-@media (max-width: 1199px) {
+@media (max-width: 1085px) {
+  :deep(.header-main-responsive:not(.dlc).has-title .title .full-title) {
+    display: block;
+  }
+
+  :deep(.header-main-responsive:not(.dlc).has-acronym .acronym) {
+    display: none;
+  }
+}
+
+@media (max-width: 750px) {
   :deep(.header-main-responsive:not(.dlc).has-title .title .full-title) {
     display: none;
   }
