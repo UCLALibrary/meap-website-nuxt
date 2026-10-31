@@ -120,7 +120,7 @@ const classes = computed(() => {
 
 :deep(.nav-menu-item) {
   min-width: 0;
-  max-width: 150px;
+  max-width: 135px;
 }
 
 @media (max-width: 1380px) {
