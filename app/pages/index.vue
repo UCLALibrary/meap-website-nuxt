@@ -1,4 +1,4 @@
-<script setup>
+<script lang="ts" setup>
 
 import _get from 'lodash/get'
 
@@ -49,7 +49,7 @@ const homePage = computed(() => {
 })
 
 const parsedMastheadHeroImage = computed(() => {
-  return homePage.value.heroImage[0].image[0]
+  return homePage.value.heroImage?.[0]?.image?.[0]
 })
 
 const featuredMeapResources = computed(() => {
@@ -80,18 +80,18 @@ const meapNews = computed(() => {
   return homePage.value.meapNews.map((obj) => {
     return {
       ...obj,
-      image: obj.heroImage[0].image[0],
+      image: obj.heroImage?.[0]?.image?.[0],
     }
   })
 })
 </script>
 
 <template>
-    <main
-      id="main"
-      tabindex="-1"
-      class="page page-home"
-    >
+  <main
+    id="main"
+    tabindex="-1"
+    class="page page-home"
+  >
     <masthead-secondary
       :title="homePage.titleGeneral"
       :text="homePage.summary"
@@ -110,7 +110,7 @@ const meapNews = computed(() => {
     >
       <banner-featured
         class="banner"
-        :media="featuredProjects[0].heroImage[0].image[0]"
+        :media="featuredProjects[0]?.heroImage?.[0]?.image?.[0]"
         :to="featuredProjects[0].to"
         :title="featuredProjects[0].title"
         :category="featuredProjects[0].category"
@@ -136,9 +136,9 @@ const meapNews = computed(() => {
     <section-wrapper
       v-if="
         featuredProjects &&
-          featuredProjects.length &&
-          featuredMeapResources &&
-          featuredMeapResources.length
+        featuredProjects.length &&
+        featuredMeapResources &&
+        featuredMeapResources.length
       "
       theme="divider"
     >
@@ -171,8 +171,8 @@ const meapNews = computed(() => {
       v-if="
         ((featuredProjects && featuredProjects.length) ||
           (featuredMeapResources && featuredMeapResources.length)) &&
-          meapNews &&
-          meapNews.length
+        meapNews &&
+        meapNews.length
       "
       theme="divider"
     >
@@ -190,7 +190,7 @@ const meapNews = computed(() => {
     >
       <section-teaser-card
         :items="meapNews"
-        :image="meapNews[0].heroImage[0].image[0]"
+        :image="meapNews?.[0]?.heroImage?.[0]?.image?.[0]"
         class="meap-news"
       />
 
