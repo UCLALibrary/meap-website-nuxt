@@ -1,4 +1,4 @@
-<script setup>
+<script lang="ts" setup>
 
 import _get from 'lodash/get'
 
@@ -9,7 +9,6 @@ const { $graphql } = useNuxtApp()
 
 const { data, error } = await useAsyncData('meap-home-page', async () => {
   const data = await $graphql.default.request(MEAP_HOMEPAGE)
-  console.log(data)
   return data
 })
 
@@ -19,14 +18,14 @@ if (error.value) {
   })
 }
 
-if (!data.value.entries) {
+const entries = data.value?.entries
+if (!Array.isArray(entries) || entries.length === 0) {
   throw createError({
     statusCode: 404,
     statusMessage: 'Page Not Found',
     fatal: true
   })
 }
-console.log(data.value)
 
 const page = ref(_get(data.value, 'entries', {}))
 
@@ -35,8 +34,8 @@ useHead({
 })
 
 watch(data, (newVal, oldVal) => {
-  console.log('In watch preview enabled, newVal, oldVal', newVal, oldVal)
-  page.value = _get(newVal, 'entry', {})
+  // console.log('In watch preview enabled, newVal, oldVal', newVal, oldVal)
+  page.value = _get(newVal, 'entries', {})
 })
 
 const homePage = computed(() => {
@@ -49,7 +48,7 @@ const homePage = computed(() => {
 })
 
 const parsedMastheadHeroImage = computed(() => {
-  return homePage.value.heroImage[0].image[0]
+  return homePage.value.heroImage?.[0]?.image?.[0]
 })
 
 const featuredMeapResources = computed(() => {
@@ -67,7 +66,7 @@ const featuredProjects = computed(() => {
   return homePage.value.featuredProjects.map((obj) => {
     return {
       ...obj,
-      image: obj.heroImage[0].image[0],
+      image: obj.heroImage?.[0]?.image?.[0],
     }
   })
 })
@@ -80,18 +79,18 @@ const meapNews = computed(() => {
   return homePage.value.meapNews.map((obj) => {
     return {
       ...obj,
-      image: obj.heroImage[0].image[0],
+      image: obj.heroImage?.[0]?.image?.[0],
     }
   })
 })
 </script>
 
 <template>
-    <main
-      id="main"
-      tabindex="-1"
-      class="page page-home"
-    >
+  <main
+    id="main"
+    tabindex="-1"
+    class="page page-home"
+  >
     <masthead-secondary
       :title="homePage.titleGeneral"
       :text="homePage.summary"
@@ -105,12 +104,12 @@ const meapNews = computed(() => {
                 class="divider-way-finder"
             /> -->
     <section-wrapper
-      v-if="featuredProjects"
+      v-if="featuredProjects?.length > 0"
       class="section-banner"
     >
       <banner-featured
         class="banner"
-        :media="featuredProjects[0].heroImage[0].image[0]"
+        :media="featuredProjects[0].image"
         :to="featuredProjects[0].to"
         :title="featuredProjects[0].title"
         :category="featuredProjects[0].category"
@@ -135,10 +134,8 @@ const meapNews = computed(() => {
 
     <section-wrapper
       v-if="
-        featuredProjects &&
-          featuredProjects.length &&
-          featuredMeapResources &&
-          featuredMeapResources.length
+        featuredProjects?.length > 0 &&
+        featuredMeapResources?.length > 0
       "
       theme="divider"
     >
@@ -150,7 +147,7 @@ const meapNews = computed(() => {
 
     <!-- Program Resources -->
     <section-wrapper
-      v-if="featuredMeapResources && featuredMeapResources.length"
+      v-if="featuredMeapResources?.length > 0"
       class="section"
     >
       <simple-cards
@@ -159,7 +156,6 @@ const meapNews = computed(() => {
       />
 
       <nuxt-link
-        v-if="featuredMeapResources.length"
         class="button-more-link"
         to="/applicants/resources"
       >
@@ -171,8 +167,8 @@ const meapNews = computed(() => {
       v-if="
         ((featuredProjects && featuredProjects.length) ||
           (featuredMeapResources && featuredMeapResources.length)) &&
-          meapNews &&
-          meapNews.length
+        meapNews &&
+        meapNews.length
       "
       theme="divider"
     >
@@ -184,18 +180,16 @@ const meapNews = computed(() => {
 
     <!-- Announcements -->
     <section-wrapper
-      v-if="meapNews && meapNews.length"
+      v-if="meapNews?.length > 0"
       section-title="News"
       class="section"
     >
       <section-teaser-card
         :items="meapNews"
-        :image="meapNews[0].heroImage[0].image[0]"
         class="meap-news"
       />
 
       <nuxt-link
-        v-if="featuredMeapResources.length"
         class="button-more-link"
         to="/about/news"
       >
